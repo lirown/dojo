@@ -81,9 +81,9 @@ export class App extends LitElement {
       <header>
         ${Logo()}
         <nav>
-          <a href="/result">Result</a>
-          <a href="/quiz">Quiz</a>
-          <a href="/improve">Improve</a>
+          <a href="${urlForName('result')}">Result</a>
+          <a href="${urlForName('quiz')}">Quiz</a>
+          <a href="${urlForName('improve')}">Improve</a>
         </nav>
 
         <pwa-install-button>
