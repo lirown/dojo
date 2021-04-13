@@ -31,6 +31,5 @@ export const attachRouter = (outlet) => {
  * @return {String} url name
  */
 export const urlForName = (name, params) => {
-  return (location.href.indexOf('github') !== -1 ? 'dojo/' : '') +
-    router.urlForName(name, params);
+  return router.urlForName(name, params);
 };
