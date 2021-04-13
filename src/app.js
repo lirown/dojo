@@ -77,34 +77,38 @@ export class App extends LitElement {
   }
 
   render() {
-    return html`
-      <header>
-        ${Logo()}
-        <nav>
-          <a href="${urlForName('result')}">Result</a>
-          <a href="${urlForName('quiz')}">Quiz</a>
-          <a href="${urlForName('improve')}">Improve</a>
-        </nav>
+    return html` <header>
+        <div class="container">
+          <div class="header-inner">
+            ${Logo()}
+            <nav>
+              <a href="${urlForName('result')}">Result</a>
+              <a href="${urlForName('quiz')}">Quiz</a>
+              <a href="${urlForName('improve')}">Improve</a>
+            </nav>
 
-        <pwa-install-button>
-          <button>Install app</button>
-        </pwa-install-button>
+            <pwa-install-button>
+              <button>Install app</button>
+            </pwa-install-button>
 
-        <pwa-update-available>
-          <button>Update app</button>
-        </pwa-update-available>
+            <pwa-update-available>
+              <button>Update app</button>
+            </pwa-update-available>
+          </div>
+        </div>
       </header>
 
       <!-- The main content is added / removed dynamically by the router -->
       <main role="main"></main>
 
       <footer>
-        <span
-          >Made with ❤️ by Forter Engineering (Environment:
-          ${config.environment})</span
-        >
-      </footer>
-    `;
+        <div class="container">
+          <span
+            >Made with ❤️ by Forter Engineering (Environment:
+            ${config.environment})</span
+          >
+        </div>
+      </footer>`;
   }
 
   createRenderRoot() {
