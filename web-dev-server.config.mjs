@@ -3,7 +3,7 @@ import { fromRollup } from '@web/dev-server-rollup';
 import replace from '@rollup/plugin-replace';
 
 export default {
-  appIndex: 'index-base.html',
+  appIndex: 'index.html',
   nodeResolve: true,
   plugins: [
     esbuildPlugin({ target: 'auto' }),
