@@ -26,7 +26,7 @@ const workboxConfig = {
       }
     }
   ],
-  navigateFallback: 'base-index.html',
+  navigateFallback: 'index-base.html',
   skipWaiting: false,
   clientsClaim: false
 };
@@ -40,7 +40,7 @@ const config = merge(
     injectServiceWorker: true
   }),
   {
-    input: 'base-index.html',
+    input: 'index-base.html',
     plugins: [
       babel({ babelHelpers: 'bundled' }),
       replace({
