@@ -30,7 +30,6 @@ export const routes = [
     action: async () => {
       await import('../pages/page-result');
     }
-
   },
   {
     path: '/quiz',
@@ -44,7 +43,7 @@ export const routes = [
       await import('../pages/page-quiz');
     }
   },
-{
+  {
     path: '/improve',
     name: 'improve',
     component: 'page-improve',
@@ -56,7 +55,18 @@ export const routes = [
       await import('../pages/page-improve');
     }
   },
-
+  {
+    path: '/notepad',
+    name: 'notepad',
+    component: 'page-notepad',
+    metadata: {
+      title: 'Result',
+      description: 'Suggestions for improve due to  quiz result'
+    },
+    action: async () => {
+      await import('../pages/page-notepad');
+    }
+  },
   {
     path: '(.*)',
     name: 'not-found',

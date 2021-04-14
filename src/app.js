@@ -3,8 +3,9 @@ import { Logo } from './components';
 
 import config from './config';
 import { attachRouter, urlForName } from './router';
-
+import '@forter/checkbox';
 import '@forter/button';
+import '@forter/radio';
 import 'pwa-helper-components/pwa-install-button.js';
 import 'pwa-helper-components/pwa-update-available.js';
 
@@ -85,6 +86,7 @@ export class App extends LitElement {
               <a href="${urlForName('result')}">Result</a>
               <a href="${urlForName('quiz')}">Quiz</a>
               <a href="${urlForName('improve')}">Improve</a>
+              <a href="${urlForName('notepad')}">My Growth Notepad</a>
             </nav>
 
             <pwa-install-button>
