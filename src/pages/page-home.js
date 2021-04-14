@@ -1,5 +1,6 @@
 import { html } from 'lit-element';
 import { Logo, Feature } from '../components';
+import { urlForName } from '../router';
 import { PageElement } from '../helpers/page-element';
 
 export class PageHome extends PageElement {
@@ -14,7 +15,7 @@ export class PageHome extends PageElement {
             can help you improve your skills, expand your knowledge and make
             bigger impact.
           </h5>
-          <a href="/quiz">
+          <a href="${urlForName('quiz')}">
             <fc-button size="large">I'M READY! SHOW ME</fc-button>
           </a>
           <p>all free, no emails, no BS. We're Engineers..</p>
