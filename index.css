@@ -141,9 +141,10 @@ header nav a {
   display: flex;
   align-items: center;
   margin-left: 20px;
-  padding: 5px 25px;
+  padding: 5px 20px;
   color: #fff;
   font-weight: 600;
+  font-size: 14px;
   text-decoration: none;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 50px;
@@ -677,6 +678,11 @@ ul#main-menu > li:not(.type-notepad) {
 @media (min-width: 992px) {
   ul#main-menu > li:not(.type-notepad) {
     display: block;
+  }
+
+  header nav a {
+    padding: 5px 25px;
+    font-size: 16px;
   }
 
   .box-title i {
