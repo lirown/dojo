@@ -17,10 +17,12 @@ export class PageHome extends PageElement {
               that can help you improve your skills, expand your knowledge and
               make bigger impact.
             </h2>
-            <a href="${urlForName('quiz')}">
-              <fc-button size="large">I'M READY! SHOW ME</fc-button>
-            </a>
-            <p>all free, no emails, no BS. We're Engineers..</p>
+            <div class="bottom-data">
+              <a href="${urlForName('quiz')}">
+                <fc-button size="large">I'M READY! SHOW ME</fc-button>
+              </a>
+              <p>all free, no emails, no BS. We're Engineers...</p>
+            </div>
           </div>
         </div>
       </section>

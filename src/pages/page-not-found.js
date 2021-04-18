@@ -6,13 +6,9 @@ export class PageNotFound extends PageElementNotFound {
   render() {
     return html`
       <section class="not-found">
-
-        <h1 hidden>Oops! </h1>
-        <h2 hidden>We can't seem to find the page you're looking for...</h2>
-
-        <p hidden>
-          <a href="${urlForName('home')}">Back to home</a>
-        </p>
+        <h1>404</h1>
+        <h2>Oops!</h2>
+        <h3>We can't seem to find the page you're looking for...</h3>
       </section>
     `;
   }

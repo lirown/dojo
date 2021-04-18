@@ -10,6 +10,7 @@ import 'pwa-helper-components/pwa-install-button.js';
 import 'pwa-helper-components/pwa-update-available.js';
 
 console.log(config);
+
 export class App extends LitElement {
   static get styles() {
     return [
@@ -84,10 +85,29 @@ export class App extends LitElement {
           <div class="header-inner">
             ${Logo()}
             <nav>
-              <a href="${urlForName('result')}">Result</a>
-              <a href="${urlForName('quiz')}">Quiz</a>
-              <a href="${urlForName('improve')}">Improve</a>
-              <a href="${urlForName('notepad')}">My Growth Notepad</a>
+              <ul id="main-menu">
+                <li class="type-drop">
+                  <a href="${urlForName('result')}">Drop Down</a>
+                  <ul id="sub-menu">
+                    <li><a href="#" aria-label="subemnu">submenu</a></li>
+                    <li><a href="#" aria-label="subemnu">submenu</a></li>
+                    <li><a href="#" aria-label="subemnu">submenu</a></li>
+                    <li><a href="#" aria-label="subemnu">submenu</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="${urlForName('result')}">Result</a>
+                </li>
+                <li>
+                  <a href="${urlForName('quiz')}">Quiz</a>
+                </li>
+                <li>
+                  <a href="${urlForName('improve')}">Improve</a>
+                </li>
+                <li class="type-notepad">
+                  <a href="${urlForName('notepad')}">My Growth Notepad</a>
+                </li>
+              </ul>
             </nav>
 
             <pwa-install-button>
