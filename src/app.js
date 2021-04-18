@@ -9,6 +9,7 @@ import '@forter/radio';
 import 'pwa-helper-components/pwa-install-button.js';
 import 'pwa-helper-components/pwa-update-available.js';
 
+console.log(config);
 export class App extends LitElement {
   static get styles() {
     return [

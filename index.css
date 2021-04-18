@@ -446,19 +446,19 @@ li {
 }
 
 i.impact {
-  background-image: url(../images/@impact.svg);
+  background-image: url(./images/@impact.svg);
 }
 
 i.leader {
-  background-image: url(../images/@leadership.svg);
+  background-image: url(./images/@leadership.svg);
 }
 
 i.craft {
-  background-image: url(../images/@craftmanship.svg);
+  background-image: url(./images/@craftmanship.svg);
 }
 
 i.business {
-  background-image: url(../images/@businessInv.svg);
+  background-image: url(./images/@businessInv.svg);
 }
 
 .box-title i {
