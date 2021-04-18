@@ -360,8 +360,8 @@ p {
 
 page-home .hero-inner > h1 {
   margin-top: 50px;
-  font-size: 38px;
-  line-height: 52px;
+  font-size: 32px;
+  line-height: 40px;
 }
 
 .main-hero .hero-inner p {
@@ -402,6 +402,11 @@ a.creator img {
 
 .quiz-a {
   margin-top: 30px;
+}
+
+page-home .hero-inner > h2 {
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .result-box {
@@ -678,6 +683,11 @@ ul#main-menu > li:not(.type-notepad) {
 @media (min-width: 992px) {
   ul#main-menu > li:not(.type-notepad) {
     display: block;
+  }
+
+  page-home .hero-inner > h2 {
+    font-size: 24px;
+    line-height: 34px;
   }
 
   header nav a {
