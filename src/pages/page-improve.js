@@ -6,10 +6,9 @@ import { PageElement } from '../helpers/page-element';
 export class PageImprove extends PageElement {
   render() {
     return html`
-      <section class="hero">
+      <section class="hero hero-improve">
         <div class="container">
           <div class="hero-inner">
-            <!--<img class="logo" src="images/logo.svg"></img>-->
             <p>
               We don’t know what your real title is (that would be creepy!) but
               the level of impact you’ve mentioned fits here:

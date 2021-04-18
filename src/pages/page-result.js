@@ -6,7 +6,7 @@ import { PageElement } from '../helpers/page-element';
 export class PageResult extends PageElement {
   render() {
     return html`
-      <section class="hero">
+      <section class="hero hero-result">
         <div class="container">
           <div class="hero-inner">
             <!--<img class="logo" src="images/logo.svg"></img>-->
