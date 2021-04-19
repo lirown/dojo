@@ -2,6 +2,8 @@ import { LitElement, html, css } from './components/base';
 import { Logo } from './components';
 
 import config from './config';
+import appData from './app.data.js';
+
 import { attachRouter, urlForName } from './router';
 import '@forter/checkbox';
 import '@forter/button';
@@ -10,99 +12,71 @@ import 'pwa-helper-components/pwa-install-button.js';
 import 'pwa-helper-components/pwa-update-available.js';
 
 console.log(config);
-
+console.log(appData);
 export class App extends LitElement {
-  static get styles() {
-    return [
-      css`
-        :host {
-          display: flex;
-          flex-direction: column;
-        }
-
-        header {
-          display: flex;
-          align-items: center;
-          height: 53px;
-          padding: 0 1rem;
-          background-color: transparent;
-          position: absolute;
-          width: 92%;
-          align-self: end;
-        }
-
-        header nav {
-          display: flex;
-          flex: 1;
-          align-self: stretch;
-          justify-content: flex-end;
-          height: 30px;
-          padding-top: 70px;
-        }
-
-        header nav a {
-          display: flex;
-          align-items: center;
-          color: #fff;
-          font-weight: 600;
-          text-decoration: none;
-          background: rgba(255, 255, 255, 0.2);
-          border-radius: 50px;
-          padding: 0 25px;
-        }
-
-        header nav a:not(:last-child) {
-          margin-right: 1rem;
-        }
-
-        header nav a:hover {
-          color: #bbb;
-        }
-
-        main,
-        main > * {
-          display: flex;
-          flex: 1;
-          flex-direction: column;
-        }
-
-        main:empty ~ footer {
-          display: none;
-        }
-
-        footer {
-          padding: 1rem;
-          text-align: center;
-          background-color: white;
-        }
-      `
-    ];
-  }
-
   render() {
+    const topics = Object.keys(appData.Ladder).map(topic => ({
+      key: topic.split(' ').join('-').toLowerCase(),
+      name: topic
+    }));
+    const levels = Object.values(appData.Meta.Dans).map(({ name }) => ({
+      key: name.split(' ').join('-').toLowerCase(),
+      name
+    }));
+
+    const [, route,
+      topic = 'engineering-craftsmanship',
+      role = 'software-engineer'
+    ] = location.pathname.split('/');
+
     return html` <header>
         <div class="container">
           <div class="header-inner">
             ${Logo()}
             <nav>
               <ul id="main-menu">
+                ${location.pathname.includes('/improve') ? html`
                 <li class="type-drop">
-                  <a href="${urlForName('result')}">Drop Down</a>
+                  <a >Change level</a>
                   <ul id="sub-menu">
-                    <li><a href="#" aria-label="subemnu">submenu</a></li>
-                    <li><a href="#" aria-label="subemnu">submenu</a></li>
-                    <li><a href="#" aria-label="subemnu">submenu</a></li>
-                    <li><a href="#" aria-label="subemnu">submenu</a></li>
+                    ${levels.map(
+                      level => html`
+                        <li>
+                          <a
+                            href="${urlForName('improve', {
+                              topic,
+                              role: level.key
+                            })}"
+                            aria-label="subemnu"
+                            >${level.name}</a
+                          >
+                        </li>
+                      `
+                    )}
                   </ul>
                 </li>
-                <li>
-                  <a href="${urlForName('result')}">Result</a>
+                <li class="type-drop">
+                  <a >Change Topic</a>
+                  <ul id="sub-menu">
+                    ${topics.map(
+                      topic => html`
+                        <li>
+                          <a
+                            href="${urlForName('improve', {
+                              topic: topic.key,
+                              role
+                            })}"
+                            aria-label="subemnu"
+                            >${topic.name}</a
+                          >
+                        </li>
+                      `
+                    )}
+                  </ul>
                 </li>
+                `: html``}
                 <li>
-                  <a href="${urlForName('quiz')}">Quiz</a>
-                </li>
-                <li>
-                  <a href="${urlForName('improve')}">Improve</a>
+                  <a href="${urlForName('result', { role: 'software-engineer' })}">Result</a>
                 </li>
                 <li class="type-notepad">
                   <a href="${urlForName('notepad')}">My Growth Notepad</a>

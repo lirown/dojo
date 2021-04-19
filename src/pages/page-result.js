@@ -1,21 +1,25 @@
 import { html, css } from '../components/base';
 import { Logo } from '../components';
+import config from '../config';
+import appData from '../app.data';
 
 import { PageElement } from '../helpers/page-element';
+import { urlForName } from '../router';
 
 export class PageResult extends PageElement {
   render() {
+    const { role } = this.location.params;
+    const { Ladder } = appData;
     return html`
       <section class="hero hero-result">
         <div class="container">
           <div class="hero-inner">
-            <!--<img class="logo" src="images/logo.svg"></img>-->
             <p>
               We don’t know what your real title is (that would be creepy!) but
               the level of impact you’ve mentioned fits here:
             </p>
 
-            <h1>Entry-level Engineer / Junior Engineer</h1>
+            <h1>${config.roleToTitle[role]}</h1>
           </div>
         </div>
       </section>
@@ -40,20 +44,22 @@ export class PageResult extends PageElement {
                 </div>
                 <div class="box-tags">
                   <ul>
-                    <li>Architecture</li>
-                    <li>Code writing skills</li>
-                    <li>Tests</li>
-                    <li>Operations</li>
-                    <li>Security</li>
-                    <li>Observability</li>
-                    <li>Costs Optimizations</li>
-                    <li>Ownership</li>
-                    <li>Being a Chief</li>
+                    ${Ladder['Engineering Craftsmanship'].Topics.map(section => html`
+                      <li>${section}</li>
+                    `)}
                   </ul>
                 </div>
               </div>
               <div class="right-box">
-                <fc-button size="small">Show me How</fc-button>
+                <a
+                  class="text-white"
+                  href="${urlForName('improve', {
+                    role,
+                    topic: 'engineering-craftsmanship'
+                  })}"
+                >
+                  <fc-button size="small">Show me How</fc-button>
+                </a>
               </div>
             </div>
 
@@ -64,20 +70,22 @@ export class PageResult extends PageElement {
                 </div>
                 <div class="box-tags">
                   <ul>
-                    <li>Architecture</li>
-                    <li>Code writing skills</li>
-                    <li>Tests</li>
-                    <li>Operations</li>
-                    <li>Security</li>
-                    <li>Observability</li>
-                    <li>Costs Optimizations</li>
-                    <li>Ownership</li>
-                    <li>Being a Chief</li>
+                    ${Ladder['Project Leadership'].Topics.map(section => html`
+                      <li>${section}</li>
+                    `)}
                   </ul>
                 </div>
               </div>
               <div class="right-box">
-                <fc-button size="small">Show me How</fc-button>
+                <a
+                  class="text-white"
+                  href="${urlForName('improve', {
+                    role,
+                    topic: 'project-leadership'
+                  })}"
+                >
+                  <fc-button size="small">Show me How</fc-button>
+                </a>
               </div>
             </div>
 
@@ -88,20 +96,22 @@ export class PageResult extends PageElement {
                 </div>
                 <div class="box-tags">
                   <ul>
-                    <li>Architecture</li>
-                    <li>Code writing skills</li>
-                    <li>Tests</li>
-                    <li>Operations</li>
-                    <li>Security</li>
-                    <li>Observability</li>
-                    <li>Costs Optimizations</li>
-                    <li>Ownership</li>
-                    <li>Being a Chief</li>
+                    ${Ladder['Business Involvement'].Topics.map(section => html`
+                      <li>${section}</li>
+                    `)}
                   </ul>
                 </div>
               </div>
               <div class="right-box">
-                <fc-button size="small">Show me How</fc-button>
+                <a
+                  class="text-white"
+                  href="${urlForName('improve', {
+                    role,
+                    topic: 'business-involvement'
+                  })}"
+                >
+                  <fc-button size="small">Show me How</fc-button>
+                </a>
               </div>
             </div>
 
@@ -112,21 +122,23 @@ export class PageResult extends PageElement {
                 </div>
                 <div class="box-tags">
                   <ul>
-                    <li>Architecture</li>
-                    <li>Code writing skills</li>
-                    <li>Tests</li>
-                    <li>Operations</li>
-                    <li>Security</li>
-                    <li>Observability</li>
-                    <li>Costs Optimizations</li>
-                    <li>Ownership</li>
-                    <li>Being a Chief</li>
+                    ${Ladder['Organizational Impact'].Topics.map(section => html`
+                      <li>${section}</li>
+                    `)}
                   </ul>
                 </div>
               </div>
               <div class="right-box">
-                <fc-button size="small">Show me How</fc-button>
-              </div>
+                <a
+                  class="text-white"
+                  href="${urlForName('improve', {
+                    role,
+                    topic: 'organizational-impact',
+                  })}"
+                >
+                  <fc-button size="small">Show me How</fc-button>
+                </a>
+               </div>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { html, css } from '../components/base';
 import { Logo } from '../components';
+import { quizQuestions, ROLES } from '../components/quiz';
 
 import { PageElement } from '../helpers/page-element';
 
@@ -19,28 +20,22 @@ export class PageQuiz extends PageElement {
 
       <section>
         <div class="container">
-          <div class="quiz-inner">
-            <div class="quiz-data">
-              <div class="quiz-q">
-                When it’s unclear why you need to build a certain capability,
-                what is your preference?
+          ${quizQuestions.sort(() => Math.random() - 0.5).map(
+            ({ question, answers }, index) => html`
+              <div class="quiz-inner">
+                <div class="quiz-data">
+                  <div class="quiz-q" place="${index+1}_">${question}</div>
+                  <div class="quiz-a">
+                    <fc-radio-group name="q-radio">
+                      ${answers.map(({ content, type }) => html`
+                        <fc-radio value="${type}">${content}</fc-radio>
+                      `)}
+                    </fc-radio-group>
+                  </div>
+                </div>
               </div>
-              <div class="quiz-a">
-                <fc-radio-group name="q-radio">
-                  <fc-radio
-                    value="As long as I understand the task, it’s fine for me"
-                    >As long as I understand the task, it’s fine for me
-                  </fc-radio>
-                  <fc-radio checked value="Ask my manager"
-                    >Ask my manager, this is their job
-                  </fc-radio>
-                  <fc-radio disabled value="Ask my manager, this is their job"
-                    >Ask my manager, this is their job
-                  </fc-radio>
-                </fc-radio-group>
-              </div>
-            </div>
-          </div>
+            `
+          )}
         </div>
       </section>
     `;

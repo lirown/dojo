@@ -36,11 +36,18 @@ fc-button[size='large'] {
 
 fc-checkbox {
   --fc-checkbox-check-color: #1f75f7;
+
+  padding-left: 15px;
+  font-size: 16px;
+}
+
+.text-white {
+  color: white;
 }
 
 .right-box fc-button {
   --fc-button-min-width: 120px;
-  --fc-button-item-color: white;
+  --fc-button-background-color: var(--fc-secondary);
 
   margin-bottom: 10px;
 }
@@ -239,7 +246,6 @@ p {
   line-height: 23px;
 }
 
-
 /** not found */
 .not-found {
   height: calc(100vh - 191px);
@@ -395,7 +401,7 @@ a.creator img {
 .quiz-q::before {
   margin-right: 10px;
   color: #00d894;
-  content: "1_";
+  content: attr(place);
 }
 
 .quiz-q {
@@ -619,7 +625,7 @@ section.not-found h1 {
 #sub-menu {
   position: absolute;
   left: 0;
-  width: 100%;
+  width: 170%;
   margin-top: 5px;
   overflow: hidden;
   background: rgb(0 34 85 / 70%);
@@ -643,13 +649,14 @@ li.type-drop a:hover {
 
 #sub-menu > li > a {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   width: 100%;
   margin: 0;
   padding: 5px 0;
   color: white;
   text-decoration: none;
   border-radius: 0;
+  padding: 5px 10px;
 }
 
 #main-menu > li:hover #sub-menu {
@@ -674,7 +681,7 @@ li.type-drop > a::after {
   width: 16px;
   height: 16px;
   background: url('./images/arrow-down.svg');
-  content: "";
+  content: '';
 }
 
 ul#main-menu > li:not(.type-notepad) {

@@ -1,20 +1,22 @@
 import { html, css } from '../components/base';
 import { Logo } from '../components';
-
+import config from '../config';
+import appData from '../app.data';
 import { PageElement } from '../helpers/page-element';
 
 export class PageImprove extends PageElement {
   render() {
+    const { topic, role } = this.location.params;
+    const content = this.getContent();
+
     return html`
       <section class="hero hero-improve">
         <div class="container">
           <div class="hero-inner">
+            <h1> Improving at ${this.startCase(topic)}
             <p>
-              We don’t know what your real title is (that would be creepy!) but
-              the level of impact you’ve mentioned fits here:
+              Level: ${config.roleToTitle[role]}
             </p>
-
-            <h1>Entry-level Engineer / Junior Engineer</h1>
           </div>
         </div>
       </section>
@@ -36,34 +38,11 @@ export class PageImprove extends PageElement {
                   Things you're expected to do/know at this level
                 </div>
                 <div class="box-questions">
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
+                  ${content.Responsibilities.map(
+                    text => html`
+                      <div><fc-checkbox></fc-checkbox><span>${text}</span></div>
+                    `
+                  )}
                 </div>
               </div>
             </div>
@@ -75,34 +54,11 @@ export class PageImprove extends PageElement {
                   Things you're expected to do/know at this level
                 </div>
                 <div class="box-questions">
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
+                  ${content.Examples.map(
+                    text => html`
+                      <div><fc-checkbox></fc-checkbox><span>${text}</span></div>
+                    `
+                  )}
                 </div>
               </div>
             </div>
@@ -113,34 +69,14 @@ export class PageImprove extends PageElement {
                   Things you're expected to do/know at this level
                 </div>
                 <div class="box-questions">
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
+                  ${content['Anti-Patterns'].map(
+                    text => html`
+                      <div>
+                        <fc-checkbox></fc-checkbox
+                        ><span>${text['anti-pattern']}</span>
+                      </div>
+                    `
+                  )}
                 </div>
               </div>
             </div>
@@ -151,34 +87,14 @@ export class PageImprove extends PageElement {
                   Things you're expected to do/know at this level
                 </div>
                 <div class="box-questions">
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
-                  <div>
-                    <fc-checkbox></fc-checkbox
-                    ><span
-                      >Promote (by getting buy-in) successful processes on the
-                      group level (or at least in multiple teams)</span
-                    >
-                  </div>
+                  ${content['Resources'].map(
+                    ({ link, name }) => html`
+                      <div>
+                        <fc-checkbox></fc-checkbox
+                        ><a href="${link}" target="_blank">${name}</a>
+                      </div>
+                    `
+                  )}
                 </div>
               </div>
             </div>
@@ -186,6 +102,16 @@ export class PageImprove extends PageElement {
         </div>
       </section>
     `;
+  }
+
+  getContent() {
+    const { topic, role } = this.location.params;
+    const [content] = Object.values(
+      appData.Ladder[this.startCase(topic)].Ladder.filter(
+        level => config.roleToLevel[role] === Object.keys(level)[0]
+      )[0]
+    );
+    return content;
   }
 }
 
