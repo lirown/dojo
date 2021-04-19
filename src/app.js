@@ -75,9 +75,6 @@ export class App extends LitElement {
                   </ul>
                 </li>
                 `: html``}
-                <li>
-                  <a href="${urlForName('result', { role: 'software-engineer' })}">Result</a>
-                </li>
                 <li class="type-notepad">
                   <a href="${urlForName('notepad')}">My Growth Notepad</a>
                 </li>
