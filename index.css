@@ -45,23 +45,25 @@ fc-checkbox {
   color: white;
 }
 
-.right-box fc-button {
+ fc-button.added,
+ fc-button.done,
+ fc-button.work {
   --fc-button-min-width: 120px;
   --fc-button-background-color: var(--fc-secondary);
 
   margin-bottom: 10px;
 }
 
-.right-box fc-button.added {
+fc-button.added {
   --fc-button-background-color: #00ba7f;
 }
 
-.right-box fc-button.done {
+fc-button.done {
   --fc-button-background-color: #dce3f3;
   --fc-button-item-color: #025;
 }
 
-.right-box fc-button.work {
+fc-button.work {
   --fc-button-background-color: #00d894;
 }
 
@@ -322,6 +324,14 @@ p {
   background-position: bottom;
 }
 
+.left-box {
+  width: 100%;
+}
+
+.improve-label {
+  width: 100%;
+}
+
 /* HOME */
 .home-data-inner {
   max-width: 980px;
@@ -531,11 +541,12 @@ i.business {
 
 fc-radio {
   --fc-radio-checked-color: #1f75f7;
+  --fc-radio-padding: 0 40px 0;
+  --fc-radio-line-height: 1.5;
 
   margin-bottom: 20px;
   font-size: 24px;
   line-height: 32px;
-  text-indent: 32px;
 }
 
 .goal-items ul {

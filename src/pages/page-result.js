@@ -6,10 +6,13 @@ import appData from '../app.data';
 import { PageElement } from '../helpers/page-element';
 import { urlForName } from '../router';
 
+
 export class PageResult extends PageElement {
   render() {
     const { role } = this.location.params;
+    const { topicsToIcon, topicsToLink, topics, roleToTitle } = config;
     const { Ladder } = appData;
+
     return html`
       <section class="hero hero-result">
         <div class="container">
@@ -37,110 +40,37 @@ export class PageResult extends PageElement {
             </p>
           </div>
           <div class="result-data">
-            <div class="result-box">
-              <div class="left-box">
-                <div class="box-title">
-                  <i class="craft"></i>Engineering Craftsmanship
+            ${topics.map(
+              topic => html`
+                <div class="result-box">
+                  <div class="left-box">
+                    <div class="box-title">
+                      <i class="${topicsToIcon[topic]}"></i>${topic}
+                    </div>
+                    <div class="box-tags">
+                      <ul>
+                        ${Ladder[topic].Topics.map(
+                          section => html` <li>${section}</li> `
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="right-box">
+                    <a
+                      class="text-white"
+                      href="${urlForName('improve', {
+                        role,
+                        topic: topicsToLink[topic]
+                      })}"
+                    >
+                      <fc-button size="small" class="work"
+                        >Show me How</fc-button
+                      >
+                    </a>
+                  </div>
                 </div>
-                <div class="box-tags">
-                  <ul>
-                    ${Ladder['Engineering Craftsmanship'].Topics.map(section => html`
-                      <li>${section}</li>
-                    `)}
-                  </ul>
-                </div>
-              </div>
-              <div class="right-box">
-                <a
-                  class="text-white"
-                  href="${urlForName('improve', {
-                    role,
-                    topic: 'engineering-craftsmanship'
-                  })}"
-                >
-                  <fc-button size="small">Show me How</fc-button>
-                </a>
-              </div>
-            </div>
-
-            <div class="result-box">
-              <div class="left-box">
-                <div class="box-title">
-                  <i class="leader"></i>Project Leadership
-                </div>
-                <div class="box-tags">
-                  <ul>
-                    ${Ladder['Project Leadership'].Topics.map(section => html`
-                      <li>${section}</li>
-                    `)}
-                  </ul>
-                </div>
-              </div>
-              <div class="right-box">
-                <a
-                  class="text-white"
-                  href="${urlForName('improve', {
-                    role,
-                    topic: 'project-leadership'
-                  })}"
-                >
-                  <fc-button size="small">Show me How</fc-button>
-                </a>
-              </div>
-            </div>
-
-            <div class="result-box">
-              <div class="left-box">
-                <div class="box-title">
-                  <i class="business"></i>Business Involvement
-                </div>
-                <div class="box-tags">
-                  <ul>
-                    ${Ladder['Business Involvement'].Topics.map(section => html`
-                      <li>${section}</li>
-                    `)}
-                  </ul>
-                </div>
-              </div>
-              <div class="right-box">
-                <a
-                  class="text-white"
-                  href="${urlForName('improve', {
-                    role,
-                    topic: 'business-involvement'
-                  })}"
-                >
-                  <fc-button size="small">Show me How</fc-button>
-                </a>
-              </div>
-            </div>
-
-            <div class="result-box">
-              <div class="left-box">
-                <div class="box-title">
-                  <i class="impact"></i>Organizational Impact
-                </div>
-                <div class="box-tags">
-                  <ul>
-                    ${Ladder['Organizational Impact'].Topics.map(section => html`
-                      <li>${section}</li>
-                    `)}
-                  </ul>
-                </div>
-              </div>
-              <div class="right-box">
-                <a
-                  class="text-white"
-                  href="${urlForName('improve', {
-                    role,
-                    topic: 'organizational-impact',
-                  })}"
-                >
-                  <fc-button size="small">Show me How</fc-button>
-                </a>
-               </div>
-            </div>
-          </div>
+              `
+            )}
         </div>
       </section>
     `;

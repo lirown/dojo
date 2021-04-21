@@ -1,6 +1,7 @@
 import { html, css } from '../components/base';
 import { Logo } from '../components';
 import { quizQuestions, ROLES } from '../components/quiz';
+import { urlForName } from '../router';
 
 import { PageElement } from '../helpers/page-element';
 
@@ -82,33 +83,33 @@ export class PageQuiz extends PageElement {
 
       this.selected = index + 1;
       this.requestUpdate();
-    }, 1000);
+    }, 500);
   }
 
   goToResult() {
     const { answers } = this;
     const roles = Array.from(new Set(answers)).filter(x => x !== undefined);
+    const params = { role: 'software-engineer' };
     console.log(answers, roles);
     if (roles.length === 1 && roles.includes(ROLES.ENTRY)) {
-      location.href = '/result/entry-software-engineer';
+      params.role = 'entry-software-engineer';
     } else if (
       !roles.includes(ROLES.ENTRY) &&
       !roles.includes(ROLES.NORMAL) &&
       !roles.includes(ROLES.SENIOR) &&
       !roles.includes(ROLES.STAFF)
     ) {
-      location.href = '/result/principal-software-engineer';
+      params.role = 'principal-software-engineer';
     } else if (
       !roles.includes(ROLES.ENTRY) &&
       !roles.includes(ROLES.NORMAL) &&
       (roles.includes(ROLES.PRINCIPAL) || roles.includes(ROLES.STAFF))
     ) {
-      location.href = '/result/staff-software-engineer';
+      params.role = 'staff-software-engineer';
     } else if (!roles.includes(ROLES.ENTRY) && !roles.includes(ROLES.NORMAL)) {
-      location.href = '/result/senior-engineer';
-    } else {
-      location.href = '/result/software-engineer';
+      params.role = 'senior-software-engineer';
     }
+    location.href = urlForName('result', params);
   }
 }
 customElements.define('page-quiz', PageQuiz);

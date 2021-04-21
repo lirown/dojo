@@ -8,6 +8,12 @@ export class PageImprove extends PageElement {
   render() {
     const { topic, role } = this.location.params;
     const content = this.getContent();
+    const sections = [
+      'Responsibilities',
+      'Examples',
+      'Anti-Patterns',
+      'Resources'
+    ];
 
     return html`
       <section class="hero hero-improve">
@@ -31,73 +37,40 @@ export class PageImprove extends PageElement {
             </p>
           </div>
           <div class="result-data">
-            <div class="result-box">
-              <div class="left-box">
-                <div class="box-title">Responsibilities</div>
-                <div class="box-subtitle">
-                  Things you're expected to do/know at this level
+            ${sections.map(
+              section => html`
+                <div class="result-box">
+                  <div class="left-box">
+                    <div class="box-title">${section}</div>
+                    <div class="box-subtitle">
+                      ${config.sectionDescriptions[section]}
+                    </div>
+                    <div class="box-questions">
+                      ${content[section].map(data =>
+                        data.link && data.name
+                          ? html`
+                              <div >
+                                <fc-checkbox></fc-checkbox
+                                ><a href="${data.link}" target="_blank"
+                                  >${data.name}</a
+                                >
+                              </div>
+                            `
+                          : html`
+                              <div>
+                                <fc-checkbox></fc-checkbox>
+                                <span class="improve-label">${data['anti-pattern'] || data}</span>
+                                <fc-button class="work" size="medium"
+                                  >Work on it</fc-button
+                                >
+                              </div>
+                            `
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <div class="box-questions">
-                  ${content.Responsibilities.map(
-                    text => html`
-                      <div><fc-checkbox></fc-checkbox><span>${text}</span></div>
-                    `
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <div class="result-box">
-              <div class="left-box">
-                <div class="box-title">Examples</div>
-                <div class="box-subtitle">
-                  Things you're expected to do/know at this level
-                </div>
-                <div class="box-questions">
-                  ${content.Examples.map(
-                    text => html`
-                      <div><fc-checkbox></fc-checkbox><span>${text}</span></div>
-                    `
-                  )}
-                </div>
-              </div>
-            </div>
-            <div class="result-box">
-              <div class="left-box">
-                <div class="box-title">Anti Pattern</div>
-                <div class="box-subtitle">
-                  Things you're expected to do/know at this level
-                </div>
-                <div class="box-questions">
-                  ${content['Anti-Patterns'].map(
-                    text => html`
-                      <div>
-                        <fc-checkbox></fc-checkbox
-                        ><span>${text['anti-pattern']}</span>
-                      </div>
-                    `
-                  )}
-                </div>
-              </div>
-            </div>
-            <div class="result-box">
-              <div class="left-box">
-                <div class="box-title">Resources</div>
-                <div class="box-subtitle">
-                  Things you're expected to do/know at this level
-                </div>
-                <div class="box-questions">
-                  ${content['Resources'].map(
-                    ({ link, name }) => html`
-                      <div>
-                        <fc-checkbox></fc-checkbox
-                        ><a href="${link}" target="_blank">${name}</a>
-                      </div>
-                    `
-                  )}
-                </div>
-              </div>
-            </div>
+              `
+            )}
           </div>
         </div>
       </section>

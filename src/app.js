@@ -98,8 +98,8 @@ export class App extends LitElement {
       <footer>
         <div class="container">
           <span
-            >Made with ❤️ by Forter Engineering (Environment:
-            ${config.environment})</span
+            >Made with ❤️ by Forter Engineering
+            ${config.environment !== 'production' ? `(Environment: ${config.environment})` : ''}</span
           >
         </div>
       </footer>`;
