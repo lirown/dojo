@@ -176,7 +176,7 @@ section {
 .main-hero {
   position: relative;
   min-height: 500px;
-
+  height: 570px;
   /* height: 500px; */
 
   /* padding: 0; */
