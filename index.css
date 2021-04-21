@@ -45,9 +45,9 @@ fc-checkbox {
   color: white;
 }
 
- fc-button.added,
- fc-button.done,
- fc-button.work {
+fc-button.added,
+fc-button.done,
+fc-button.work {
   --fc-button-min-width: 120px;
   --fc-button-background-color: var(--fc-secondary);
 
@@ -175,11 +175,7 @@ section {
 /** Home **/
 .main-hero {
   position: relative;
-  min-height: 500px;
-  height: 570px;
-  /* height: 500px; */
-
-  /* padding: 0; */
+  min-height: 570px;
   background-color: rgb(33, 22, 133);
   background-image: url(./images/home-backdrop-mobile.svg);
   background-repeat: no-repeat;
@@ -187,16 +183,7 @@ section {
   background-size: cover;
 }
 
-/* main-hero:empty ~ footer { */
-
-/*    display: none; */
-
-/* } */
-
 .logo {
-  /* margin-top: 125px; */
-
-  /* margin-left: 33px; */
   position: relative;
   top: -2px;
   width: 102px;
@@ -227,12 +214,6 @@ section.half {
 
 .featuring {
   padding-top: 30px;
-
-  /* margin: 60px 40px; */
-
-  /* padding: 20px; */
-
-  /* background-color: #f2f5fc; */
   border-radius: 20px;
 }
 
@@ -274,7 +255,6 @@ p {
 
 /** questionaire **/
 .hero {
-  /* height: 151px; */
   padding-top: 100px;
   background-color: rgb(33, 22, 133);
   background-image: url('./images/backdrop.svg');
@@ -663,11 +643,10 @@ li.type-drop a:hover {
   justify-content: start;
   width: 100%;
   margin: 0;
-  padding: 5px 0;
+  padding: 5px 10px;
   color: white;
   text-decoration: none;
   border-radius: 0;
-  padding: 5px 10px;
 }
 
 #main-menu > li:hover #sub-menu {
@@ -800,8 +779,6 @@ ul#main-menu > li:not(.type-notepad) {
 
   .featuring-data > a {
     margin-bottom: 0;
-
-    /*     margin-right: 0; */
   }
 
   .box-title {
