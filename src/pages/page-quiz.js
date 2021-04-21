@@ -92,7 +92,7 @@ export class PageQuiz extends PageElement {
     const params = { role: 'software-engineer' };
     console.log(answers, roles);
     if (roles.length === 1 && roles.includes(ROLES.ENTRY)) {
-      params.role = 'entry-software-engineer';
+      params.role = 'entry-level-engineer';
     } else if (
       !roles.includes(ROLES.ENTRY) &&
       !roles.includes(ROLES.NORMAL) &&

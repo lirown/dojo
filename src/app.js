@@ -24,10 +24,10 @@ export class App extends LitElement {
       name
     }));
 
-    const [, route,
-      topic = 'engineering-craftsmanship',
-      role = 'software-engineer'
-    ] = location.pathname.split('/');
+    const [
+      role = 'software-engineer',
+      topic = 'engineering-craftsmanship'
+    ] = location.pathname.split('/').reverse();
 
     return html` <header>
         <div class="container">
