@@ -66,6 +66,9 @@
     <noscript>Please enable JavaScript to view this websiter!</noscript>
 
     <script type="text/javascript">
+      if (location.pathname) {
+        document.querySelector('base').setAttribute('href', location.pathname)
+      }
       // Single Page Apps for GitHub Pages
       // MIT License
       // https://github.com/rafgraph/spa-github-pages
