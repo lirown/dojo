@@ -7,7 +7,10 @@ import { copy } from '@web/rollup-plugin-copy';
 import merge from 'deepmerge';
 import { black, blue } from 'chalk';
 
-const DIST_PATH = 'server/dist/';
+let DIST_PATH = 'server/dist/';
+if (process.env.GIT_HASH) {
+  DIST_PATH = 'server/dist/deploy-preview-' + process.env.GIT_HASH;
+}
 
 const workboxConfig = {
   mode: 'production',
@@ -49,7 +52,6 @@ const config = merge(
           'process.env.NODE_ENV': JSON.stringify('production')
         }
       }),
-
       ...(process.env.NODE_ENV
         ? [
             replace({
@@ -60,12 +62,25 @@ const config = merge(
               values: {
                 './config': `./config.${process.env.NODE_ENV}`
               }
+            }),
+            replace({
+              include: 'index.html',
+              delimiters: ['', ''],
+              values: {
+                'GIT_HASH': `${process.env.GIT_HASH || ''}`
+              }
             })
           ]
         : []),
       copy({
         // Copy all the static files
-        patterns: ['images/**/*', 'manifest.webmanifest', '404.html', 'robots.txt', 'index.css']
+        patterns: [
+          'images/**/*',
+          'manifest.webmanifest',
+          '404.html',
+          'robots.txt',
+          'index.css'
+        ]
       })
     ]
   }
