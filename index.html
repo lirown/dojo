@@ -9,6 +9,27 @@
 
     <base href="/" />
 
+    <script type="text/javascript">
+
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
+      // This script checks to see if a redirect is present in the query string,
+      // converts it back into the correct url and adds it to the
+      // browser's history using window.history.replaceState(...),
+      // which won't cause the browser to attempt to load the new url.
+      // When the single page app is loaded further down in this file,
+      // the correct url will be waiting in the browser's history for
+      // the single page app to route accordingly.
+      const [, base = '', preview = '' ] = location.pathname.split('/');
+
+      if (preview.includes('deploy-preview')) {
+        document.querySelector('base').setAttribute('href', `/${base}/${preview}/`);
+      } else if (location.href.includes('github.io')) {
+        document.querySelector('base').setAttribute('href', `/${base}/`);
+      }
+    </script>
+
     <meta
       name="description"
       content="Improve your craftsmanship as a Software Engineer"
@@ -65,26 +86,6 @@
     <app-index></app-index>
     <noscript>Please enable JavaScript to view this websiter!</noscript>
 
-    <script type="text/javascript">
-
-      // Single Page Apps for GitHub Pages
-      // MIT License
-      // https://github.com/rafgraph/spa-github-pages
-      // This script checks to see if a redirect is present in the query string,
-      // converts it back into the correct url and adds it to the
-      // browser's history using window.history.replaceState(...),
-      // which won't cause the browser to attempt to load the new url.
-      // When the single page app is loaded further down in this file,
-      // the correct url will be waiting in the browser's history for
-      // the single page app to route accordingly.
-      const [, base = '', preview = '' ] = location.pathname.split('/');
-
-      if (preview.includes('deploy-preview')) {
-        document.querySelector('base').setAttribute('href', `/${base}/${preview}/`);
-      } else if (location.href.includes('github.io')) {
-        document.querySelector('base').setAttribute('href', `/${base}/`);
-      }
-    </script>
     <!-- End Single Page Apps for GitHub Pages -->
     <script type="module" src="src/app.js"></script>
   </body>
