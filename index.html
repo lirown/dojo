@@ -7,7 +7,7 @@
 
     <title>Dojo</title>
 
-    <base href="/dojo/" />
+    <base href="/" />
 
     <meta
       name="description"
@@ -66,6 +66,7 @@
     <noscript>Please enable JavaScript to view this websiter!</noscript>
 
     <script type="text/javascript">
+
       // Single Page Apps for GitHub Pages
       // MIT License
       // https://github.com/rafgraph/spa-github-pages
@@ -76,17 +77,13 @@
       // When the single page app is loaded further down in this file,
       // the correct url will be waiting in the browser's history for
       // the single page app to route accordingly.
-      /**
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) {
-            return s.replace(/~and~/g, '&')
-          }).join('#');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      }(window.location)) */
+      const [, base = '', preview = '' ] = location.pathname.split('/');
+
+      if (preview.includes('deploy-preview')) {
+        document.querySelector('base').setAttribute('href', `/${base}/${preview}/`);
+      } else if (location.href.includes('github.io')) {
+        document.querySelector('base').setAttribute('href', `/${base}/`);
+      }
     </script>
     <!-- End Single Page Apps for GitHub Pages -->
     <script type="module" src="src/app.js"></script>
