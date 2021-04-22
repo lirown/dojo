@@ -1,7 +1,7 @@
 > This project is currently in development.
 
 [![CI](https://github.com/lirown/dojo-engineering/workflows/CI/badge.svg)](https://github.com/lirown/dojo-engineering/actions)
-[![Built with dojo-starter](https://img.shields.io/badge/built%20with-pwa--lit--template-blue)](https://github.com/lirown/dojo 'Built with pwa-lit-template')
+[![Built with dojo-starter](https://img.shields.io/badge/built%20with-pwa--forter--template-blue)](https://github.com/lirown/dojo 'Built with pwa-forter-template')
 
 # Dojp Engineering
 
