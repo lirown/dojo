@@ -5,8 +5,7 @@ import { PageElement } from '../helpers/page-element';
 
 export class PageHome extends PageElement {
   render() {
-    return html` 
-      <section class="main-hero">
+    return html` <section class="main-hero">
         <div class="container">
           <div class="hero-inner">
             <h1>
@@ -19,9 +18,9 @@ export class PageHome extends PageElement {
               make bigger impact.
             </h2>
             <div class="bottom-data">
-              <a href="${urlForName('quiz')}">
-                <fc-button size="large">I'M READY! SHOW ME</fc-button>
-              </a>
+              <main-action-button
+                label="I'M READY! SHOW ME"
+              ></main-action-button>
               <p>all free, no emails, no BS. We're Engineers...</p>
             </div>
           </div>

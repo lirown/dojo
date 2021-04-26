@@ -8,14 +8,19 @@ import { attachRouter, urlForName } from './router';
 import '@forter/checkbox';
 import '@forter/button';
 import '@forter/radio';
+// import '@forter/modal/fc-modal';
+import '@forter/input';
+
 import 'pwa-helper-components/pwa-install-button.js';
 import 'pwa-helper-components/pwa-update-available.js';
+
+import './components/main-action-button.js';
 
 console.log(config);
 console.log(appData);
 export class App extends LitElement {
   render() {
-    const topics = Object.keys(appData.Ladder).map(topic => ({
+    const topics = Object.keys(appData.Ladder).map((topic) => ({
       key: topic.split(' ').join('-').toLowerCase(),
       name: topic
     }));
@@ -24,7 +29,9 @@ export class App extends LitElement {
       name
     }));
 
-    const [, route,
+    const [
+      ,
+      route,
       topic = 'engineering-craftsmanship',
       role = 'software-engineer'
     ] = location.pathname.split('/');
@@ -35,46 +42,48 @@ export class App extends LitElement {
             ${Logo()}
             <nav>
               <ul id="main-menu">
-                ${location.pathname.includes('/improve') ? html`
-                <li class="type-drop">
-                  <a >Change level</a>
-                  <ul id="sub-menu">
-                    ${levels.map(
-                      level => html`
-                        <li>
-                          <a
-                            href="${urlForName('improve', {
-                              topic,
-                              role: level.key
-                            })}"
-                            aria-label="subemnu"
-                            >${level.name}</a
-                          >
-                        </li>
-                      `
-                    )}
-                  </ul>
-                </li>
-                <li class="type-drop">
-                  <a >Change Topic</a>
-                  <ul id="sub-menu">
-                    ${topics.map(
-                      topic => html`
-                        <li>
-                          <a
-                            href="${urlForName('improve', {
-                              topic: topic.key,
-                              role
-                            })}"
-                            aria-label="subemnu"
-                            >${topic.name}</a
-                          >
-                        </li>
-                      `
-                    )}
-                  </ul>
-                </li>
-                `: html``}
+                ${location.pathname.includes('/improve')
+                  ? html`
+                      <li class="type-drop">
+                        <a>Change level</a>
+                        <ul id="sub-menu">
+                          ${levels.map(
+                            (level) => html`
+                              <li>
+                                <a
+                                  href="${urlForName('improve', {
+                                    topic,
+                                    role: level.key
+                                  })}"
+                                  aria-label="subemnu"
+                                  >${level.name}</a
+                                >
+                              </li>
+                            `
+                          )}
+                        </ul>
+                      </li>
+                      <li class="type-drop">
+                        <a>Change Topic</a>
+                        <ul id="sub-menu">
+                          ${topics.map(
+                            (topic) => html`
+                              <li>
+                                <a
+                                  href="${urlForName('improve', {
+                                    topic: topic.key,
+                                    role
+                                  })}"
+                                  aria-label="subemnu"
+                                  >${topic.name}</a
+                                >
+                              </li>
+                            `
+                          )}
+                        </ul>
+                      </li>
+                    `
+                  : html``}
                 <li class="type-notepad">
                   <a href="${urlForName('notepad')}">My Growth Notepad</a>
                 </li>
@@ -99,7 +108,9 @@ export class App extends LitElement {
         <div class="container">
           <span
             >Made with ❤️ by Forter Engineering
-            ${config.environment !== 'production' ? `(Environment: ${config.environment})` : ''}</span
+            ${config.environment !== 'production'
+              ? `(Environment: ${config.environment})`
+              : ''}</span
           >
         </div>
       </footer>`;
