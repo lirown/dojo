@@ -49,7 +49,7 @@ export async function forgotPassword(email) {
     dynamicLinkDomain: 'example.page.link'
   };
 
-  return new Promise((resolve, reject) => {
+  return await new Promise((resolve, reject) => {
     app
       .auth()
       .sendSignInLinkToEmail(email, actionCodeSettings)
