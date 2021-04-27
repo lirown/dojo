@@ -12,7 +12,7 @@ const appConfig = {
 
 const app = firebase.initializeApp(appConfig);
 
-export async function signIn() {
+export async function signIn(email, password) {
   return await new Promise((resolve, reject) => {
     app
       .auth()
