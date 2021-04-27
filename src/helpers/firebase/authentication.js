@@ -1,5 +1,4 @@
 import firebase from 'firebase';
-import { html } from '../../components/base';
 
 const apiName = 'dojo-ae8b1';
 const appConfig = {
