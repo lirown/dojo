@@ -29,7 +29,6 @@
     "@forter/button": "^5.4.0",
     "@forter/checkbox": "^3.5.0",
     "@forter/input": "^3.9.1",
-    "@forter/modal": "^4.3.5",
     "@forter/radio": "^3.3.1",
     "@forter/styles": "^4.9.0",
     "@vaadin/router": "^1.7.4",

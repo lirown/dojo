@@ -8,16 +8,14 @@ import { attachRouter, urlForName } from './router';
 import '@forter/checkbox';
 import '@forter/button';
 import '@forter/radio';
-// import '@forter/modal/fc-modal';
 import '@forter/input';
 
 import 'pwa-helper-components/pwa-install-button.js';
 import 'pwa-helper-components/pwa-update-available.js';
 
 import './components/main-action-button.js';
+import './components/modal.js';
 
-console.log(config);
-console.log(appData);
 export class App extends LitElement {
   render() {
     const topics = Object.keys(appData.Ladder).map((topic) => ({
