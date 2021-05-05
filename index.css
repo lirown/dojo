@@ -1,4 +1,6 @@
-tml,
+/* stylelint-disable rule-empty-line-before, declaration-colon-newline-after */
+
+html,
 body,
 app-index {
   height: 100%;
@@ -21,6 +23,7 @@ body,
 
   font-family: 'Source Sans Pro', sans-serif;
 }
+
 .green {
   color: var(--fc-secondary);
 }
@@ -42,6 +45,7 @@ fc-button[size='large'] {
 fc-checkbox {
   --fc-checkbox-check-color: white;
   --fc-checkbox-checked-color: var(--fc-blue);
+
   padding-left: 15px;
   font-size: 16px;
 }
@@ -603,10 +607,7 @@ fc-radio {
 page-notepad .hero-inner {
   max-width: 100%;
 }
-x
-.goal-items li {
 
-}
 .goal-items li > a {
   color: white;
   text-decoration: none;
@@ -909,6 +910,5 @@ fc-checkbox[checked] + span {
     height: 192px;
   }
 }
-/* @media (min-width: 1200px) { */
 
-/* } */
+/* stylein-enable rule-empty-line-before, declaration-colon-newline-after */
