@@ -1,5 +1,5 @@
-import { html } from 'lit-element';
-import { Logo, Feature } from '../components';
+import { html } from 'lit';
+import { Logo, Feature, Ninja } from '../components';
 import { urlForName } from '../router';
 import { PageElement } from '../helpers/page-element';
 
@@ -8,6 +8,7 @@ export class PageHome extends PageElement {
     return html` <section class="main-hero">
         <div class="container">
           <div class="hero-inner">
+            ${Ninja()}
             <h1>
               Improve your craftsmanship<br />
               as a Software Engineer

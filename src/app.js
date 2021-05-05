@@ -4,6 +4,8 @@ import { Logo } from './components';
 import config from './config';
 import appData from './app.data.js';
 
+import { db } from './app.db';
+
 import { attachRouter, urlForName } from './router';
 import '@forter/checkbox';
 import '@forter/button';
@@ -16,8 +18,19 @@ import 'pwa-helper-components/pwa-update-available.js';
 import './components/main-action-button.js';
 import './components/modal.js';
 
+window.__db = db;
+
 export class App extends LitElement {
   render() {
+    let role = 'software-engineer';
+    let topic = 'engineering-craftsmanship';
+
+    if (location.pathname.split('/').length > 3) {
+      const parts = location.pathname.split('/').reverse();
+      role = parts[0];
+      topic = parts[1];
+    }
+
     const topics = Object.keys(appData.Ladder).map((topic) => ({
       key: topic.split(' ').join('-').toLowerCase(),
       name: topic
@@ -26,13 +39,6 @@ export class App extends LitElement {
       key: name.split(' ').join('-').toLowerCase(),
       name
     }));
-
-    const [
-      ,
-      route,
-      topic = 'engineering-craftsmanship',
-      role = 'software-engineer'
-    ] = location.pathname.split('/');
 
     return html` <header>
         <div class="container">
@@ -83,7 +89,12 @@ export class App extends LitElement {
                     `
                   : html``}
                 <li class="type-notepad">
-                  <a href="${urlForName('notepad')}">My Growth Notepad</a>
+                  <a
+                    href="${urlForName('notepad', {
+                      topic: 'engineering-craftsmanship'
+                    })}"
+                    >My Growth Notepad</a
+                  >
                 </li>
               </ul>
             </nav>

@@ -1,7 +1,7 @@
 > This project is currently in development.
 
 [![CI](https://github.com/lirown/dojo-engineering/workflows/CI/badge.svg)](https://github.com/lirown/dojo-engineering/actions)
-[![Built with dojo-starter](https://img.shields.io/badge/built%20with-pwa--lit--template-blue)](https://github.com/lirown/dojo 'Built with pwa-lit-template')
+[![Built with dojo-starter](https://img.shields.io/badge/built%20with-pwa--forter--template-blue)](https://github.com/lirown/dojo 'Built with pwa-forter-template')
 
 # Dojp Engineering
 
@@ -111,7 +111,7 @@ Note: If you need to add static files to the build, like the `images` folder or 
    customElements.defile('page-explore', PageExplore);
    ```
 
-2. Register the new route in the `routes.ts`:
+2. Register the new route in the `routes.js`:
 
    ```typescript
    {
@@ -132,7 +132,7 @@ With SEO in mind, this project offers you the `PageElement` base class to help y
 
 ### Environment configuration
 
-This project allows different configurations per environment. The file that manages that configuration is `src/config.ts`. If you are interested in overwrite any of the configuration variables depending of the environment, you can create a file following the rule `src/config.{NODE_ENV}.ts`. Take into account that you don't need to replicate all the variables, just change the variable that you need to be different this way:
+This project allows different configurations per environment. The file that manages that configuration is `src/config.js`. If you are interested in overwrite any of the configuration variables depending of the environment, you can create a file following the rule `src/config.{NODE_ENV}.js`. Take into account that you don't need to replicate all the variables, just change the variable that you need to be different this way:
 
 ```typescript
 import config from './config';

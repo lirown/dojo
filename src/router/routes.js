@@ -67,7 +67,7 @@ export const routes = [
     }
   },
   {
-    path: '/notepad',
+    path: '/notepad/:topic',
     name: 'notepad',
     component: 'page-notepad',
     metadata: {

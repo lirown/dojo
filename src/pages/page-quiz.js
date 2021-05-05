@@ -38,7 +38,7 @@ export class PageQuiz extends PageElement {
                   <div class="quiz-a">
                     <fc-radio-group
                       name="q-radio"
-                      @change=${e => this.answerChosen(e, index)}
+                      @change=${(e) => this.answerChosen(e, index)}
                     >
                       ${answers
                         //.sort(this.reshuffle)
@@ -88,11 +88,11 @@ export class PageQuiz extends PageElement {
 
   goToResult() {
     const { answers } = this;
-    const roles = Array.from(new Set(answers)).filter(x => x !== undefined);
+    const roles = Array.from(new Set(answers)).filter((x) => x !== undefined);
     const params = { role: 'software-engineer' };
     console.log(answers, roles);
     if (roles.length === 1 && roles.includes(ROLES.ENTRY)) {
-      params.role = 'entry-software-engineer';
+      params.role = 'entry-level-engineer';
     } else if (
       !roles.includes(ROLES.ENTRY) &&
       !roles.includes(ROLES.NORMAL) &&

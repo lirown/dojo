@@ -1,114 +1,111 @@
+import { openDB } from 'idb';
+
+const STORE_NAME = 'dojo-improve';
+
+const dbPromise = openDB('dojo-notepad', 1, {
+  upgrade(db) {
+    const store = db.createObjectStore(STORE_NAME);
+    store.createIndex('updatedAt', 'updatedAt');
+  }
+});
+
 /**
- * Export all data from an IndexedDB database
+ * get a sepecific key from a store
  *
- * @param {IDBDatabase} idb The database to export from
  * @return {Promise<string>}
  */
-export function backup(idb) {
-  return new Promise((resolve, reject) => {
-    const exportObject = {}
-    if (idb.objectStoreNames.length === 0) {
-      resolve(JSON.stringify(exportObject))
-    } else {
-      const transaction = idb.transaction(
-        idb.objectStoreNames,
-        'readonly'
-      )
-
-      transaction.addEventListener('error', reject)
-
-      for (const storeName of idb.objectStoreNames) {
-        const allObjects = []
-        transaction
-          .objectStore(storeName)
-          .openCursor()
-          .addEventListener('success', event => {
-            const cursor = event.target.result
-            if (cursor) {
-              // Cursor holds value, put it into store data
-              allObjects.push(cursor.value)
-              cursor.continue()
-            } else {
-              // No more values, store is done
-              exportObject[storeName] = allObjects
-
-              // Last store was handled
-              if (
-                idb.objectStoreNames.length ===
-                Object.keys(exportObject).length
-              ) {
-                resolve(JSON.stringify(exportObject))
-              }
-            }
-          })
-      }
-    }
-  })
+export async function get(key) {
+  return (await dbPromise).get(STORE_NAME, key);
 }
 
 /**
- * Import data from JSON into an IndexedDB database.
- * This does not delete any existing data from the database, so keys may clash.
+ * create a new record by a key and value
  *
- * @param {IDBDatabase} idb Database to import into
- * @param {string}      json        Data to import, one key per object store
- * @return {Promise<void>}
+ * @param {String} key to store a new record
+ * @param {Object} a object contains different fields to store
+ * @return {Promise<string>}
  */
-export function restore(idb, json) {
-  return new Promise((resolve, reject) => {
-    const transaction = idb.transaction(
-      idb.objectStoreNames,
-      'readwrite'
-    )
-    transaction.addEventListener('error', reject)
-
-    var importObject = JSON.parse(json)
-    for (const storeName of idb.objectStoreNames) {
-      let count = 0
-      for (const toAdd of importObject[storeName]) {
-        const request = transaction.objectStore(storeName).add(toAdd)
-        request.addEventListener('success', () => {
-          count++
-          if (count === importObject[storeName].length) {
-            // Added all objects for this store
-            delete importObject[storeName]
-            if (Object.keys(importObject).length === 0) {
-              // Added all object stores
-              resolve()
-            }
-          }
-        })
-      }
-    }
-  })
+export async function create(key, value) {
+  return (await dbPromise).put(
+    STORE_NAME,
+    {
+      ...value,
+      updatedAt: Date.now()
+    },
+    key
+  );
 }
 
 /**
- * Clear a database
+ * delete sepecific key from a store
  *
- * @param {IDBDatabase} idb The database to delete all data from
- * @return {Promise<void>}
+ * @return {Promise<string>}
  */
-export function clear(idb) {
-  return new Promise((resolve, reject) => {
-    const transaction = idb.transaction(
-      idb.objectStoreNames,
-      'readwrite'
-    )
-    transaction.addEventListener('error', reject)
-
-    let count = 0
-    for (const storeName of idb.objectStoreNames) {
-      transaction
-        .objectStore(storeName)
-        .clear()
-        .addEventListener('success', () => {
-          count++
-          if (count === idb.objectStoreNames.length) {
-            // Cleared all object stores
-            resolve()
-          }
-        })
-    }
-  })
+export async function remove(key) {
+  return (await dbPromise).delete(STORE_NAME, key);
 }
+
+/**
+ * delete all content of the store
+ *
+ * @return {Promise<string>}
+ */
+export async function clear() {
+  return (await dbPromise).clear(STORE_NAME);
+}
+
+/**
+ * get a array of all keys of a store
+ *
+ * @return {Array<string>}
+ */
+
+export async function keys() {
+  return (await dbPromise).getAllKeys(STORE_NAME);
+}
+
+/**
+ * Query all data from an IndexedDB database by specific index
+ *
+ * @param {Object} args the arguments for the query
+ * @param {String} args.groupBy a key to choose to create map
+ * @param {String} args.index a indice to choose to fetch data from
+ * @return {Promise<string>}
+ */
+export async function query({
+  index = 'updatedAt',
+  groupBy,
+  filter = () => true
+}) {
+  const store = await dbPromise;
+  const result = (await store.getAllFromIndex(STORE_NAME, index)).filter(
+    filter
+  );
+  if (!groupBy) {
+    return result;
+  }
+  const groupByMap = {};
+  result.map((item) => {
+    const groupedBy = item[groupBy];
+    if (!groupByMap[groupedBy]) {
+      groupByMap[groupedBy] = [];
+    }
+    groupByMap[groupedBy].push(item);
+  });
+
+  return groupByMap;
+}
+
+/**
+ * exposing different methods of our indexeddb
+ */
+
+export const db = {
+  get,
+  query,
+  create,
+  remove,
+  clear,
+  keys,
+  dbPromise
+};

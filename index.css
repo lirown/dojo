@@ -1,3 +1,5 @@
+/* stylelint-disable rule-empty-line-before, declaration-colon-newline-after */
+
 html,
 body,
 app-index {
@@ -10,6 +12,8 @@ body,
 :root {
   --fc-primary: #0084ff;
   --fc-secondary: #00d894;
+  --fc-blue: #00a5ff;
+  --fc-dark-blue: #0043a9;
   --fc-gold: #fad988;
   --fc-red: #ff9fa1;
   --fc-turquoise: #8af6eb;
@@ -17,8 +21,13 @@ body,
   --fc-pink: #e78ff8;
   --fc-brand-blue: #bdd8ff;
   --fc-link: #0043a9;
+  --fc-gray: #8696ac;
 
   font-family: 'Source Sans Pro', sans-serif;
+}
+
+.green {
+  color: var(--fc-secondary);
 }
 
 fc-button[size='large'] {
@@ -36,10 +45,16 @@ fc-button[size='large'] {
 }
 
 fc-checkbox {
-  --fc-checkbox-check-color: #1f75f7;
+  --fc-checkbox-check-color: white;
+  --fc-checkbox-checked-color: var(--fc-blue);
 
   padding-left: 15px;
   font-size: 16px;
+}
+
+.link {
+  color: var(--fc-dark-blue);
+  text-decoration: none;
 }
 
 .text-white {
@@ -49,9 +64,10 @@ fc-checkbox {
 fc-button.added,
 fc-button.done,
 fc-button.work {
-  --fc-button-min-width: 120px;
+  --fc-button-min-width: 100%;
   --fc-button-background-color: var(--fc-secondary);
 
+  width: 100%;
   margin-bottom: 10px;
 }
 
@@ -291,6 +307,62 @@ p {
   line-height: 23px;
 }
 
+.slide-top-bottom {
+  position: absolute;
+  top: 315px;
+  right: 32%;
+  height: 109px;
+  -webkit-animation: slide-top-bottom 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    infinite;
+  animation: slide-top-bottom 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+@-webkit-keyframes slide-top-bottom {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  25% {
+    -webkit-transform: translateY(-2px);
+    transform: translateY(-2px);
+  }
+  50% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  75% {
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-top-bottom {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  25% {
+    -webkit-transform: translateY(-4px);
+    transform: translateY(-4px);
+  }
+  50% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  75% {
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
 /** result **/
 .hero-result {
   height: 218px;
@@ -516,8 +588,16 @@ i.business {
 
 .box-questions > div {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  align-items: start;
+  width: 100%;
   margin-bottom: 20px;
+}
+
+.box-questions > div > div {
+  display: flex;
+  flex-direction: row;
 }
 
 fc-radio {
@@ -532,6 +612,7 @@ fc-radio {
 
 .goal-items ul {
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   color: white;
   font-weight: 600;
@@ -544,9 +625,12 @@ page-notepad .hero-inner {
   max-width: 100%;
 }
 
-.goal-items li {
+.goal-items li > a {
+  display: flex;
   margin-right: 15px;
   padding: 6px 23px;
+  color: white;
+  text-decoration: none;
 
   /* background: rgb(189 216 255 / 30%); */
   border-radius: 60px;
@@ -556,16 +640,16 @@ page-notepad .hero-inner {
   /* color: #00D894; */
 }
 
-.goal-items li > span {
+.goal-items li > a > span {
   margin-left: 10px;
   color: #00d894;
 }
 
-.goal-items li.active {
+.goal-items li.active > a {
   background: #bdd8ff4d;
 }
 
-.goal-items li:hover {
+.goal-items li:hover > a {
   background: #bdd8ff4d;
 }
 
@@ -679,6 +763,10 @@ ul#main-menu > li:not(.type-notepad) {
   display: none;
 }
 
+fc-checkbox[checked] + span {
+  color: var(--fc-gray);
+}
+
 /* @media (min-width: 576px) { */
 
 /* } */
@@ -742,7 +830,8 @@ ul#main-menu > li:not(.type-notepad) {
   .main-hero {
     min-height: auto;
     background-image: url(./images/home-backdrop.svg);
-    background-position: top;
+    background-position: top right;
+    background-size: auto;
   }
 
   .quiz-a span {
@@ -832,9 +921,34 @@ ul#main-menu > li:not(.type-notepad) {
   .quiz-a > div {
     margin-bottom: 20px;
   }
+
+  .slide-top-bottom {
+    top: 120px;
+    right: 205px;
+    height: 192px;
+  }
+
+  .goal-items ul {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  fc-button.added,
+  fc-button.done,
+  fc-button.work {
+    --fc-button-min-width: 120px;
+    --fc-button-background-color: var(--fc-secondary);
+
+    margin-bottom: 10px;
+  }
+  .box-questions > div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
 }
 
-/* @media (min-width: 1200px) { */
+/* stylein-enable rule-empty-line-before, declaration-colon-newline-after */
 
 /* } */
 
