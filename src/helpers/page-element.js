@@ -9,6 +9,8 @@ import { updateMetadata } from './html-meta-manager';
 export class PageElement extends LitElement {
   location = {};
 
+  data = new Promise(res => res);
+
   defaultTitleTemplate = `%s | ${config.appName}`;
 
   getTitleTemplate(titleTemplate) {

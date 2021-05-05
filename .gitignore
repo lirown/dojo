@@ -1,2 +1,5 @@
 node_modules/
 server/dist/
+:w
+stats.html
+stats.json

@@ -3,6 +3,7 @@ import renameExtensions from '@betit/rollup-plugin-rename-extensions';
 import replace from '@rollup/plugin-replace';
 import { babel } from '@rollup/plugin-babel';
 import { copy } from '@web/rollup-plugin-copy';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 import merge from 'deepmerge';
 import { black, blue } from 'chalk';
@@ -81,7 +82,8 @@ const config = merge(
           'robots.txt',
           'index.css'
         ]
-      })
+      }),
+      visualizer()
     ]
   }
 );

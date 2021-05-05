@@ -1,20 +1,27 @@
-import { html, css } from '../components/base';
+import { html, css, until } from '../components/base';
 import { Logo } from '../components';
 import config from '../config';
 import appData from '../app.data';
+import { db } from '../app.db';
 import { PageElement } from '../helpers/page-element';
+import * as notepad from '../helpers/notepad';
 
 export class PageImprove extends PageElement {
+
+  static get properties() {
+    return {
+      state: { type: Object }
+    };
+  }
+
+  async firstUpdated() {
+    this.state = await db.query({ groupBy: 'key' });
+  }
+
   render() {
     const { topic, role } = this.location.params;
     const content = this.getContent();
-    const sections = [
-      'Responsibilities',
-      'Examples',
-      'Anti-Patterns',
-      'Resources'
-    ];
-
+    const { state  } = this;
     return html`
       <section class="hero hero-improve">
         <div class="container">
@@ -37,7 +44,7 @@ export class PageImprove extends PageElement {
             </p>
           </div>
           <div class="result-data">
-            ${sections.map(
+            ${notepad.sections.map(
               section => html`
                 <div class="result-box">
                   <div class="left-box">
@@ -46,10 +53,13 @@ export class PageImprove extends PageElement {
                       ${config.sectionDescriptions[section]}
                     </div>
                     <div class="box-questions">
-                      ${content[section].map(data =>
-                        data.link && data.name
+                      ${content[section].map(data => {
+                        const status = notepad.getStatus(state, data);
+                        console.log(data, status);
+                        const key = data.name || data['anti-pattern'] || data;
+                        return data.link && data.name
                           ? html`
-                              <div >
+                              <div>
                                 <fc-checkbox></fc-checkbox
                                 ><a href="${data.link}" target="_blank"
                                   >${data.name}</a
@@ -58,14 +68,24 @@ export class PageImprove extends PageElement {
                             `
                           : html`
                               <div>
-                                <fc-checkbox></fc-checkbox>
-                                <span class="improve-label">${data['anti-pattern'] || data}</span>
-                                <fc-button class="work" size="medium"
-                                  >Work on it</fc-button
+                                <fc-checkbox
+                                  ?checked=${status === 'done'}
+                                ></fc-checkbox>
+                                <span class="improve-label">${key}</span>
+                                <fc-button
+                                  @click=${() =>
+                                      notepad.changeStatus(state , key , section, topic, () => this.firstUpdated())}
+                                  class="${status}"
+                                  size="medium"
+                                  >${notepad.getStatus(
+                                    state,
+                                    key,
+                                    'Work on it'
+                                  )}</fc-button
                                 >
                               </div>
-                            `
-                      )}
+                            `;
+                      })}
                     </div>
                   </div>
                 </div>
