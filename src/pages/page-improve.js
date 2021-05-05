@@ -7,7 +7,6 @@ import { PageElement } from '../helpers/page-element';
 import * as notepad from '../helpers/notepad';
 
 export class PageImprove extends PageElement {
-
   static get properties() {
     return {
       state: { type: Object }
@@ -21,7 +20,7 @@ export class PageImprove extends PageElement {
   render() {
     const { topic, role } = this.location.params;
     const content = this.getContent();
-    const { state  } = this;
+    const { state } = this;
     return html`
       <section class="hero hero-improve">
         <div class="container">
@@ -60,23 +59,69 @@ export class PageImprove extends PageElement {
                         return data.link && data.name
                           ? html`
                               <div>
-                                <fc-checkbox></fc-checkbox
-                                ><a class="link" href="${data.link}" target="_blank"
+                                <div>
+                                  <fc-tooltip tooltip="done?">
+                                <fc-checkbox
+                                  ?checked=${status === 'done'}
+                                  @click=${() =>
+                                    notepad.changeStatus(
+                                      { ...state, status: 'done' },
+                                      key,
+                                      section,
+                                      topic,
+                                      () => this.firstUpdated()
+                                    )}
+                                ></fc-checkbox
+                                ></fc-tooltip><a class="link" href="${
+                                  data.link
+                                }" target="_blank"
                                   >${data.name}</a
                                 >
+                                </div>
+                                <fc-button
+                                  @click=${() =>
+                                    notepad.changeStatus(
+                                      state,
+                                      key,
+                                      section,
+                                      topic,
+                                      () => this.firstUpdated()
+                                    )}
+                                  class="${status}"
+                                  size="medium"
+                                  >${notepad.getStatus(
+                                    state,
+                                    key,
+                                    'Work on it'
+                                  )}</fc-button
+
                               </div>
                             `
                           : html`
                               <div>
                                 <div>
-                                <fc-checkbox
-                                  ?checked=${status === 'done'}
-                                ></fc-checkbox>
-                                <span class="improve-label">${key}</span>
+                                  <fc-checkbox
+                                    @click=${() =>
+                                      notepad.changeStatus(
+                                        { ...state, status: 'added' },
+                                        key,
+                                        section,
+                                        topic,
+                                        () => this.firstUpdated()
+                                      )}
+                                    ?checked=${status === 'done'}
+                                  ></fc-checkbox>
+                                  <span class="improve-label">${key}</span>
                                 </div>
                                 <fc-button
                                   @click=${() =>
-                                      notepad.changeStatus(state , key , section, topic, () => this.firstUpdated())}
+                                    notepad.changeStatus(
+                                      state,
+                                      key,
+                                      section,
+                                      topic,
+                                      () => this.firstUpdated()
+                                    )}
                                   class="${status}"
                                   size="medium"
                                   >${notepad.getStatus(

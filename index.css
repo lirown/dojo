@@ -47,6 +47,7 @@ fc-checkbox {
   --fc-checkbox-check-color: white;
   --fc-checkbox-checked-color: var(--fc-blue);
 
+  margin-top: -5px;
   padding-left: 15px;
   font-size: 16px;
 }
@@ -588,15 +589,15 @@ i.business {
 .box-questions > div {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   margin-bottom: 20px;
   width: 100%;
-  align-items: start;
 }
 
 .box-questions > div > div {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
 }
 
 fc-radio {
@@ -938,12 +939,15 @@ fc-checkbox[checked] + span {
     --fc-button-min-width: 120px;
     --fc-button-background-color: var(--fc-secondary);
 
+    width: 120px;
     margin-bottom: 10px;
   }
   .box-questions > div {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+justify-content: space-between;
+    flex-direction: row;
   }
 }
 

@@ -10,6 +10,8 @@ import { attachRouter, urlForName } from './router';
 import '@forter/checkbox';
 import '@forter/button';
 import '@forter/radio';
+//import '@forter/tooltip';
+
 import 'pwa-helper-components/pwa-install-button.js';
 import 'pwa-helper-components/pwa-update-available.js';
 
@@ -30,6 +32,7 @@ export class App extends LitElement {
       key: topic.split(' ').join('-').toLowerCase(),
       name: topic
     }));
+
     const levels = Object.values(appData.Meta.Dans).map(({ name }) => ({
       key: name.split(' ').join('-').toLowerCase(),
       name
@@ -85,7 +88,7 @@ export class App extends LitElement {
                   : html``}
                 <li class="type-notepad">
                   <a href="${urlForName('notepad', {
-                    topic: 'engineering-craftsmanship'
+                    topic
                   })}">My Growth Notepad</a>
                 </li>
               </ul>

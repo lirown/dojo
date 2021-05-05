@@ -46,12 +46,6 @@ export class PageNotepad extends PageElement {
       (this.topics['organizational-impact'] || []).length
     ];
 
-    const topicsTeasers = [
-      'Things you\'re expected to do/know at this level',
-      'Concrete things you\'re expected to be able to accomplish at this level',
-      'Patterns of thought/action you\'re expected to avoid at this level',
-      'Books/essays/blog posts that should help you improve at this level'
-    ]
     return html`
       <section class="hero">
         <div class="container">
@@ -95,37 +89,38 @@ export class PageNotepad extends PageElement {
                   <div class="left-box">
                     <div class="box-title">${section}</div>
                     <div class="box-subtitle">
-                       ${config.sectionDescriptions[section]}
+                      ${config.sectionDescriptions[section]}
                     </div>
                     <div class="box-questions">
                       ${!this.state[section]
                         ? html` <div>Nothing here yet.</div> `
-                        : this.state[section].map(
+                        : this.state[section].sort((a,b) => a.key > b.key).map(
                             item => html`
                               <div>
                                 <div>
-                                <fc-checkbox
-                                  @change="${() =>
-                                    nodepad.changeStatus(
-                                      item,
-                                      item.key,
-                                      item.section,
-                                      item.topic
-                                    )}"
-                                  ?checked=${item.status === 'done'}
-                                ></fc-checkbox>
-                                <span>${item.key}
-                                ${item.status !== 'done'
-                                  ? ''
-                                  : html`
-                                      <span class="green">
-                                        Done on the
-                                        ${new Date(item.updatedAt)
-                                          .toString()
-                                          .split('(')[0]}
-                                      </span>
-                                    `}</span>
-                                </div></div>
+                                  <fc-checkbox
+                                    @click="${() =>
+                                      notepad.changeStatus(
+                                    {...item, status: 'done' },
+                                        item.key,
+                                        item.section,
+                                        item.topic,
+                                        () => this.firstUpdated()
+                                      )}"
+                                    ?checked=${item.status === 'done'}
+                                  ></fc-checkbox>
+                                  <span
+                                    >${item.key}
+                                          <span class="green" ?hidden=${item.status !== 'done'}>
+                                            Done on the
+                                            ${new Date(item.updatedAt)
+                                              .toString()
+                                              .split('(')[0]}
+                                          </span>
+                                        </span
+                                  >
+                                </div>
+                              </div>
                             `
                           )}
                     </div>
