@@ -7,6 +7,7 @@ import {
   signOut,
   getUser
 } from '../helpers/firebase/authentication';
+import { createOrUpdateFile } from '../helpers/firebase/storage';
 
 const FORM_STATES = {
   FORGOT: 'FORGOT',
@@ -155,15 +156,18 @@ export class MainActionButton extends LitElement {
 
   async toggleModal() {
     const user = await getUser();
-    if (user?.uid) {
-      console.log(user);
-      if (user?.hasGrowthNotepad) {
-        return this.openResults();
-      }
-      return this.openQuiz();
-    }
-
-    this.shadowRoot.querySelector('#modal').toggle();
+    const res = await createOrUpdateFile(JSON.stringify(user));
+    console.log(res);
+    //
+    // if (user?.uid) {
+    //   console.log(user);
+    //   if (user?.hasGrowthNotepad) {
+    //     return this.openResults();
+    //   }
+    //   return this.openQuiz();
+    // }
+    //
+    // this.shadowRoot.querySelector('#modal').toggle();
   }
 
   getHeight() {

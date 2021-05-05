@@ -312,54 +312,37 @@ p {
   top: 315px;
   right: 32%;
   height: 109px;
-  -webkit-animation: slide-top-bottom 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)
-    infinite;
-  animation: slide-top-bottom 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+  -webkit-animation: slide-top-bottom 2s ease-in-out infinite;
+  animation: slide-top-bottom 2s ease-in-out infinite;
 }
 
 @-webkit-keyframes slide-top-bottom {
   0% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-  25% {
     -webkit-transform: translateY(-2px);
     transform: translateY(-2px);
   }
   50% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-  75% {
     -webkit-transform: translateY(4px);
     transform: translateY(4px);
   }
   100% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
+    -webkit-transform: translateY(-2px);
+    transform: translateY(-2px);
   }
 }
 
 @keyframes slide-top-bottom {
   0% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-  25% {
-    -webkit-transform: translateY(-4px);
-    transform: translateY(-4px);
+    -webkit-transform: translateY(-2px);
+    transform: translateY(-2px);
   }
   50% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-  75% {
     -webkit-transform: translateY(4px);
     transform: translateY(4px);
   }
   100% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
+    -webkit-transform: translateY(-2px);
+    transform: translateY(-2px);
   }
 }
 
