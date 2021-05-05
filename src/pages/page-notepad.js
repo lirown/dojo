@@ -1,5 +1,6 @@
 import { html, css } from '../components/base';
 import * as notepad from '../helpers/notepad';
+import config from '../config';
 import { Logo } from '../components';
 import { db } from '../app.db';
 import { urlForName } from '../router';
@@ -45,6 +46,12 @@ export class PageNotepad extends PageElement {
       (this.topics['organizational-impact'] || []).length
     ];
 
+    const topicsTeasers = [
+      'Things you\'re expected to do/know at this level',
+      'Concrete things you\'re expected to be able to accomplish at this level',
+      'Patterns of thought/action you\'re expected to avoid at this level',
+      'Books/essays/blog posts that should help you improve at this level'
+    ]
     return html`
       <section class="hero">
         <div class="container">
@@ -88,7 +95,7 @@ export class PageNotepad extends PageElement {
                   <div class="left-box">
                     <div class="box-title">${section}</div>
                     <div class="box-subtitle">
-                      Things you're expected to do/know at this level
+                       ${config.sectionDescriptions[section]}
                     </div>
                     <div class="box-questions">
                       ${!this.state[section]
@@ -96,6 +103,7 @@ export class PageNotepad extends PageElement {
                         : this.state[section].map(
                             item => html`
                               <div>
+                                <div>
                                 <fc-checkbox
                                   @change="${() =>
                                     nodepad.changeStatus(
@@ -106,7 +114,7 @@ export class PageNotepad extends PageElement {
                                     )}"
                                   ?checked=${item.status === 'done'}
                                 ></fc-checkbox>
-                                <span>${item.key}</span>
+                                <span>${item.key}
                                 ${item.status !== 'done'
                                   ? ''
                                   : html`
@@ -116,8 +124,8 @@ export class PageNotepad extends PageElement {
                                           .toString()
                                           .split('(')[0]}
                                       </span>
-                                    `}
-                              </div>
+                                    `}</span>
+                                </div></div>
                             `
                           )}
                     </div>

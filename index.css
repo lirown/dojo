@@ -13,6 +13,7 @@ body,
   --fc-primary: #0084ff;
   --fc-secondary: #00d894;
   --fc-blue: #00a5ff;
+  --fc-dark-blue: #0043a9;
   --fc-gold: #fad988;
   --fc-red: #ff9fa1;
   --fc-turquoise: #8af6eb;
@@ -50,6 +51,11 @@ fc-checkbox {
   font-size: 16px;
 }
 
+.link {
+  color: var(--fc-dark-blue);
+  text-decoration: none;
+}
+
 .text-white {
   color: white;
 }
@@ -57,9 +63,10 @@ fc-checkbox {
 fc-button.added,
 fc-button.done,
 fc-button.work {
-  --fc-button-min-width: 120px;
+  --fc-button-min-width: 100%;
   --fc-button-background-color: var(--fc-secondary);
 
+  width: 100%;
   margin-bottom: 10px;
 }
 
@@ -580,8 +587,16 @@ i.business {
 
 .box-questions > div {
   display: flex;
+  flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
+  width: 100%;
+  align-items: start;
+}
+
+.box-questions > div > div {
+  display: flex;
+  flex-direction: row;
 }
 
 fc-radio {
@@ -597,6 +612,7 @@ fc-radio {
 .goal-items ul {
   display: flex;
   justify-content: flex-start;
+  flex-direction: column;
   color: white;
   font-weight: 600;
   font-size: 24px;
@@ -613,6 +629,7 @@ page-notepad .hero-inner {
   text-decoration: none;
   margin-right: 15px;
   padding: 6px 23px;
+  display: flex;
 
   /* background: rgb(189 216 255 / 30%); */
   border-radius: 60px;
@@ -908,6 +925,25 @@ fc-checkbox[checked] + span {
     right: 205px;
     top: 120px;
     height: 192px;
+  }
+
+  .goal-items ul {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  fc-button.added,
+  fc-button.done,
+  fc-button.work {
+    --fc-button-min-width: 120px;
+    --fc-button-background-color: var(--fc-secondary);
+
+    margin-bottom: 10px;
+  }
+  .box-questions > div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
   }
 }
 

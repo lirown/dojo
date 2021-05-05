@@ -61,17 +61,19 @@ export class PageImprove extends PageElement {
                           ? html`
                               <div>
                                 <fc-checkbox></fc-checkbox
-                                ><a href="${data.link}" target="_blank"
+                                ><a class="link" href="${data.link}" target="_blank"
                                   >${data.name}</a
                                 >
                               </div>
                             `
                           : html`
                               <div>
+                                <div>
                                 <fc-checkbox
                                   ?checked=${status === 'done'}
                                 ></fc-checkbox>
                                 <span class="improve-label">${key}</span>
+                                </div>
                                 <fc-button
                                   @click=${() =>
                                       notepad.changeStatus(state , key , section, topic, () => this.firstUpdated())}

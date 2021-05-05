@@ -37,9 +37,9 @@ export default {
     'Organizational Impact': 'organizational-impact'
   },
   sectionDescriptions: {
-    'Responsabilities': 'Things you\'re expected to do\/know at this level',
+    'Responsibilities': 'Things you\'re expected to do\/know at this level',
     'Examples': 'Concrete things you\'re expected to be able to accomplish at this level',
-    'Anti-Pattern': 'Patterns of thought/action you\'re expected to avoid at this level',
+    'Anti-Patterns': 'Patterns of thought/action you\'re expected to avoid at this level',
     'Resources': 'Books/essays/blog posts that should help you improve at this level'
   }
 };
