@@ -100,3 +100,7 @@ export async function signUp(email, password, name) {
 
   // SAVE NAME SOMEWHERE
 }
+
+export async function getUser() {
+  return app.auth().currentUser;
+}

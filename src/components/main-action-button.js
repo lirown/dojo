@@ -4,7 +4,8 @@ import {
   signUp,
   forgotPassword,
   signIn,
-  signOut
+  signOut,
+  getUser
 } from '../helpers/firebase/authentication';
 
 const FORM_STATES = {
@@ -93,6 +94,14 @@ export class MainActionButton extends LitElement {
     };
   }
 
+  openQuiz() {
+    window.location.href = urlForName('quiz');
+  }
+
+  openResults() {
+    window.location.href = urlForName('quiz');
+  }
+
   getInputProps() {
     const email = this.shadowRoot.querySelector('#email').value;
     const name = this.shadowRoot.querySelector('#name').value;
@@ -110,7 +119,7 @@ export class MainActionButton extends LitElement {
     const { password, email } = this.getInputProps();
     const result = await signIn(email, password);
     console.log(result);
-    this.urlForName('quiz');
+    this.openQuiz();
   }
 
   async signUpUser() {
@@ -118,7 +127,7 @@ export class MainActionButton extends LitElement {
     const { password, email } = this.getInputProps();
     const result = await signUp(email, password);
     console.log(result);
-    this.urlForName('quiz');
+    this.openQuiz();
   }
 
   async forgotPassword() {
@@ -144,7 +153,16 @@ export class MainActionButton extends LitElement {
     this.formState = FORM_STATES.SIGNUP;
   }
 
-  toggleModal() {
+  async toggleModal() {
+    const user = await getUser();
+    if (user?.uid) {
+      console.log(user);
+      if (user?.hasGrowthNotepad) {
+        return this.openResults();
+      }
+      return this.openQuiz();
+    }
+
     this.shadowRoot.querySelector('#modal').toggle();
   }
 
@@ -174,9 +192,8 @@ export class MainActionButton extends LitElement {
 
   render() {
     return html`<a>
-      <fc-button @click="${() => this.toggleModal()}" size="large">${
-      this.label
-    }</fc-button>
+      <fc-button @click="${async () =>
+        await this.toggleModal()}" size="large">${this.label}</fc-button>
       <fc-modal width="205px" height="${this.getHeight()}" id="modal">
         <div>
           <img src="images/logodark.png"></img>
