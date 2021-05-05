@@ -6,7 +6,6 @@ export async function signIn(email, password) {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user;
         resolve(user);
       })
@@ -70,12 +69,18 @@ export async function signOut() {
 }
 
 // todo: save name in some db
-export async function signUp(email, password, name) {
+export async function signUp(email, password, displayName) {
   return await new Promise((resolve, reject) => {
     app
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
+        // Signed in
+
+        const res = await userCredential.user.updateProfile({
+          displayName
+        });
+
         const user = userCredential.user;
         resolve(user);
       })
