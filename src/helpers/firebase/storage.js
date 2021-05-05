@@ -1,4 +1,5 @@
-import { storage } from './index';
+import { storageRef } from './index';
+import { getUser } from './authentication';
 
 export async function getFile(file) {
   // Create a reference to the file we want to download
@@ -21,8 +22,13 @@ export async function getFile(file) {
 }
 
 export async function createOrUpdateFile(str) {
+  const user = await getUser();
+  if (!user) {
+    throw 'not logged in';
+  }
   return await new Promise((resolve) => {
-    storage.putString(str).then((snapshot) => {
+    const fileRef = storageRef.child(`user/${user.uid}`);
+    fileRef.putString(str).then((snapshot) => {
       resolve(snapshot);
     });
   });

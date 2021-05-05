@@ -127,6 +127,7 @@ export class MainActionButton extends LitElement {
     console.log('signing up...');
     const { password, email } = this.getInputProps();
     const result = await signUp(email, password);
+    // const res = await createOrUpdateFile(JSON.stringify(user));
     console.log(result);
     this.openQuiz();
   }
@@ -156,18 +157,14 @@ export class MainActionButton extends LitElement {
 
   async toggleModal() {
     const user = await getUser();
-    const res = await createOrUpdateFile(JSON.stringify(user));
-    console.log(res);
-    //
-    // if (user?.uid) {
-    //   console.log(user);
-    //   if (user?.hasGrowthNotepad) {
-    //     return this.openResults();
-    //   }
-    //   return this.openQuiz();
-    // }
-    //
-    // this.shadowRoot.querySelector('#modal').toggle();
+    if (user?.uid) {
+      if (user?.hasGrowthNotepad) {
+        return this.openResults();
+      }
+      return this.openQuiz();
+    }
+
+    this.shadowRoot.querySelector('#modal').toggle();
   }
 
   getHeight() {
