@@ -87,9 +87,12 @@ export class App extends LitElement {
                     `
                   : html``}
                 <li class="type-notepad">
-                  <a href="${urlForName('notepad', {
-                    topic
-                  })}">My Growth Notepad</a>
+                  <a
+                    href="${urlForName('notepad', {
+                      topic
+                    })}"
+                    >My Growth Notepad</a
+                  >
                 </li>
               </ul>
             </nav>
@@ -114,7 +117,12 @@ export class App extends LitElement {
             >Made with ❤️ by Forter Engineering
             ${config.environment !== 'production'
               ? `(Environment: ${config.environment})`
-              : ''}</span
+              : ''}
+            ${!navigator.share
+              ? html`
+                <div>Like what you? see please <a href="#" @click=${this.share}> share </a> with your friends </a></div>
+              `
+              : ``}</span
           >
         </div>
       </footer>`;
@@ -122,6 +130,17 @@ export class App extends LitElement {
 
   createRenderRoot() {
     return this;
+  }
+
+  share() {
+    navigator
+      .share({
+        title: 'Dojo.Engineering',
+        text: 'Check out Dojo Engineering and Improve as engineer.',
+        url: 'https://lirown.github.io/dojo'
+      })
+      .then(() => console.log('Successful share'))
+      .catch(error => console.log('Error sharing', error));
   }
 
   firstUpdated() {

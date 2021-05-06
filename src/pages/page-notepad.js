@@ -94,35 +94,41 @@ export class PageNotepad extends PageElement {
                     <div class="box-questions">
                       ${!this.state[section]
                         ? html` <div>Nothing here yet.</div> `
-                        : this.state[section].sort((a,b) => a.key > b.key).map(
-                            item => html`
-                              <div>
+                        : this.state[section]
+                            .sort((a, b) => a.key.localeCompare(b.key))
+                            .map(
+                              item => html`
                                 <div>
-                                  <fc-checkbox
-                                    @click="${() =>
-                                      notepad.changeStatus(
-                                    {...item, status: 'done' },
-                                        item.key,
-                                        item.section,
-                                        item.topic,
-                                        () => this.firstUpdated()
-                                      )}"
-                                    ?checked=${item.status === 'done'}
-                                  ></fc-checkbox>
-                                  <span
-                                    >${item.key}
-                                          <span class="green" ?hidden=${item.status !== 'done'}>
-                                            Done on the
-                                            ${new Date(item.updatedAt)
-                                              .toString()
-                                              .split('(')[0]}
-                                          </span>
-                                        </span
-                                  >
+                                  <div>
+                                    <fc-checkbox
+                                      @click="${() =>
+                                        notepad.changeStatus(
+                                          {
+                                            [item.key]: { ...item, status: this.checked ? 'added' : 'work' }
+                                          },
+                                          item.key,
+                                          item.section,
+                                          item.topic,
+                                          () => this.firstUpdated()
+                                        )}"
+                                      ?checked=${item.status === 'done'}
+                                    ></fc-checkbox>
+                                    <span
+                                      >${item.key}
+                                      <span
+                                        class="green"
+                                        ?hidden=${item.status !== 'done'}
+                                      >
+                                        Done on the
+                                        ${new Date(item.updatedAt)
+                                          .toString()
+                                          .split('(')[0]}
+                                      </span>
+                                    </span>
+                                  </div>
                                 </div>
-                              </div>
-                            `
-                          )}
+                              `
+                            )}
                     </div>
                   </div>
                 </div>

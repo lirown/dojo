@@ -52,7 +52,7 @@
 <circle cx="196.377" cy="494.615" r="3" transform="rotate(-90 196.377 494.615)" fill="#1E283D" stroke="#8AF6EB" stroke-width="1.82044"/>
 <circle cx="182.202" cy="466.755" r="3" transform="rotate(-90 182.202 466.755)" fill="#1E283D" stroke="#C88EF4" stroke-width="1.82044"/>
 <circle cx="191.489" cy="440.85" r="3" transform="rotate(-90 191.489 440.85)" fill="#1E283D" stroke="#F98BD4" stroke-width="1.82044"/>
-<circle opacity="0.2" cx="190.015" cy="341.817" r="35.7789" transform="rotate(-90 190.015 341.817)" fill="#E5FEF6"/>
+
 
 <defs>
 <filter id="filter0_f" x="-427.256" y="-74.0061" width="1042.34" height="944.575" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
