@@ -498,7 +498,7 @@ page-home .hero-inner > h2 {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 30px;
-  padding: 30px;
+  padding: 25px;
   background: #f2f5fc;
   border-radius: 20px;
 }
@@ -954,7 +954,10 @@ fc-checkbox[checked] + span {
   ul#main-menu > li:not(.type-notepad) {
     display: block;
   }
-
+  .result-box {
+    flex-direction: row;
+    padding: 30px;
+  }
   .link {
     margin-bottom: 0;
   }
@@ -1049,10 +1052,6 @@ fc-checkbox[checked] + span {
   .hero-inner h1 {
     font-size: 32px;
     line-height: 40px;
-  }
-
-  .result-box {
-    flex-direction: row;
   }
 
   .quiz-q {
