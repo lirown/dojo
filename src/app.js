@@ -120,7 +120,7 @@ export class App extends LitElement {
               : ''}
             ${navigator.share
               ? html`
-                <div>Like what you? see please <a href="#" @click=${this.share}> share </a> with your friends </a></div>
+                <div>Like what you see? please <a href="#" @click=${this.share}> share </a> with your friends </a></div>
               `
               : ``}</span
           >

@@ -3,21 +3,13 @@ import { svg, html } from './base';
 export function Ninja() {
   return html`
     <svg
-class="slide-top-bottom"
+      class="slide-top-bottom"
       width="156"
       height="214"
       viewBox="0 0 156 214"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle
-        opacity="0.2"
-        cx="74.5"
-        cy="67.5"
-        r="67.5"
-        transform="rotate(-90 74.5 67.5)"
-        fill="#E5FEF6"
-      />
       <g filter="url(#filter0_d)">
         <path
           fill-rule="evenodd"
