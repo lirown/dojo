@@ -5,8 +5,7 @@ import { PageElement } from '../helpers/page-element';
 
 export class PageHome extends PageElement {
   render() {
-    return html`
-      <section class="main-hero">
+    return html` <section class="main-hero">
         <div class="container">
           <div class="hero-inner">
             ${Ninja()}
@@ -65,7 +64,7 @@ export class PageHome extends PageElement {
         <div class="container">
           <div class="featuring-inner">
             <p>From the creators of other fun things...</p>
-            <div class="featuring-data">
+            <div class="featuring-data hi-icon-wrap hi-icon-effect-8">
               ${Feature({ name: 'forkerlabs' })}
               ${Feature({ name: 'softwarearchitectureaddict' })}
               ${Feature({ name: 'chuckwho' })}

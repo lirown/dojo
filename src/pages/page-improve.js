@@ -44,7 +44,7 @@ export class PageImprove extends PageElement {
           </div>
           <div class="result-data">
             ${notepad.sections.map(
-              section => html`
+              (section) => html`
                 <div class="result-box">
                   <div class="left-box">
                     <div class="box-title">${section}</div>
@@ -52,7 +52,7 @@ export class PageImprove extends PageElement {
                       ${config.sectionDescriptions[section]}
                     </div>
                     <div class="box-questions">
-                      ${content[section].map(data => {
+                      ${content[section].map((data) => {
                         const status = notepad.getStatus(state, data);
                         console.log(data, status);
                         const key = data.name || data['anti-pattern'] || data;
@@ -78,7 +78,7 @@ export class PageImprove extends PageElement {
                                   >${data.name}</a
                                 >
                                 </div>
-                                <fc-button
+                                <fc-button style="--fc-button-text-transform:uppercase;--fc-button-color:white;"
                                   @click=${() =>
                                     notepad.changeStatus(
                                       state,
@@ -92,7 +92,7 @@ export class PageImprove extends PageElement {
                                   >${notepad.getStatus(
                                     state,
                                     key,
-                                    'Work on it'
+                                    'Explore Later'
                                   )}</fc-button
 
                               </div>
@@ -114,6 +114,7 @@ export class PageImprove extends PageElement {
                                   <span class="improve-label">${key}</span>
                                 </div>
                                 <fc-button
+                                  style="--fc-button-text-transform:uppercase;--fc-button-color:white;"
                                   @click=${() =>
                                     notepad.changeStatus(
                                       state,
@@ -148,7 +149,7 @@ export class PageImprove extends PageElement {
     const { topic, role } = this.location.params;
     const [content] = Object.values(
       appData.Ladder[this.startCase(topic)].Ladder.filter(
-        level => config.roleToLevel[role] === Object.keys(level)[0]
+        (level) => config.roleToLevel[role] === Object.keys(level)[0]
       )[0]
     );
     return content;
