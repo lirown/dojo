@@ -308,10 +308,10 @@ p {
 }
 
 .slide-top-bottom {
-  right: 32%;
-  top: 315px;
-  height: 109px;
   position: absolute;
+  top: 315px;
+  right: 32%;
+  height: 109px;
   -webkit-animation: slide-top-bottom 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)
     infinite;
   animation: slide-top-bottom 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
@@ -590,8 +590,8 @@ i.business {
   display: flex;
   flex-direction: column;
   align-items: start;
-  margin-bottom: 20px;
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .box-questions > div > div {
@@ -612,8 +612,8 @@ fc-radio {
 
 .goal-items ul {
   display: flex;
-  justify-content: flex-start;
   flex-direction: column;
+  justify-content: flex-start;
   color: white;
   font-weight: 600;
   font-size: 24px;
@@ -626,11 +626,11 @@ page-notepad .hero-inner {
 }
 
 .goal-items li > a {
-  color: white;
-  text-decoration: none;
+  display: flex;
   margin-right: 15px;
   padding: 6px 23px;
-  display: flex;
+  color: white;
+  text-decoration: none;
 
   /* background: rgb(189 216 255 / 30%); */
   border-radius: 60px;
@@ -830,8 +830,8 @@ fc-checkbox[checked] + span {
   .main-hero {
     min-height: auto;
     background-image: url(./images/home-backdrop.svg);
-    background-size: auto;
     background-position: top right;
+    background-size: auto;
   }
 
   .quiz-a span {
@@ -923,8 +923,8 @@ fc-checkbox[checked] + span {
   }
 
   .slide-top-bottom {
-    right: 205px;
     top: 120px;
+    right: 205px;
     height: 192px;
   }
 
@@ -944,10 +944,10 @@ fc-checkbox[checked] + span {
   }
   .box-questions > div {
     display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-justify-content: space-between;
     flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
   }
 }
 
