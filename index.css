@@ -251,6 +251,9 @@ p {
   color: black;
   line-height: 23px;
 }
+section:not(.hero) {
+  padding: 30px 0;
+}
 
 /** not found */
 .not-found {
@@ -953,6 +956,12 @@ fc-checkbox[checked] + span {
 @media (min-width: 992px) {
   ul#main-menu > li:not(.type-notepad) {
     display: block;
+  }
+  section {
+    padding: 65px 0;
+  }
+  section:not(.hero) {
+    padding: 65px 0;
   }
   .result-box {
     flex-direction: row;
