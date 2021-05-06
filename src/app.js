@@ -28,7 +28,7 @@ export class App extends LitElement {
       topic = parts[1];
     }
 
-    const topics = Object.keys(appData.Ladder).map(topic => ({
+    const topics = Object.keys(appData.Ladder).map((topic) => ({
       key: topic.split(' ').join('-').toLowerCase(),
       name: topic
     }));
@@ -50,7 +50,7 @@ export class App extends LitElement {
                         <a>Change level</a>
                         <ul id="sub-menu">
                           ${levels.map(
-                            level => html`
+                            (level) => html`
                               <li>
                                 <a
                                   href="${urlForName('improve', {
@@ -69,7 +69,7 @@ export class App extends LitElement {
                         <a>Change Topic</a>
                         <ul id="sub-menu">
                           ${topics.map(
-                            topic => html`
+                            (topic) => html`
                               <li>
                                 <a
                                   href="${urlForName('improve', {
@@ -118,7 +118,7 @@ export class App extends LitElement {
             ${config.environment !== 'production'
               ? `(Environment: ${config.environment})`
               : ''}
-            ${!navigator.share
+            ${navigator.share
               ? html`
                 <div>Like what you? see please <a href="#" @click=${this.share}> share </a> with your friends </a></div>
               `
@@ -140,7 +140,7 @@ export class App extends LitElement {
         url: 'https://lirown.github.io/dojo'
       })
       .then(() => console.log('Successful share'))
-      .catch(error => console.log('Error sharing', error));
+      .catch((error) => console.log('Error sharing', error));
   }
 
   firstUpdated() {
