@@ -94,16 +94,15 @@ export class App extends LitElement {
                     >My Growth Notepad</a
                   >
                 </li>
+                <pwa-install-button>
+                  <button>Install app</button>
+                </pwa-install-button>
+
+                <pwa-update-available>
+                  <button>Update app</button>
+                </pwa-update-available>
               </ul>
             </nav>
-
-            <pwa-install-button>
-              <button>Install app</button>
-            </pwa-install-button>
-
-            <pwa-update-available>
-              <button>Update app</button>
-            </pwa-update-available>
           </div>
         </div>
       </header>
