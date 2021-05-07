@@ -125,7 +125,7 @@ export class App extends LitElement {
           >
         </div>
         <div class="hiring">
-          <a href="javascript:void(0);"
+          <a href="https://www.forter.com/careers/"
             ><img src="images/hire.svg" alt="We are Hiring"
           /></a>
         </div>
