@@ -317,8 +317,8 @@ section:not(.hero) {
 
 .slide-top-bottom {
   position: absolute;
-  top: 315px;
-  right: 32%;
+  top: 279px;
+  right: 30%;
   height: 109px;
   -webkit-animation: slide-top-bottom 2s ease-in-out infinite;
   animation: slide-top-bottom 2s ease-in-out infinite;
@@ -794,7 +794,7 @@ fc-checkbox[checked] + span {
   width: 115px;
   height: 38px;
   background: url(./images/pop.svg);
-  content: "";
+  content: '';
 }
 .hiring a:hover::before {
   opacity: 1;
@@ -806,7 +806,7 @@ fc-checkbox[checked] + span {
   color: white;
   font-size: 15px;
   letter-spacing: 0.02em;
-  content: "We Are Hiring!";
+  content: 'We Are Hiring!';
 }
 .hiring a:hover::after {
   opacity: 1;
@@ -900,12 +900,16 @@ fc-checkbox[checked] + span {
   }
 
   40% {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1), 0 0 10px 10px #fff, 0 0 0 10px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1),
+      0 0 10px 10px #fff,
+      0 0 0 10px rgba(255, 255, 255, 0.5);
     opacity: 0.5;
   }
 
   100% {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1), 0 0 10px 10px #fff, 0 0 0 10px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1),
+      0 0 10px 10px #fff,
+      0 0 0 10px rgba(255, 255, 255, 0.5);
     -webkit-transform: scale(1.5);
     opacity: 0;
   }
@@ -917,12 +921,16 @@ fc-checkbox[checked] + span {
   }
 
   40% {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1), 0 0 10px 10px #fff, 0 0 0 10px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1),
+      0 0 10px 10px #fff,
+      0 0 0 10px rgba(255, 255, 255, 0.5);
     opacity: 0.5;
   }
 
   100% {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1), 0 0 10px 10px #fff, 0 0 0 10px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1),
+      0 0 10px 10px #fff,
+      0 0 0 10px rgba(255, 255, 255, 0.5);
     -moz-transform: scale(1.5);
     opacity: 0;
   }
@@ -934,12 +942,16 @@ fc-checkbox[checked] + span {
   }
 
   40% {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1), 0 0 10px 10px #fff, 0 0 0 10px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1),
+      0 0 10px 10px #fff,
+      0 0 0 10px rgba(255, 255, 255, 0.5);
     opacity: 0.5;
   }
 
   100% {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1), 0 0 10px 10px #fff, 0 0 0 10px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1),
+      0 0 10px 10px #fff,
+      0 0 0 10px rgba(255, 255, 255, 0.5);
     transform: scale(1.5);
     opacity: 0;
   }
