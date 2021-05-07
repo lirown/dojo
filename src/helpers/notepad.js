@@ -1,12 +1,5 @@
 import { db } from '../app.db';
 
-export const sections = [
-  'Responsibilities',
-  'Examples',
-  'Anti-Patterns',
-  'Resources'
-];
-
 function getStatus(notepad, key, fallback = 'work') {
   if (!notepad || !notepad[key]) {
     return fallback;
@@ -15,7 +8,7 @@ function getStatus(notepad, key, fallback = 'work') {
 }
 
 async function changeStatus(notepad, key, section, topic, callback = () => {}) {
-  console.log( notepad, key, section, topic, callback )
+  console.log(notepad, key, section, topic, callback);
 
   const currentStatus = getStatus(notepad, key);
   const item = Array.isArray(notepad[key]) ? notepad[key][0] : notepad[key];

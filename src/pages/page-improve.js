@@ -1,8 +1,12 @@
 import { html, css, until } from '../components/base';
 import { Logo } from '../components';
-import config from '../config';
-import appData from '../app.data';
 import { db } from '../app.db';
+import {
+  sections,
+  getActionableItems,
+  sectionMetadata
+} from '../helpers/topic';
+import { roleMetadata } from '../helpers/role';
 import { PageElement } from '../helpers/page-element';
 import * as notepad from '../helpers/notepad';
 
@@ -19,7 +23,7 @@ export class PageImprove extends PageElement {
 
   render() {
     const { topic, role } = this.location.params;
-    const content = this.getContent();
+    const actionableItems = getActionableItems({ topic, role });
     const { state } = this;
     return html`
       <section class="hero hero-improve">
@@ -27,7 +31,7 @@ export class PageImprove extends PageElement {
           <div class="hero-inner">
             <h1> Improving at ${this.startCase(topic)}
             <p>
-              Level: ${config.roleToTitle[role]}
+              Level: ${roleMetadata[role].title}
             </p>
           </div>
         </div>
@@ -43,16 +47,16 @@ export class PageImprove extends PageElement {
             </p>
           </div>
           <div class="result-data">
-            ${notepad.sections.map(
+            ${sections.map(
               (section) => html`
                 <div class="result-box">
                   <div class="left-box">
                     <div class="box-title">${section}</div>
                     <div class="box-subtitle">
-                      ${config.sectionDescriptions[section]}
+                      ${sectionMetadata[section].description}
                     </div>
                     <div class="box-questions">
-                      ${content[section].map((data) => {
+                      ${actionableItems[section].map((data) => {
                         const status = notepad.getStatus(state, data);
                         console.log(data, status);
                         const key = data.name || data['anti-pattern'] || data;
@@ -60,18 +64,18 @@ export class PageImprove extends PageElement {
                           ? html`
                               <div>
                                 <div>
-                                  <fc-tooltip tooltip="done?">
-                                <fc-checkbox
-                                  ?checked=${status === 'done'}
-                                  @click=${() =>
-                                    notepad.changeStatus(
-                                      { ...state, status: 'done' },
-                                      key,
-                                      section,
-                                      topic,
-                                      () => this.firstUpdated()
-                                    )}
-                                ></fc-checkbox
+                                  <fc-tooltip tooltip="done?" position="top">
+                                  <fc-checkbox
+                                    ?checked=${status === 'done'}
+                                    @click=${() =>
+                                      notepad.changeStatus(
+                                        { ...state, status: 'done' },
+                                        key,
+                                        section,
+                                        topic,
+                                        () => this.firstUpdated()
+                                      )}
+                                  ></fc-checkbox
                                 ></fc-tooltip><a class="link" href="${
                                   data.link
                                 }" target="_blank"
@@ -143,16 +147,6 @@ export class PageImprove extends PageElement {
         </div>
       </section>
     `;
-  }
-
-  getContent() {
-    const { topic, role } = this.location.params;
-    const [content] = Object.values(
-      appData.Ladder[this.startCase(topic)].Ladder.filter(
-        (level) => config.roleToLevel[role] === Object.keys(level)[0]
-      )[0]
-    );
-    return content;
   }
 }
 

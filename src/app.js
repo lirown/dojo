@@ -2,41 +2,25 @@ import { LitElement, html, css } from './components/base';
 import { Logo } from './components';
 
 import config from './config';
-import appData from './app.data.js';
-
-import { db } from './app.db';
 
 import { attachRouter, urlForName } from './router';
+
+import { getTopics, getTopicFromURL } from './helpers/topic';
+
+import { getRoles, getRoleFromURL } from './helpers/role';
+
 import '@forter/checkbox';
 import '@forter/button';
 import '@forter/radio';
-//import '@forter/tooltip';
+import '@forter/tooltip';
 
 import 'pwa-helper-components/pwa-install-button.js';
 import 'pwa-helper-components/pwa-update-available.js';
 
-window.__db = db;
-
 export class App extends LitElement {
   render() {
-    let role = 'software-engineer';
-    let topic = 'engineering-craftsmanship';
-
-    if (location.pathname.split('/').length > 3) {
-      const parts = location.pathname.split('/').reverse();
-      role = parts[0];
-      topic = parts[1];
-    }
-
-    const topics = Object.keys(appData.Ladder).map((topic) => ({
-      key: topic.split(' ').join('-').toLowerCase(),
-      name: topic
-    }));
-
-    const levels = Object.values(appData.Meta.Dans).map(({ name }) => ({
-      key: name.split(' ').join('-').toLowerCase(),
-      name
-    }));
+    const role = getRoleFromURL();
+    const topic = getTopicFromURL();
 
     return html` <header>
         <div class="container">
@@ -49,7 +33,7 @@ export class App extends LitElement {
                       <li class="type-drop">
                         <a>Change level</a>
                         <ul id="sub-menu">
-                          ${levels.map(
+                          ${getRoles().map(
                             (level) => html`
                               <li>
                                 <a
@@ -68,7 +52,7 @@ export class App extends LitElement {
                       <li class="type-drop">
                         <a>Change Topic</a>
                         <ul id="sub-menu">
-                          ${topics.map(
+                          ${getTopics().map(
                             (topic) => html`
                               <li>
                                 <a
