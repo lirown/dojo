@@ -1,4 +1,4 @@
-import appData from '../app.data.js';
+import appData from './career-ladder.js';
 import { roleMetadata } from './role';
 
 export const DEFAULT_TOPIC = 'engineering-craftsmanship';

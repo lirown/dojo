@@ -72,15 +72,26 @@ export async function keys() {
  * @param {String} args.index a indice to choose to fetch data from
  * @return {Promise<string>}
  */
-export async function query({ index = 'updatedAt', groupBy, filter = () => true }) {
+export async function query({
+  index = 'updatedAt',
+  groupBy,
+  flat = false,
+  filter = () => true
+}) {
   const store = await dbPromise;
-  const result = (await store.getAllFromIndex(STORE_NAME, index)).filter(filter);
+  const result = (await store.getAllFromIndex(STORE_NAME, index)).filter(
+    filter
+  );
   if (!groupBy) {
     return result;
   }
   const groupByMap = {};
-  result.map(item => {
-    const groupedBy = item[groupBy]
+  result.map((item) => {
+    const groupedBy = item[groupBy];
+    if (flat) {
+      groupByMap[groupedBy] = item;
+      return;
+    }
     if (!groupByMap[groupedBy]) {
       groupByMap[groupedBy] = [];
     }

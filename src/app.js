@@ -1,13 +1,17 @@
 import { LitElement, html, css } from './components/base';
-import { Logo } from './components';
+import {
+  ShareSection,
+  HiringButton,
+  Logo,
+  NavButton,
+  NavDropdownItem
+} from './components';
 
 import config from './config';
 
 import { attachRouter, urlForName } from './router';
-
-import { getTopics, getTopicFromURL } from './helpers/topic';
-
-import { getRoles, getRoleFromURL } from './helpers/role';
+import { getTopics, getTopicFromURL } from './stores/topic';
+import { getRoles, getRoleFromURL } from './stores/role';
 
 import '@forter/checkbox';
 import '@forter/button';
@@ -33,58 +37,40 @@ export class App extends LitElement {
                       <li class="type-drop">
                         <a>Change level</a>
                         <ul id="sub-menu">
-                          ${getRoles().map(
-                            (level) => html`
-                              <li>
-                                <a
-                                  href="${urlForName('improve', {
-                                    topic,
-                                    role: level.key
-                                  })}"
-                                  aria-label="subemnu"
-                                  >${level.name}</a
-                                >
-                              </li>
-                            `
+                          ${getRoles().map((level) =>
+                            NavDropdownItem({
+                              name: 'improve',
+                              params: {
+                                topic,
+                                role: level.key
+                              },
+                              label: level.name
+                            })
                           )}
                         </ul>
                       </li>
                       <li class="type-drop">
                         <a>Change Topic</a>
                         <ul id="sub-menu">
-                          ${getTopics().map(
-                            (topic) => html`
-                              <li>
-                                <a
-                                  href="${urlForName('improve', {
-                                    topic: topic.key,
-                                    role
-                                  })}"
-                                  aria-label="subemnu"
-                                  >${topic.name}</a
-                                >
-                              </li>
-                            `
+                          ${getTopics().map((topic) =>
+                            NavDropdownItem({
+                              name: 'improve',
+                              params: {
+                                topic: topic.key,
+                                role
+                              },
+                              label: topic.name
+                            })
                           )}
                         </ul>
                       </li>
                     `
                   : html``}
-                <li class="type-notepad">
-                  <a
-                    href="${urlForName('notepad', {
-                      topic
-                    })}"
-                    >My Growth Notepad</a
-                  >
-                </li>
-                <pwa-install-button>
-                  <button>Install app</button>
-                </pwa-install-button>
-
-                <pwa-update-available>
-                  <button>Update app</button>
-                </pwa-update-available>
+                ${NavButton({
+                  name: 'notepad',
+                  params: { topic },
+                  label: 'My Growth Notepad'
+                })}
               </ul>
             </nav>
           </div>
@@ -101,34 +87,15 @@ export class App extends LitElement {
             ${config.environment !== 'production'
               ? `(Environment: ${config.environment})`
               : ''}
-            ${navigator.share
-              ? html`
-                <div>Like what you see? please <a href="#" @click=${this.share}> share </a> with your friends </a></div>
-              `
-              : ``}</span
-          >
+            ${ShareSection()}
+          </span>
         </div>
-        <div class="hiring">
-          <a href="https://www.forter.com/careers/"
-            ><img src="images/hire.svg" alt="We are Hiring"
-          /></a>
-        </div>
+        ${HiringButton()}
       </footer>`;
   }
 
   createRenderRoot() {
     return this;
-  }
-
-  share() {
-    navigator
-      .share({
-        title: 'Dojo.Engineering',
-        text: 'Check out Dojo Engineering and Improve as engineer.',
-        url: 'https://lirown.github.io/dojo'
-      })
-      .then(() => console.log('Successful share'))
-      .catch((error) => console.log('Error sharing', error));
   }
 
   firstUpdated() {

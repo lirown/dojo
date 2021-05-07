@@ -1,12 +1,12 @@
 import { html, css } from '../components/base';
-import * as notepad from '../helpers/notepad';
+import * as notepad from '../stores/notepad';
 import {
   DEFAULT_TOPIC,
   getTopics,
   sectionMetadata,
   sections
-} from '../helpers/topic';
-import { Logo } from '../components';
+} from '../stores/topic';
+import { Logo, StatusCheckbox } from '../components';
 import { db } from '../app.db';
 import { urlForName } from '../router';
 
@@ -37,6 +37,7 @@ export class PageNotepad extends PageElement {
     }
 
     const { topic = DEFAULT_TOPIC } = this.location.params;
+    const callback = this.firstUpdated.bind(this);
 
     const topicsCount = [
       (this.topics['engineering-craftsmanship'] || []).length,
@@ -94,35 +95,30 @@ export class PageNotepad extends PageElement {
                         : this.state[section]
                             .sort((a, b) => a.key.localeCompare(b.key))
                             .map(
-                              (item) => html`
+                              ({
+                                key,
+                                section,
+                                topic,
+                                status,
+                                updatedAt
+                              }) => html`
                                 <div>
                                   <div>
-                                    <fc-checkbox
-                                      @click="${() =>
-                                        notepad.changeStatus(
-                                          {
-                                            [item.key]: {
-                                              ...item,
-                                              status: this.checked
-                                                ? 'added'
-                                                : 'work'
-                                            }
-                                          },
-                                          item.key,
-                                          item.section,
-                                          item.topic,
-                                          () => this.firstUpdated()
-                                        )}"
-                                      ?checked=${item.status === 'done'}
-                                    ></fc-checkbox>
+                                    ${StatusCheckbox({
+                                      key,
+                                      section,
+                                      topic,
+                                      status,
+                                      callback
+                                    })}
                                     <span
-                                      >${item.key}
+                                      >${key}
                                       <span
                                         class="green"
-                                        ?hidden=${item.status !== 'done'}
+                                        ?hidden=${status !== 'done'}
                                       >
                                         Done on the
-                                        ${new Date(item.updatedAt)
+                                        ${new Date(updatedAt)
                                           .toString()
                                           .split('(')[0]}
                                       </span>

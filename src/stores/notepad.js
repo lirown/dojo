@@ -1,5 +1,15 @@
 import { db } from '../app.db';
 
+export const DEFAULT_STATUS = 'work';
+/**
+ * hold translation of role key to level, title of engineering
+ */
+export const nextStatus = {
+  work: 'added',
+  added: 'done',
+  done: 'work'
+};
+
 function getStatus(notepad, key, fallback = 'work') {
   if (!notepad || !notepad[key]) {
     return fallback;

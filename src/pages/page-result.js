@@ -4,8 +4,8 @@ import config from '../config';
 
 import { PageElement } from '../helpers/page-element';
 import { urlForName } from '../router';
-import { topicMetadata, topics, getCategoriesByTopic } from '../helpers/topic';
-import { roleMetadata } from '../helpers/role';
+import { topicMetadata, topics, getCategoriesByTopic } from '../stores/topic';
+import { roleMetadata } from '../stores/role';
 
 export class PageResult extends PageElement {
   render() {

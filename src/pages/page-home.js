@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { Logo, Feature, Ninja } from '../components';
+import { Logo, Feature, Ninja, GoogleDocsSpreadsheetLink } from '../components';
 import { urlForName } from '../router';
 import { PageElement } from '../helpers/page-element';
 
@@ -40,22 +40,18 @@ export class PageHome extends PageElement {
               what you like to use.
             </p>
             <div class="doc-btns">
-              <a
-                href="https://docs.google.com/spreadsheets/d/1e71fL0b5lYyac_SMSZZFHqID_VjixPwUOuCqFXtzGL4"
-                target="_blank"
-                title="Forter Career Ladder for Software Engineers"
-                ><img src="images/excel.svg" alt="Download Spreadsheet" /><span
-                  >Forter Career Ladder for Software Engineers</span
-                ></a
-              >
-              <a
-                href="https://docs.google.com/document/d/1u4C0LhkMVZt_6luTi9EvCfAnlzoE_uRAfJ6lLRW9TxU"
-                target="_blank"
-                title="Forter Engineering Career Journey"
-                ><img src="images/doc.svg" alt="Download Document" /><span
-                  >Forter Engineering Career Journey</span
-                ></a
-              >
+              ${GoogleDocsSpreadsheetLink({
+                href:
+                  'https://docs.google.com/spreadsheets/d/1e71fL0b5lYyac_SMSZZFHqID_VjixPwUOuCqFXtzGL4',
+                label: 'Forter Career Ladder for Software Engineers',
+                icon: 'excel'
+              })}
+              ${GoogleDocsSpreadsheetLink({
+                href:
+                  'https://docs.google.com/document/d/1u4C0LhkMVZt_6luTi9EvCfAnlzoE_uRAfJ6lLRW9TxU',
+                label: 'Forter Engineering Career Journey',
+                icon: 'doc'
+              })}
             </div>
           </div>
         </div>

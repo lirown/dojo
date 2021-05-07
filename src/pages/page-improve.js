@@ -1,14 +1,10 @@
-import { html, css, until } from '../components/base';
-import { Logo } from '../components';
-import { db } from '../app.db';
-import {
-  sections,
-  getActionableItems,
-  sectionMetadata
-} from '../helpers/topic';
-import { roleMetadata } from '../helpers/role';
+import { html } from '../components/base';
+import { Logo, StatusCheckbox, StatusButton } from '../components';
 import { PageElement } from '../helpers/page-element';
-import * as notepad from '../helpers/notepad';
+
+import { db } from '../app.db';
+import { sections, getActionableItems, sectionMetadata } from '../stores/topic';
+import { roleMetadata } from '../stores/role';
 
 export class PageImprove extends PageElement {
   static get properties() {
@@ -18,13 +14,15 @@ export class PageImprove extends PageElement {
   }
 
   async firstUpdated() {
-    this.state = await db.query({ groupBy: 'key' });
+    this.state = await db.query({ groupBy: 'key', flat: true });
   }
 
   render() {
     const { topic, role } = this.location.params;
+    const callback = this.firstUpdated.bind(this);
     const actionableItems = getActionableItems({ topic, role });
     const { state } = this;
+
     return html`
       <section class="hero hero-improve">
         <div class="container">
@@ -47,102 +45,82 @@ export class PageImprove extends PageElement {
             </p>
           </div>
           <div class="result-data">
-            ${sections.map(
-              (section) => html`
-                <div class="result-box">
-                  <div class="left-box">
-                    <div class="box-title">${section}</div>
-                    <div class="box-subtitle">
-                      ${sectionMetadata[section].description}
-                    </div>
-                    <div class="box-questions">
-                      ${actionableItems[section].map((data) => {
-                        const status = notepad.getStatus(state, data);
-                        console.log(data, status);
-                        const key = data.name || data['anti-pattern'] || data;
-                        return data.link && data.name
-                          ? html`
-                              <div>
-                                <div>
-                                  <fc-tooltip tooltip="done?" position="top">
-                                  <fc-checkbox
-                                    ?checked=${status === 'done'}
-                                    @click=${() =>
-                                      notepad.changeStatus(
-                                        { ...state, status: 'done' },
+            ${
+              this.state
+                ? sections.map(
+                    (section) => html`
+                      <div class="result-box">
+                        <div class="left-box">
+                          <div class="box-title">${section}</div>
+                          <div class="box-subtitle">
+                            ${sectionMetadata[section].description}
+                          </div>
+                          <div class="box-questions">
+                            ${actionableItems[section].map((data) => {
+                              const key =
+                                data.name || data['anti-pattern'] || data;
+                              const status =
+                                (this.state[key] || {}).status || 'work';
+                              return data.link && data.name
+                                ? html`
+                                    <div>
+                                      <div>
+                                        ${StatusCheckbox({
+                                          status,
+                                          key,
+                                          section,
+                                          topic,
+                                          callback
+                                        })}
+                                        <a
+                                          class="link"
+                                          href="${data.link}"
+                                          target="_blank"
+                                          >${data.name}</a
+                                        >
+                                      </div>
+                                      ${StatusButton({
+                                        status,
                                         key,
-                                        section,
                                         topic,
-                                        () => this.firstUpdated()
-                                      )}
-                                  ></fc-checkbox
-                                ></fc-tooltip><a class="link" href="${
-                                  data.link
-                                }" target="_blank"
-                                  >${data.name}</a
-                                >
-                                </div>
-                                <fc-button style="--fc-button-text-transform:uppercase;--fc-button-color:white;"
-                                  @click=${() =>
-                                    notepad.changeStatus(
-                                      state,
-                                      key,
-                                      section,
-                                      topic,
-                                      () => this.firstUpdated()
-                                    )}
-                                  class="${status}"
-                                  size="medium"
-                                  >${notepad.getStatus(
-                                    state,
-                                    key,
-                                    'Explore Later'
-                                  )}</fc-button
-
-                              </div>
-                            `
-                          : html`
-                              <div>
-                                <div>
-                                  <fc-checkbox
-                                    @click=${() =>
-                                      notepad.changeStatus(
-                                        { ...state, status: 'added' },
+                                        section,
+                                        label: 'Explore Later',
+                                        callback
+                                      })}
+                                    </div>
+                                  `
+                                : html`
+                                    <div>
+                                      <div>
+                                        ${StatusCheckbox({
+                                          status,
+                                          key,
+                                          section,
+                                          topic,
+                                          callback
+                                        })}
+                                        <span class="improve-label"
+                                          >${key}</span
+                                        >
+                                      </div>
+                                      ${StatusButton({
+                                        status,
                                         key,
-                                        section,
                                         topic,
-                                        () => this.firstUpdated()
-                                      )}
-                                    ?checked=${status === 'done'}
-                                  ></fc-checkbox>
-                                  <span class="improve-label">${key}</span>
-                                </div>
-                                <fc-button
-                                  style="--fc-button-text-transform:uppercase;--fc-button-color:white;"
-                                  @click=${() =>
-                                    notepad.changeStatus(
-                                      state,
-                                      key,
-                                      section,
-                                      topic,
-                                      () => this.firstUpdated()
-                                    )}
-                                  class="${status}"
-                                  size="medium"
-                                  >${notepad.getStatus(
-                                    state,
-                                    key,
-                                    'Work on it'
-                                  )}</fc-button
-                                >
-                              </div>
-                            `;
-                      })}
-                    </div>
-                  </div>
-                </div>
-              `
-            )}
+                                        section,
+                                        label: 'Work on it',
+                                        callback
+                                      })}
+                                    </div>
+                                  `;
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    `
+                  )
+                : html`Loading...`
+            }
           </div>
         </div>
       </section>

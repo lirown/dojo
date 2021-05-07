@@ -46,7 +46,6 @@ fc-checkbox {
   --fc-checkbox-check-color: white;
   --fc-checkbox-checked-color: var(--fc-blue);
 
-  position: absolute;
   margin-top: -5px;
   padding-left: 0;
   font-size: 16px;
@@ -382,7 +381,7 @@ section:not(.hero) {
 
   /* max-width: 90%; */
   margin-bottom: 20px;
-  margin-left: 40px;
+  margin-left: 10px;
   outline: navajowhite;
 }
 
