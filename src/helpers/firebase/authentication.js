@@ -68,7 +68,6 @@ export async function signOut() {
   });
 }
 
-// todo: save name in some db
 export async function signUp(email, password, displayName) {
   return await new Promise((resolve, reject) => {
     app

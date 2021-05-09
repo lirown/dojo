@@ -83,6 +83,11 @@ export class MainActionButton extends LitElement {
         color: var(--fc-link);
         cursor: pointer;
       }
+
+      #reset-confirm {
+        font-size: 14px;
+        color: var(--gray-8);
+      }
     `
   ];
 
@@ -133,6 +138,8 @@ export class MainActionButton extends LitElement {
   }
 
   async forgotPassword() {
+    this.formState = FORM_STATES.FORGOT_POST_EMAIL;
+
     console.log('forgot password...');
     const { email } = this.getInputProps();
     const result = await forgotPassword(email);
@@ -168,27 +175,22 @@ export class MainActionButton extends LitElement {
   }
 
   getHeight() {
-    const base = 260;
-    const inputHeight = 55;
-    let calc;
-
+    let height;
     if (this.formState === FORM_STATES.SIGNUP) {
-      const inputs = 3;
-      calc = base + inputs * inputHeight;
+      height = 425;
     }
     if (this.formState === FORM_STATES.SIGNIN) {
-      const inputs = 2;
-      calc = base + inputs * inputHeight;
+      height = 355;
     }
-    if (
-      this.formState === FORM_STATES.FORGOT ||
-      this.formState === FORM_STATES.FORGOT_POST_EMAIL
-    ) {
-      const inputs = 1;
-      calc = base + inputs * inputHeight;
+    if (this.formState === FORM_STATES.FORGOT) {
+      height = 250;
     }
 
-    return `${calc}px`;
+    if (this.formState === FORM_STATES.FORGOT_POST_EMAIL) {
+      height = 305;
+    }
+
+    return `${height}px`;
   }
 
   render() {
@@ -216,7 +218,10 @@ export class MainActionButton extends LitElement {
             ></fc-input>
           </div>
           <div
-            ?hidden=${[FORM_STATES.FORGOT].includes(this.formState)}
+            ?hidden=${[
+              FORM_STATES.FORGOT,
+              FORM_STATES.FORGOT_POST_EMAIL
+            ].includes(this.formState)}
             class="field"
           >
             <label>Password</label>
@@ -224,13 +229,17 @@ export class MainActionButton extends LitElement {
           </div>
           <span
               id="forgot"
-            ?hidden=${[FORM_STATES.FORGOT].includes(this.formState)}
+            ?hidden=${[
+              FORM_STATES.FORGOT,
+              FORM_STATES.FORGOT_POST_EMAIL
+            ].includes(this.formState)}
             @click="${() => (this.formState = FORM_STATES.FORGOT)}"
             >Forgot Password?</span
           >
           <span
+            id="reset-confirm"
             ?hidden=${![FORM_STATES.FORGOT_POST_EMAIL].includes(this.formState)}
-            >A Link to log in has been sent to your mail.</span
+            >A Link to log in has been sent to your mail, if such exist.</span
           >
           <div class="buttons">
             <fc-button
