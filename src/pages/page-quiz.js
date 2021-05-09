@@ -20,7 +20,6 @@ export class PageQuiz extends PageElement {
       <section class="hero">
         <div class="container">
           <div class="hero-inner">
-            <!--<img class="logo" src="images/logo.svg"></img>-->
             <p>To be helpful, we need to get to know you just a little.</p>
 
             <h1>Answer these 5 quick questions without overthinking it.</h1>
@@ -72,9 +71,7 @@ export class PageQuiz extends PageElement {
    */
   answerChosen({ target }, index) {
     // adding small interval to see animation
-    //
     this.answers.push(target.value);
-    console.log(target.value, index, this.answers);
 
     setTimeout(() => {
       if (this.selected === 4) {
@@ -86,11 +83,14 @@ export class PageQuiz extends PageElement {
     }, 500);
   }
 
+  /**
+   * go to result by the engineering level result after quiz
+   */
   goToResult() {
     const { answers } = this;
     const roles = Array.from(new Set(answers)).filter((x) => x !== undefined);
     const params = { role: 'software-engineer' };
-    console.log(answers, roles);
+
     if (roles.length === 1 && roles.includes(ROLES.ENTRY)) {
       params.role = 'entry-level-engineer';
     } else if (

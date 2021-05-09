@@ -157,15 +157,14 @@ export class MainActionButton extends LitElement {
 
   async toggleModal() {
     const user = await getUser();
-    console.log(user);
-    // if (user?.uid) {
-    //   if (user?.hasGrowthNotepad) {
-    //     return this.openResults();
-    //   }
-    //   return this.openQuiz();
-    // }
-    //
-    // this.shadowRoot.querySelector('#modal').toggle();
+    if (user?.uid) {
+      if (user?.hasGrowthNotepad) {
+        return this.openResults();
+      }
+      return this.openQuiz();
+    }
+
+    this.shadowRoot.querySelector('#modal').toggle();
   }
 
   getHeight() {

@@ -1,17 +1,15 @@
 import { html, css } from '../components/base';
 import { Logo } from '../components';
 import config from '../config';
-import appData from '../app.data';
 
 import { PageElement } from '../helpers/page-element';
 import { urlForName } from '../router';
-
+import { topicMetadata, topics, getCategoriesByTopic } from '../stores/topic';
+import { roleMetadata } from '../stores/role';
 
 export class PageResult extends PageElement {
   render() {
     const { role } = this.location.params;
-    const { topicsToIcon, topicsToLink, topics, roleToTitle } = config;
-    const { Ladder } = appData;
 
     return html`
       <section class="hero hero-result">
@@ -22,7 +20,7 @@ export class PageResult extends PageElement {
               the level of impact you’ve mentioned fits here:
             </p>
 
-            <h1>${config.roleToTitle[role]}</h1>
+            <h1>${roleMetadata[role].title}</h1>
           </div>
         </div>
       </section>
@@ -41,16 +39,16 @@ export class PageResult extends PageElement {
           </div>
           <div class="result-data">
             ${topics.map(
-              topic => html`
+              (topic) => html`
                 <div class="result-box">
                   <div class="left-box">
                     <div class="box-title">
-                      <i class="${topicsToIcon[topic]}"></i>${topic}
+                      <i class="${topicMetadata[topic].icon}"></i>${topic}
                     </div>
                     <div class="box-tags">
                       <ul>
-                        ${Ladder[topic].Topics.map(
-                          section => html` <li>${section}</li> `
+                        ${getCategoriesByTopic(topic).map(
+                          (section) => html` <li>${section}</li> `
                         )}
                       </ul>
                     </div>
@@ -60,7 +58,7 @@ export class PageResult extends PageElement {
                       class="text-white"
                       href="${urlForName('improve', {
                         role,
-                        topic: topicsToLink[topic]
+                        topic: topicMetadata[topic].link
                       })}"
                     >
                       <fc-button size="small" class="work"

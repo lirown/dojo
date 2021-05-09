@@ -1,5 +1,6 @@
 import config from '../config';
 import { signOut } from '../helpers/firebase/authentication';
+import { db } from '../app.db';
 
 /**
  * Update the navbar items by route
@@ -52,7 +53,7 @@ export const routes = [
       title: 'Result',
       description: 'Quiz result page'
     },
-    action: async () => {
+    action: async (a, b) => {
       await import('../pages/page-result');
       updateNavbar();
     }

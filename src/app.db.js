@@ -5,7 +5,7 @@ const STORE_NAME = 'dojo-improve';
 const dbPromise = openDB('dojo-notepad', 1, {
   upgrade(db) {
     const store = db.createObjectStore(STORE_NAME);
-    store.createIndex('updatedAt', 'updatedAt');
+    store.createIndex('createdAt', 'createdAt');
   }
 });
 
@@ -75,6 +75,7 @@ export async function keys() {
 export async function query({
   index = 'updatedAt',
   groupBy,
+  flat = false,
   filter = () => true
 }) {
   const store = await dbPromise;
@@ -87,6 +88,10 @@ export async function query({
   const groupByMap = {};
   result.map((item) => {
     const groupedBy = item[groupBy];
+    if (flat) {
+      groupByMap[groupedBy] = item;
+      return;
+    }
     if (!groupByMap[groupedBy]) {
       groupByMap[groupedBy] = [];
     }

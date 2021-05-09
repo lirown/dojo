@@ -25,6 +25,7 @@ export function Feature({
   return html`
     <a class="creator" href="https://www.${name}.com" target="_blank">
         <img width="${width}" height="${height}" src="images/${name}.png" alt="{name}"></img>
+        <span class="play-icon hi-icon hi-icon-archive"></span>
      </a>
   `;
 }
