@@ -251,6 +251,7 @@ p {
   color: black;
   line-height: 23px;
 }
+
 section:not(.hero) {
   padding: 30px 0;
 }
@@ -454,8 +455,6 @@ page-home .hero-inner > h1 {
 
 .featuring-data > a {
   position: relative;
-
-  /* flex: 1; */
   margin-right: 0;
   margin-bottom: 20px;
 }
@@ -783,11 +782,13 @@ ul#main-menu > li:not(.type-notepad) {
 fc-checkbox[checked] + span {
   color: var(--fc-gray);
 }
+
 .hiring a::before,
 .hiring a::after {
   opacity: 0;
   transition: all 0.2s;
 }
+
 .hiring a::before {
   position: absolute;
   top: -83px;
@@ -797,9 +798,11 @@ fc-checkbox[checked] + span {
   background: url(./images/pop.svg);
   content: "";
 }
+
 .hiring a:hover::before {
   opacity: 1;
 }
+
 .hiring a::after {
   position: absolute;
   top: -78px;
@@ -809,9 +812,11 @@ fc-checkbox[checked] + span {
   letter-spacing: 0.02em;
   content: "We Are Hiring!";
 }
+
 .hiring a:hover::after {
   opacity: 1;
 }
+
 .hiring {
   position: fixed;
   right: 20px;
@@ -836,6 +841,42 @@ fc-checkbox[checked] + span {
   cursor: pointer;
 }
 
+a.creator::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  width: 55px;
+  height: 55px;
+  margin: auto;
+  background: url(./images/play.svg);
+  content: "";
+}
+
+.prev-next {
+  position: absolute;
+  bottom: 30px;
+}
+
+.prev-next a:hover {
+  color: #03d894;
+}
+
+.prev-next a {
+  color: #0074ff;
+  font-weight: 300;
+  font-size: 18px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.prev-next a.first::after {
+  margin: 0 10px;
+  content: "|";
+}
+
 .hi-icon::after {
   position: absolute;
   -webkit-box-sizing: content-box;
@@ -846,6 +887,10 @@ fc-checkbox[checked] + span {
   border-radius: 50%;
   content: '';
   pointer-events: none;
+}
+
+page-result .hero {
+  position: relative;
 }
 
 .hi-icon::before {
@@ -957,19 +1002,28 @@ fc-checkbox[checked] + span {
   ul#main-menu > li:not(.type-notepad) {
     display: block;
   }
+
   section {
     padding: 65px 0;
   }
+
+  .prev-next a {
+    font-size: 20px;
+  }
+
   section:not(.hero) {
     padding: 65px 0;
   }
+
   .result-box {
     flex-direction: row;
     padding: 30px;
   }
+
   .link {
     margin-bottom: 0;
   }
+
   fc-radio {
     font-size: 24px;
     line-height: 32px;
@@ -993,6 +1047,7 @@ fc-checkbox[checked] + span {
     padding: 5px 20px 6px;
     font-size: 16px;
   }
+
   header nav button {
     display: flex;
     align-items: center;

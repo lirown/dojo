@@ -6,7 +6,6 @@ import appData from '../app.data';
 import { PageElement } from '../helpers/page-element';
 import { urlForName } from '../router';
 
-
 export class PageResult extends PageElement {
   render() {
     const { role } = this.location.params;
@@ -23,6 +22,10 @@ export class PageResult extends PageElement {
             </p>
 
             <h1>${config.roleToTitle[role]}</h1>
+              <div class="prev-next">
+                  <a class="first" href="#" title="previous level">Previous Level</a>
+                  <a href="#" title="next level">Next Level</a>
+              </div>
           </div>
         </div>
       </section>
@@ -41,7 +44,7 @@ export class PageResult extends PageElement {
           </div>
           <div class="result-data">
             ${topics.map(
-              topic => html`
+              (topic) => html`
                 <div class="result-box">
                   <div class="left-box">
                     <div class="box-title">
@@ -50,7 +53,7 @@ export class PageResult extends PageElement {
                     <div class="box-tags">
                       <ul>
                         ${Ladder[topic].Topics.map(
-                          section => html` <li>${section}</li> `
+                          (section) => html` <li>${section}</li> `
                         )}
                       </ul>
                     </div>
