@@ -21,7 +21,7 @@ export async function forgotPassword(email) {
   const actionCodeSettings = {
     // URL you want to redirect back to. The domain (www.example.com) for this
     // URL must be in the authorized domains list in the Firebase Console.
-    url: 'https://lirown.github.io/dojo/',
+    url: 'https:/dojo.engineering/forgot/',
     // This must be true.
     handleCodeInApp: true,
     iOS: {
@@ -32,7 +32,7 @@ export async function forgotPassword(email) {
       installApp: true,
       minimumVersion: '12'
     },
-    dynamicLinkDomain: 'example.page.link'
+    dynamicLinkDomain: 'https:/dojo.engineering/forgot'
   };
 
   return await new Promise((resolve, reject) => {

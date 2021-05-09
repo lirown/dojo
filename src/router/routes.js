@@ -46,6 +46,23 @@ export const routes = [
     }
   },
   {
+    path: '/forgot',
+    redirect: '/',
+    name: 'forgot',
+    component: 'page-home',
+    metadata: {
+      title: config.appName,
+      titleTemplate: null,
+      description: config.appDescription
+    },
+    action: async () => {
+      debugger;
+      console.log(location); // should be something like dojo.engineering/forgot?google-site-verification=hOObp-ajZtjNm7s6nQCeKpVxpn9Bmm7PxCNyugtTffQ
+      await import('../pages/page-home');
+      updateNavbar();
+    }
+  },
+  {
     path: '/result/:role',
     name: 'result',
     component: 'page-result',
