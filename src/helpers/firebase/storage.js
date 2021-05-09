@@ -21,15 +21,54 @@ export async function getFile(file) {
   });
 }
 
-export async function createOrUpdateFile(str) {
+export async function updateFile(str) {
+  const user = await getUser();
+  if (!user) {
+    throw 'not logged in';
+  }
+  return await new Promise(async (resolve) => {
+    const fileRef = storageRef.child(`user/${user.uid}`);
+    // Put the new file in the same child ref.
+    await fileRef.put(`user/${user.uid}`);
+    // Get the new URL
+    const url = await fileRef.getDownloadURL();
+    resolve(url);
+  });
+}
+
+export async function createFile() {
   const user = await getUser();
   if (!user) {
     throw 'not logged in';
   }
   return await new Promise((resolve) => {
     const fileRef = storageRef.child(`user/${user.uid}`);
-    fileRef.putString(str).then((snapshot) => {
+    fileRef.putString('{}').then((snapshot) => {
       resolve(snapshot);
     });
+  });
+}
+
+export async function deleteFile() {
+  const user = await getUser();
+  if (!user) {
+    throw 'not logged in';
+  }
+
+  return await new Promise((resolve, reject) => {
+    // Create a reference to the file to delete
+    var desertRef = storageRef.child(`images/${user.uid}`);
+
+    // Delete the file
+    desertRef
+      .delete()
+      .then(() => {
+        // File deleted successfully
+        resolve();
+      })
+      .catch((error) => {
+        // Uh-oh, an error occurred!
+        reject(error);
+      });
   });
 }

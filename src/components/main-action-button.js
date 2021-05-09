@@ -7,6 +7,7 @@ import {
   signOut,
   getUser
 } from '../helpers/firebase/authentication';
+import { createFile } from '../helpers/firebase/storage';
 
 const FORM_STATES = {
   FORGOT: 'FORGOT',
@@ -131,8 +132,7 @@ export class MainActionButton extends LitElement {
     console.log('signing up...');
     const { password, email, name } = this.getInputProps();
     const result = await signUp(email, password, name);
-    // todo: verify no pii is saved in file as it is accesssible to everyone
-    // const res = await createOrUpdateFile(JSON.stringify(user));
+
     console.log(result);
     this.openQuiz();
   }
