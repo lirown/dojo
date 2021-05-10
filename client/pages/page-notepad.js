@@ -43,7 +43,6 @@ export class PageNotepad extends PageElement {
   /** @inheritdoc */
   async firstUpdated() {
     const { topic = DEFAULT_TOPIC } = this.location.params;
-    this.topicsCount = [];
     this.state = await db.query({
       groupBy: 'section',
       filter: (notepad) => notepad.topic === topic
