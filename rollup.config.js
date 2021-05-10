@@ -68,7 +68,7 @@ const config = merge(
               include: 'index.html',
               delimiters: ['', ''],
               values: {
-                'GIT_HASH': `${process.env.GIT_HASH || ''}`
+                GIT_HASH: `${process.env.GIT_HASH || ''}`
               }
             })
           ]
