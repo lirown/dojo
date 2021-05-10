@@ -1,4 +1,6 @@
 import config from '../config';
+import { signOut } from '../helpers/firebase/authentication';
+import { db } from '../app.db';
 
 /**
  * Update the navbar items by route
@@ -16,6 +18,37 @@ export const routes = [
   {
     path: '/',
     name: 'home',
+    component: 'page-home',
+    metadata: {
+      title: config.appName,
+      titleTemplate: null,
+      description: config.appDescription
+    },
+    action: async () => {
+      await import('../pages/page-home');
+      updateNavbar();
+    }
+  },
+  {
+    path: '/logout',
+    redirect: '/',
+    name: 'logout',
+    component: 'page-home',
+    metadata: {
+      title: config.appName,
+      titleTemplate: null,
+      description: config.appDescription
+    },
+    action: async () => {
+      await signOut();
+      await import('../pages/page-home');
+      updateNavbar();
+    }
+  },
+  {
+    path: '/forgot',
+    redirect: '/',
+    name: 'forgot',
     component: 'page-home',
     metadata: {
       title: config.appName,
