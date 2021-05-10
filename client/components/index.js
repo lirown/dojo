@@ -1,5 +1,6 @@
 export { Logo } from './logo';
 export { MainActionButton } from './main-action-button';
+export { FcModal } from './modal';
 export { Feature } from './feature';
 export { Ninja } from './ninja';
 export { StatusButton } from './status-button';

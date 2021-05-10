@@ -16,6 +16,10 @@ import '@forter/checkbox';
 import '@forter/button';
 import '@forter/radio';
 import '@forter/tooltip';
+import '@forter/input';
+
+import './components/main-action-button.js';
+import './components/modal.js';
 
 import 'pwa-helper-components/pwa-install-button.js';
 import 'pwa-helper-components/pwa-update-available.js';

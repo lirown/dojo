@@ -1,6 +1,5 @@
 import config from '../config';
 import { signOut } from '../helpers/firebase/authentication';
-import { db } from '../app.db';
 
 /**
  * Update the navbar items by route
