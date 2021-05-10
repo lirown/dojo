@@ -1,45 +1,43 @@
 > This project is currently in development.
 
-[![CI](https://github.com/lirown/dojo/workflows/CI/badge.svg)](https://github.com/lirown/dojo-engineering/actions)
-[![Built with dojo-starter](https://img.shields.io/badge/built%20with-pwa--forter--template-blue)](https://github.com/lirown/dojo 'Built with pwa-forter-template')
+[![CI](https://github.com/lirown/dojo/workflows/CI/badge.svg)](https://github.com/lirown/dojo/actions)
+[![Built with dojo-starter](https://img.shields.io/badge/built%20with-dojo-starter-blue)](https://github.com/lirown/dojo 'Built with dojo-starter')
 
-# 🐱‍👤 Dojo Engineering
+# 🐱👤 Dojo Engineering
+
+> Dojo Engineering is the official platform to expose how we do career journey @ Forter.
 
 [![Dojo Engineering](https://github.com/lirown/dojo/blob/main/preview.png?raw=true)](https://lirown.github.io/dojo)
 
-##### [Getting started](#getting-started) | [Build for production](#build-for-production) | [Create a new page](#create-a-new-page) | [Environment configuration](#environment-configuration) | [Browser support](#browser-support)
+## 👨‍🏭 Installing
 
-This project helps you to build Progressive Web Applications following the modern web standards, best practices and providing you with tools for that purpose. Out of the box, provides you with the following features:
+Clone from the current repo and then run the following command inside the root folder:
 
-- Simple way to create Web Components with [LitElement](https://lit-element.polymer-project.org).
-- Small and powerful client-side router for Web Components with [Vaadin Router](https://vaadin.com/router).
-- All the benefits from a PWA (manifest, service worker, offline UI) thanks to [Workbox](https://developers.google.com/web/tools/workbox) and [pwa-helpers](https://github.com/thepassle/pwa-helpers).
-- SEO friendly thanks to the `PageElement` custom element and the `html-meta-manager`.
-- A development server with auto-reload to serve the application without bundling with [`@web/dev-server`](https://modern-web.dev/docs/dev-server/overview/).
-- Simple build flow thanks to [Rollup](https://rollupjs.org) and [`@open-wc/building-rollup`](https://open-wc.org/docs/building/rollup/) initial configuration.
-- Easy deployment over to [prpl-server](https://github.com/Polymer/prpl-server) or any static hosting.
+```bash
+npm i
+```
 
-Check out [our roadmap](https://github.com/lirown/dojo-engineering/projects/1) to get informed of the latest features released and the upcoming ones.
+## 🧙‍♂️ CLI
 
-## Getting started
+`npm` are included as follows:
 
-### Prerequisites
+- `build` runs build command to pack dojo
+- `start` runs client using `rollup` in the root directory
+- `test` runs the unit and e2e test suites
+- `lint` runs ESLint with --fix flag to fix problematic patterns in code. Ignore warnings.
+- `format` runs prettier with --fix flag to auto format code.
+- `coverage` runs nyc to produce a test coverage report
+- `check-outdated` runs `david` which check if package npm dependencies are out of date
+- `check-vulnerabilities"` runs `nsp` which check if package npm dependencies have security issues
+  :
+  👨‍🏭 Installing
+  Clone from the current repo and then run the following command inside the root folder:
 
-- [node.js](https://nodejs.org)
+```bash
+npm i
+```
 
-Furthermore, this project is built on [JavaScript](https://www.typescriptlang.org) with the intention of improving the developer experience.
-
-### Install the dependencies
-
-    npm install
-
-### Start the development server
-
-This command serves the app at `http://localhost:8000`:
-
-    npm start
-
-### Project structure
+🤵 Directory Layout
 
 ```
 ├─ images/
@@ -67,110 +65,44 @@ This command serves the app at `http://localhost:8000`:
 └─ tsconfig.json
 ```
 
-- `images`: is use to store the static resourced used by your application.
-- `patches`: contains the patches to apply in the different packages mentioned [here](#things-to-be-aware). It will be removed at some point.
-- `server`: contains the logic to serve the application. And is where you are going to create your `dist/` folder containing the bundle of your application.
-- `client`
-  - `components`: contains your custom Web Components. Inside this folder you will find the `app-index.ts` file, main root of your application following the PRPL patern.
-  - `helpers`: contains two interesting features: `PageElement` and `html-meta-manager`. Go more in-depth with them [here](#create-a-new-page).
-  - `pages`: where you create the pages for your application.
-  - `router`: where you create the routes for your application.
-  - `config.ts`: stores the application configuration variables. Go more in-depth with it [here](#environment-configuration).
-- `index.html`: the application entry point.
+## 👩‍💻 Using locally
 
-## Guides
+This command serves the app at `http://localhost:8000`:
 
-### Build for production
-
-This command use Rollup to build an optimized version of the application for production:
-
-    npm run build
-
-It has two outputs: in addition to outputting a regular build, it outputs a legacy build which is compatible with older browsers down to IE11.
-
-At runtime it is determined which version should be loaded, so that legacy browsers don't force to ship more and slower code to most users on modern browsers.
-
-Note: If you need to add static files to the build, like the `images` folder or the `manifest.webmanifest`, you should register them in the `copy()` plugin of the `rollup.config.js`.
-
-### Create a new page
-
-1. Create the new page component (extending from `PageElement` helper) in the `pages` folder. For example a `page-explore.ts`.
-
-   ```javascript
-   import { html, customElement } from 'lit-element';
-
-   import { PageElement } from '../helpers/page-element';
-
-   export class PageExplore extends PageElement {
-     render() {
-       return html`
-         <h1>Explore</h1>
-         <p>My new explore page!</p>
-       `;
-     }
-   }
-
-   customElements.defile('page-explore', PageExplore);
-   ```
-
-2. Register the new route in the `routes.js`:
-
-   ```typescript
-   {
-     path: '/explore',
-     name: 'explore',
-     component: 'page-explore',
-     metadata: {
-       title: 'Explore',
-       description: 'Explore page description'
-     },
-     action: async () => {
-       await import('../pages/page-explore');
-     }
-   },
-   ```
-
-With SEO in mind, this project offers you the `PageElement` base class to help you to deal with it; it has a `metadata()` method that edits the HTML meta tags of the specific page with the `metadata` property defined in the route. And if you need dynamic information, you also can override the `metadata()` method.
-
-### Environment configuration
-
-This project allows different configurations per environment. The file that manages that configuration is `client/config.js`. If you are interested in overwrite any of the configuration variables depending of the environment, you can create a file following the rule `src/config.{NODE_ENV}.js`. Take into account that you don't need to replicate all the variables, just change the variable that you need to be different this way:
-
-```typescript
-import config from './config';
-
-export default {
-  ...config,
-  environment: 'staging'
-};
+```sh
+    npm start
 ```
 
-In the build process the references in the project (but not in the configuration files) of `./config` will be replaced to `./config.{NODE_ENV}` loading the expected configuration file for the target environment.
+## 👨‍⚕️ Linting
 
-Lastly, the way to use that configuration is quite simple. You only need to import it:
+[ESLint](eslint.org) comes already installed, extending [eslint-recommanded](http://rapilabs.github.io/eslintrc-generator). Don't forget to install the appropriate [plugin for your editor](http://eslint.org/docs/user-guide/integrations).
 
-```javascript
-import config from '../config';
+```sh
+ npm run fix-lint
 ```
 
-And use it where you need it:
+## 👨‍🔬 Testing
 
-```javascript
-render() {
-  return html`
-    <footer>
-      <span>Environment: ${config.environment}</span>
-    </footer>
-  `;
-}
+Testing is done using [mocha](mochajs.org) and [chai](chaijs.com).
+[chai-as-promised](https://github.com/domenic/chai-as-promised) is included to test promise-based code.
+Mocks, stubs, etc. can be done using [sinon](sinonjs.org).
+[nock](https://github.com/node-nock/nock) is used to test HTTP requests.
+Nock also disables your app from performing any HTTP requests during tests (see `test/setup.js`).
+
+There are examples for each library in `test/foo.spec.js`.
+
+```sh
+npm test
 ```
 
-## Browser support
+## 💂 Coverage
 
-- Chrome
-- Edge
-- Firefox
-- Safari
+[Istanbul](https://github.com/gotwarlost/istanbul) is used to produce a test coverage report. Look inside the `coverage` folder after running `npm run coverage` to see the results.
 
-To run on other browsers, you need to use a combination of polyfills and transpilation.
-This step is automated by the [build for production command](#build-for-production).
+```sh
+npm run coverage
+```
+
+## 👨‍🚀 Deploying
+
+The app will be deployed to Github pages once merged to `main` branch
