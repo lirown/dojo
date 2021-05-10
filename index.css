@@ -1083,6 +1083,22 @@ page-result .hero {
     box-shadow: none;
   }
 
+  pwa-install-button > button,
+  pwa-update-available > button {
+    display: flex;
+    align-items: center;
+    margin-top: 3px;
+    padding: 5px 20px;
+    color: #fff;
+    font-weight: 400;
+    font-size: 14px;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+
   .box-title i {
     width: 24px;
     height: 24px;

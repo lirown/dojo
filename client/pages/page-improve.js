@@ -1,5 +1,5 @@
 import { html } from '../components/base';
-import { Logo, StatusCheckbox, StatusButton } from '../components';
+import { StatusCheckbox, StatusButton } from '../components';
 import { PageElement } from '../helpers/page-element';
 
 import { db } from '../stores/db';
@@ -11,7 +11,6 @@ import { roleMetadata } from '../stores/role';
  *
  * @element page-improve
  */
-
 export class PageImprove extends PageElement {
   /** @inheritdoc */
   static get properties() {
