@@ -164,25 +164,6 @@ export class MainActionButton extends LitElement {
     this.shadowRoot.querySelector('#modal').toggle();
   }
 
-  getHeight() {
-    let height;
-    if (this.formState === FORM_STATES.SIGNUP) {
-      height = 425;
-    }
-    if (this.formState === FORM_STATES.SIGNIN) {
-      height = 355;
-    }
-    if (this.formState === FORM_STATES.FORGOT) {
-      height = 250;
-    }
-
-    if (this.formState === FORM_STATES.FORGOT_POST_EMAIL) {
-      height = 305;
-    }
-
-    return `${height}px`;
-  }
-
   getWidth() {
     if (window.innerWidth < 500) {
       return '80%';
@@ -194,7 +175,7 @@ export class MainActionButton extends LitElement {
     return html`<a>
       <fc-button @click="${async () =>
         await this.toggleModal()}" size="large">${this.label}</fc-button>
-      <fc-modal width="${this.getWidth()}" height="${this.getHeight()}" id="modal">
+      <fc-modal width="${this.getWidth()}" id="modal">
         <div>
           <img src="images/logodark.png"></img>
           <div

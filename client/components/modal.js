@@ -1,6 +1,12 @@
 import { html, LitElement, css } from './base';
 
+/**
+ * Modal showing a popup to be used mostly for authentication.
+ *
+ * @element fc-modal
+ */
 export class FcModal extends LitElement {
+  /** @inheritdoc */
   static styles = [
     css`
       /* [Object] Modal
@@ -96,6 +102,7 @@ export class FcModal extends LitElement {
     `
   ];
 
+  /** @inheritdoc */
   static get properties() {
     return {
       width: { type: String },
@@ -104,19 +111,29 @@ export class FcModal extends LitElement {
     };
   }
 
+  /** @inheritdoc */
   constructor() {
     super();
     this.opened = false;
   }
 
+  /**
+   * fire a open of the modal that show it
+   */
   open() {
     this.opened = true;
   }
 
+  /**
+   * fire a close of the modal that hide it
+   */
   close() {
     this.opened = false;
   }
 
+  /**
+   * if modal is opened fire a close of the modal that hide it or vice versa
+   */
   toggle() {
     if (this.opened) {
       return this.close();
@@ -124,6 +141,7 @@ export class FcModal extends LitElement {
     return this.open();
   }
 
+  /** @inheritdoc */
   render() {
     const { opened } = this;
     return html`
@@ -133,7 +151,8 @@ export class FcModal extends LitElement {
         <div
           class="fc-modal-inner"
           @click="${() => this.open()}"
-          style="width:${this.width};height:${this.height};"
+          style="width:${this.width || 'fit-content'};height:${this.height ||
+          'fit-content'};"
         >
           <slot></slot>
         </div>
