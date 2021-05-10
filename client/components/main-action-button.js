@@ -183,11 +183,18 @@ export class MainActionButton extends LitElement {
     return `${height}px`;
   }
 
+  getWidth() {
+    if (window.innerWidth < 500) {
+      return '80%';
+    }
+    return '205px';
+  }
+
   render() {
     return html`<a>
       <fc-button @click="${async () =>
         await this.toggleModal()}" size="large">${this.label}</fc-button>
-      <fc-modal width="205px" height="${this.getHeight()}" id="modal">
+      <fc-modal width="${this.getWidth()}" height="${this.getHeight()}" id="modal">
         <div>
           <img src="images/logodark.png"></img>
           <div
