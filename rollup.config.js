@@ -57,8 +57,8 @@ const config = merge(
         ? [
             replace({
               preventAssignment: true,
-              include: 'src/**/*.js',
-              exclude: 'src/config.*.js',
+              include: 'client/**/*.js',
+              exclude: 'client/config.*.js',
               delimiters: ['', ''],
               values: {
                 './config': `./config.${process.env.NODE_ENV}`
@@ -68,7 +68,7 @@ const config = merge(
               include: 'index.html',
               delimiters: ['', ''],
               values: {
-                'GIT_HASH': `${process.env.GIT_HASH || ''}`
+                GIT_HASH: `${process.env.GIT_HASH || ''}`
               }
             })
           ]

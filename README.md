@@ -1,9 +1,11 @@
 > This project is currently in development.
 
-[![CI](https://github.com/lirown/dojo-engineering/workflows/CI/badge.svg)](https://github.com/lirown/dojo-engineering/actions)
+[![CI](https://github.com/lirown/dojo/workflows/CI/badge.svg)](https://github.com/lirown/dojo-engineering/actions)
 [![Built with dojo-starter](https://img.shields.io/badge/built%20with-pwa--forter--template-blue)](https://github.com/lirown/dojo 'Built with pwa-forter-template')
 
-# Dojp Engineering
+# 🐱‍👤 Dojo Engineering
+
+[![Dojo Engineering](https://github.com/lirown/dojo/blob/main/preview.png?raw=true)](https://lirown.github.io/dojo)
 
 ##### [Getting started](#getting-started) | [Build for production](#build-for-production) | [Create a new page](#create-a-new-page) | [Environment configuration](#environment-configuration) | [Browser support](#browser-support)
 
@@ -43,7 +45,7 @@ This command serves the app at `http://localhost:8000`:
 ├─ images/
 ├─ patches/
 ├─ server/
-├─ src/
+├─ client/
 │  ├─ components/
 │  │  └─ ···
 │  ├─ helpers/
@@ -68,7 +70,7 @@ This command serves the app at `http://localhost:8000`:
 - `images`: is use to store the static resourced used by your application.
 - `patches`: contains the patches to apply in the different packages mentioned [here](#things-to-be-aware). It will be removed at some point.
 - `server`: contains the logic to serve the application. And is where you are going to create your `dist/` folder containing the bundle of your application.
-- `src`
+- `client`
   - `components`: contains your custom Web Components. Inside this folder you will find the `app-index.ts` file, main root of your application following the PRPL patern.
   - `helpers`: contains two interesting features: `PageElement` and `html-meta-manager`. Go more in-depth with them [here](#create-a-new-page).
   - `pages`: where you create the pages for your application.
@@ -132,7 +134,7 @@ With SEO in mind, this project offers you the `PageElement` base class to help y
 
 ### Environment configuration
 
-This project allows different configurations per environment. The file that manages that configuration is `src/config.js`. If you are interested in overwrite any of the configuration variables depending of the environment, you can create a file following the rule `src/config.{NODE_ENV}.js`. Take into account that you don't need to replicate all the variables, just change the variable that you need to be different this way:
+This project allows different configurations per environment. The file that manages that configuration is `client/config.js`. If you are interested in overwrite any of the configuration variables depending of the environment, you can create a file following the rule `src/config.{NODE_ENV}.js`. Take into account that you don't need to replicate all the variables, just change the variable that you need to be different this way:
 
 ```typescript
 import config from './config';

@@ -100,7 +100,26 @@ export async function query({
 
   return groupByMap;
 }
+/**
+ * Extract numbers around amount of items in the db by query
+ *
+ * @param {Object} args the arguments for the query
+ * @param {String} args.groupBy a key to choose to create map
+ * @param {String} args.index a indice to choose to fetch data from
+ * @return {Promise<string>}
+ */
 
+export async function aggregate({
+  index = 'updatedAt',
+  groupBy,
+  flat = false,
+  filter = () => true
+}) {
+  const result = await query({ index, groupBy, flat, filter });
+  const counters = {};
+  Object.keys(result).map((key) => (counters[key] = result[key].length || 0));
+  return counters;
+}
 /**
  * exposing different methods of our indexeddb
  */
@@ -112,5 +131,6 @@ export const db = {
   remove,
   clear,
   keys,
+  aggregate,
   dbPromise
 };

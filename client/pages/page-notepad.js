@@ -1,50 +1,64 @@
-import { html, css } from '../components/base';
-import * as notepad from '../stores/notepad';
+import { html } from '../components/base';
+import { PageElement } from '../helpers/page-element';
+import { StatusCheckbox } from '../components';
+import { db } from '../stores/db';
+import { urlForName } from '../router';
+
 import {
   DEFAULT_TOPIC,
   getTopics,
   sectionMetadata,
   sections
 } from '../stores/topic';
-import { Logo, StatusCheckbox } from '../components';
-import { db } from '../app.db';
-import { urlForName } from '../router';
 
-import { PageElement } from '../helpers/page-element';
-
+/**
+ * Notepad Page - An Engineer personal followup on actionable items he want to work on.
+ *
+ * @element page-notpad
+ */
 export class PageNotepad extends PageElement {
+  /** @inheritdoc */
   static get properties() {
     return {
+      /**
+       * contains the actionable items we should do to improve grouped by sections.
+       * @type {Object<Object>}
+       */
       state: { type: Object },
-      topics: { type: Object },
+
+      /**
+       * contains the actionable items we should do to improve grouped by topic.
+       * @type {Object<Object>}
+       */
+      topicsCount: { type: Object },
+
+      /**
+       * currect topic extracted from URLParams.
+       * @type {String}
+       */
       topic: { type: String }
     };
   }
 
+  /** @inheritdoc */
   async firstUpdated() {
     const { topic = DEFAULT_TOPIC } = this.location.params;
-
     this.state = await db.query({
       groupBy: 'section',
       filter: (notepad) => notepad.topic === topic
     });
-    this.topics = await db.query({ groupBy: 'topic' });
+    this.topicsCount = await db.aggregate({ groupBy: 'topic' });
   }
 
+  /** @inheritdoc */
   render() {
-    if (!this.state || !this.topics) {
+    const { state, topicsCount } = this;
+    if (!state || !topicsCount) {
       return html`Loading...`;
     }
 
     const { topic = DEFAULT_TOPIC } = this.location.params;
     const callback = this.firstUpdated.bind(this);
-
-    const topicsCount = [
-      (this.topics['engineering-craftsmanship'] || []).length,
-      (this.topics['project-leadership'] || []).length,
-      (this.topics['business-involvement'] || []).length,
-      (this.topics['organizational-impact'] || []).length
-    ];
 
     return html`
       <section class="hero">
@@ -60,7 +74,7 @@ export class PageNotepad extends PageElement {
                         href="${urlForName('notepad', {
                           topic: key
                         })}"
-                        >${name} <span>${topicsCount[index]}</span></a
+                        >${name} <span>${this.topicsCount[key] || 0}</span></a
                       >
                     </li>
                   `
@@ -90,9 +104,9 @@ export class PageNotepad extends PageElement {
                       ${sectionMetadata[section].description}
                     </div>
                     <div class="box-questions">
-                      ${!this.state[section]
+                      ${!state[section]
                         ? html` <div>Nothing here yet.</div> `
-                        : this.state[section]
+                        : state[section]
                             .sort((a, b) => a.key.localeCompare(b.key))
                             .map(
                               ({

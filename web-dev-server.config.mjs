@@ -11,8 +11,8 @@ export default {
       ? [
           fromRollup(replace)({
             preventAssignment: true,
-            include: 'src/**/*.js',
-            exclude: 'src/config.*.js',
+            include: 'client/**/*.js',
+            exclude: 'client/config.*.js',
             delimiters: ['', ''],
             values: {
               './config': `./config.${process.env.NODE_ENV}`
