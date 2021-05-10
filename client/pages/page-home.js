@@ -68,8 +68,9 @@ export class PageHome extends PageElement {
           <div class="featuring-inner">
             <p>From the creators of other fun things...</p>
             <div class="featuring-data hi-icon-wrap hi-icon-effect-8">
-              ${Feature({ name: 'b' })} ${Feature({ name: 'a' })}
-              ${Feature({ name: 'c' })}
+              ${Feature({ name: 'forkerlabs' })}
+              ${Feature({ name: 'softwarearchitectureaddict' })}
+              ${Feature({ name: 'chuckwho' })}
             </div>
           </div>
         </div>
