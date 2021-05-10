@@ -3,7 +3,7 @@
 [![CI](https://github.com/lirown/dojo/workflows/CI/badge.svg)](https://github.com/lirown/dojo/actions)
 [![Built with dojo-starter](https://img.shields.io/badge/built%20with-dojo-starter-blue)](https://github.com/lirown/dojo 'Built with dojo-starter')
 
-# 🐱👤 Dojo Engineering
+# 🧕 Dojo Engineering
 
 > Dojo Engineering is the official platform to expose how we do career journey @ Forter.
 
