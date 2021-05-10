@@ -1,4 +1,4 @@
-import appData from './career-ladder.js';
+import careerLadder from './career-ladder.js';
 
 export const DEFAULT_ROLE = 'software-engineer';
 
@@ -39,7 +39,7 @@ export function getRoleFromURL() {
  * @return {Array<Object<String,String>>} roles from ladder JSON
  */
 export function getRoles() {
-  return Object.values(appData.Meta.Dans).map((role) => ({
+  return Object.values(careerLadder.Meta.Dans).map((role) => ({
     key: role.name.split(' ').join('-').toLowerCase(),
     name: role.name
   }));
@@ -51,7 +51,7 @@ export function getRoles() {
 export function getActionableItems() {
   const { topic, role } = this.location.params;
   const [content] = Object.values(
-    appData.Ladder[this.startCase(topic)].Ladder.filter(
+    careerLadder.Ladder[this.startCase(topic)].Ladder.filter(
       (level) => roleMetadata[role].level === Object.keys(level)[0]
     )[0]
   );

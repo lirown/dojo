@@ -1,4 +1,4 @@
-import appData from './career-ladder.js';
+import careerLadder from './career-ladder.js';
 import { roleMetadata } from './role';
 
 export const DEFAULT_TOPIC = 'engineering-craftsmanship';
@@ -69,7 +69,7 @@ export function getTopicFromURL() {
  * @return {Array<Object<String,String>>} topics from ladder JSON
  */
 export function getTopics() {
-  return Object.keys(appData.Ladder).map((topic) => ({
+  return Object.keys(careerLadder.Ladder).map((topic) => ({
     key: topic.split(' ').join('-').toLowerCase(),
     name: topic
   }));
@@ -80,7 +80,7 @@ export function getTopics() {
  * @return {Array<Object<String,String>>} topics from ladder JSON
  */
 export function getCategoriesByTopic(topic) {
-  return appData.Ladder[topic].Topics;
+  return careerLadder.Ladder[topic].Topics;
 }
 
 /**
@@ -102,7 +102,7 @@ function startCase(string) {
  */
 export function getActionableItems({ topic, role }) {
   const [content] = Object.values(
-    appData.Ladder[startCase(topic)].Ladder.filter(
+    careerLadder.Ladder[startCase(topic)].Ladder.filter(
       (level) => roleMetadata[role].level === Object.keys(level)[0]
     )[0]
   );
