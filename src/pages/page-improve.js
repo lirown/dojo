@@ -1,10 +1,10 @@
-import { html, css, until } from '../components/base';
-import { Logo } from '../components';
-import config from '../config';
-import appData from '../app.data';
-import { db } from '../app.db';
+import { html } from '../components/base';
+import { Logo, StatusCheckbox, StatusButton } from '../components';
 import { PageElement } from '../helpers/page-element';
-import * as notepad from '../helpers/notepad';
+
+import { db } from '../app.db';
+import { sections, getActionableItems, sectionMetadata } from '../stores/topic';
+import { roleMetadata } from '../stores/role';
 
 export class PageImprove extends PageElement {
   static get properties() {
@@ -14,20 +14,22 @@ export class PageImprove extends PageElement {
   }
 
   async firstUpdated() {
-    this.state = await db.query({ groupBy: 'key' });
+    this.state = await db.query({ groupBy: 'key', flat: true });
   }
 
   render() {
     const { topic, role } = this.location.params;
-    const content = this.getContent();
+    const callback = this.firstUpdated.bind(this);
+    const actionableItems = getActionableItems({ topic, role });
     const { state } = this;
+
     return html`
       <section class="hero hero-improve">
         <div class="container">
           <div class="hero-inner">
             <h1> Improving at ${this.startCase(topic)}
             <p>
-              Level: ${config.roleToTitle[role]}
+              Level: ${roleMetadata[role].title}
             </p>
           </div>
         </div>
@@ -43,116 +45,86 @@ export class PageImprove extends PageElement {
             </p>
           </div>
           <div class="result-data">
-            ${notepad.sections.map(
-              (section) => html`
-                <div class="result-box">
-                  <div class="left-box">
-                    <div class="box-title">${section}</div>
-                    <div class="box-subtitle">
-                      ${config.sectionDescriptions[section]}
-                    </div>
-                    <div class="box-questions">
-                      ${content[section].map((data) => {
-                        const status = notepad.getStatus(state, data);
-                        console.log(data, status);
-                        const key = data.name || data['anti-pattern'] || data;
-                        return data.link && data.name
-                          ? html`
-                              <div>
-                                <div>
-                                  <fc-tooltip tooltip="done?">
-                                <fc-checkbox
-                                  ?checked=${status === 'done'}
-                                  @click=${() =>
-                                    notepad.changeStatus(
-                                      { ...state, status: 'done' },
-                                      key,
-                                      section,
-                                      topic,
-                                      () => this.firstUpdated()
-                                    )}
-                                ></fc-checkbox
-                                ></fc-tooltip><a class="link" href="${
-                                  data.link
-                                }" target="_blank"
-                                  >${data.name}</a
-                                >
-                                </div>
-                                <fc-button style="--fc-button-text-transform:uppercase;--fc-button-color:white;"
-                                  @click=${() =>
-                                    notepad.changeStatus(
-                                      state,
-                                      key,
-                                      section,
-                                      topic,
-                                      () => this.firstUpdated()
-                                    )}
-                                  class="${status}"
-                                  size="medium"
-                                  >${notepad.getStatus(
-                                    state,
-                                    key,
-                                    'Explore Later'
-                                  )}</fc-button
-
-                              </div>
-                            `
-                          : html`
-                              <div>
-                                <div>
-                                  <fc-checkbox
-                                    @click=${() =>
-                                      notepad.changeStatus(
-                                        { ...state, status: 'added' },
+            ${
+              this.state
+                ? sections.map(
+                    (section) => html`
+                      <div class="result-box">
+                        <div class="left-box">
+                          <div class="box-title">${section}</div>
+                          <div class="box-subtitle">
+                            ${sectionMetadata[section].description}
+                          </div>
+                          <div class="box-questions">
+                            ${actionableItems[section].map((data) => {
+                              const key =
+                                data.name || data['anti-pattern'] || data;
+                              const status =
+                                (this.state[key] || {}).status || 'work';
+                              return data.link && data.name
+                                ? html`
+                                    <div>
+                                      <div>
+                                        ${StatusCheckbox({
+                                          status,
+                                          key,
+                                          section,
+                                          topic,
+                                          callback
+                                        })}
+                                        <a
+                                          class="link"
+                                          href="${data.link}"
+                                          target="_blank"
+                                          >${data.name}</a
+                                        >
+                                      </div>
+                                      ${StatusButton({
+                                        status,
                                         key,
-                                        section,
                                         topic,
-                                        () => this.firstUpdated()
-                                      )}
-                                    ?checked=${status === 'done'}
-                                  ></fc-checkbox>
-                                  <span class="improve-label">${key}</span>
-                                </div>
-                                <fc-button
-                                  style="--fc-button-text-transform:uppercase;--fc-button-color:white;"
-                                  @click=${() =>
-                                    notepad.changeStatus(
-                                      state,
-                                      key,
-                                      section,
-                                      topic,
-                                      () => this.firstUpdated()
-                                    )}
-                                  class="${status}"
-                                  size="medium"
-                                  >${notepad.getStatus(
-                                    state,
-                                    key,
-                                    'Work on it'
-                                  )}</fc-button
-                                >
-                              </div>
-                            `;
-                      })}
-                    </div>
-                  </div>
-                </div>
-              `
-            )}
+                                        section,
+                                        label: 'Explore Later',
+                                        callback
+                                      })}
+                                    </div>
+                                  `
+                                : html`
+                                    <div>
+                                      <div>
+                                        ${StatusCheckbox({
+                                          status,
+                                          key,
+                                          section,
+                                          topic,
+                                          callback
+                                        })}
+                                        <span class="improve-label"
+                                          >${key}</span
+                                        >
+                                      </div>
+                                      ${StatusButton({
+                                        status,
+                                        key,
+                                        topic,
+                                        section,
+                                        label: 'Work on it',
+                                        callback
+                                      })}
+                                    </div>
+                                  `;
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    `
+                  )
+                : html`Loading...`
+            }
           </div>
         </div>
       </section>
     `;
-  }
-
-  getContent() {
-    const { topic, role } = this.location.params;
-    const [content] = Object.values(
-      appData.Ladder[this.startCase(topic)].Ladder.filter(
-        (level) => config.roleToLevel[role] === Object.keys(level)[0]
-      )[0]
-    );
-    return content;
   }
 }
 

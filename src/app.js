@@ -1,42 +1,30 @@
 import { LitElement, html, css } from './components/base';
-import { Logo } from './components';
+import {
+  ShareSection,
+  HiringButton,
+  Logo,
+  NavButton,
+  NavDropdownItem
+} from './components';
 
 import config from './config';
-import appData from './app.data.js';
-
-import { db } from './app.db';
 
 import { attachRouter, urlForName } from './router';
+import { getTopics, getTopicFromURL } from './stores/topic';
+import { getRoles, getRoleFromURL } from './stores/role';
+
 import '@forter/checkbox';
 import '@forter/button';
 import '@forter/radio';
-//import '@forter/tooltip';
+import '@forter/tooltip';
 
 import 'pwa-helper-components/pwa-install-button.js';
 import 'pwa-helper-components/pwa-update-available.js';
 
-window.__db = db;
-
 export class App extends LitElement {
   render() {
-    let role = 'software-engineer';
-    let topic = 'engineering-craftsmanship';
-
-    if (location.pathname.split('/').length > 3) {
-      const parts = location.pathname.split('/').reverse();
-      role = parts[0];
-      topic = parts[1];
-    }
-
-    const topics = Object.keys(appData.Ladder).map((topic) => ({
-      key: topic.split(' ').join('-').toLowerCase(),
-      name: topic
-    }));
-
-    const levels = Object.values(appData.Meta.Dans).map(({ name }) => ({
-      key: name.split(' ').join('-').toLowerCase(),
-      name
-    }));
+    const role = getRoleFromURL();
+    const topic = getTopicFromURL();
 
     return html` <header>
         <div class="container">
@@ -49,58 +37,40 @@ export class App extends LitElement {
                       <li class="type-drop">
                         <a>Change level</a>
                         <ul id="sub-menu">
-                          ${levels.map(
-                            (level) => html`
-                              <li>
-                                <a
-                                  href="${urlForName('improve', {
-                                    topic,
-                                    role: level.key
-                                  })}"
-                                  aria-label="subemnu"
-                                  >${level.name}</a
-                                >
-                              </li>
-                            `
+                          ${getRoles().map((level) =>
+                            NavDropdownItem({
+                              name: 'improve',
+                              params: {
+                                topic,
+                                role: level.key
+                              },
+                              label: level.name
+                            })
                           )}
                         </ul>
                       </li>
                       <li class="type-drop">
                         <a>Change Topic</a>
                         <ul id="sub-menu">
-                          ${topics.map(
-                            (topic) => html`
-                              <li>
-                                <a
-                                  href="${urlForName('improve', {
-                                    topic: topic.key,
-                                    role
-                                  })}"
-                                  aria-label="subemnu"
-                                  >${topic.name}</a
-                                >
-                              </li>
-                            `
+                          ${getTopics().map((topic) =>
+                            NavDropdownItem({
+                              name: 'improve',
+                              params: {
+                                topic: topic.key,
+                                role
+                              },
+                              label: topic.name
+                            })
                           )}
                         </ul>
                       </li>
                     `
                   : html``}
-                <li class="type-notepad">
-                  <a
-                    href="${urlForName('notepad', {
-                      topic
-                    })}"
-                    >My Growth Notepad</a
-                  >
-                </li>
-                <pwa-install-button>
-                  <button>Install app</button>
-                </pwa-install-button>
-
-                <pwa-update-available>
-                  <button>Update app</button>
-                </pwa-update-available>
+                ${NavButton({
+                  name: 'notepad',
+                  params: { topic },
+                  label: 'My Growth Notepad'
+                })}
               </ul>
             </nav>
           </div>
@@ -117,34 +87,15 @@ export class App extends LitElement {
             ${config.environment !== 'production'
               ? `(Environment: ${config.environment})`
               : ''}
-            ${navigator.share
-              ? html`
-                <div>Like what you see? please <a href="#" @click=${this.share}> share </a> with your friends </a></div>
-              `
-              : ``}</span
-          >
+            ${ShareSection()}
+          </span>
         </div>
-        <div class="hiring">
-          <a href="https://www.forter.com/careers/"
-            ><img src="images/hire.svg" alt="We are Hiring"
-          /></a>
-        </div>
+        ${HiringButton()}
       </footer>`;
   }
 
   createRenderRoot() {
     return this;
-  }
-
-  share() {
-    navigator
-      .share({
-        title: 'Dojo.Engineering',
-        text: 'Check out Dojo Engineering and Improve as engineer.',
-        url: 'https://lirown.github.io/dojo'
-      })
-      .then(() => console.log('Successful share'))
-      .catch((error) => console.log('Error sharing', error));
   }
 
   firstUpdated() {

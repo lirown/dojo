@@ -1,10 +1,14 @@
 import { html, css } from '../components/base';
-import * as notepad from '../helpers/notepad';
-import config from '../config';
-import { Logo } from '../components';
+import * as notepad from '../stores/notepad';
+import {
+  DEFAULT_TOPIC,
+  getTopics,
+  sectionMetadata,
+  sections
+} from '../stores/topic';
+import { Logo, StatusCheckbox } from '../components';
 import { db } from '../app.db';
 import { urlForName } from '../router';
-import appData from '../app.data.js';
 
 import { PageElement } from '../helpers/page-element';
 
@@ -18,11 +22,11 @@ export class PageNotepad extends PageElement {
   }
 
   async firstUpdated() {
-    const { topic = 'engineering-craftsmanship' } = this.location.params;
+    const { topic = DEFAULT_TOPIC } = this.location.params;
 
     this.state = await db.query({
       groupBy: 'section',
-      filter: notepad => notepad.topic === topic
+      filter: (notepad) => notepad.topic === topic
     });
     this.topics = await db.query({ groupBy: 'topic' });
   }
@@ -32,12 +36,8 @@ export class PageNotepad extends PageElement {
       return html`Loading...`;
     }
 
-    const { topic = 'engineering-craftsmanship' } = this.location.params;
-
-    const topicList = Object.keys(appData.Ladder).map(topic => ({
-      key: topic.split(' ').join('-').toLowerCase(),
-      name: topic
-    }));
+    const { topic = DEFAULT_TOPIC } = this.location.params;
+    const callback = this.firstUpdated.bind(this);
 
     const topicsCount = [
       (this.topics['engineering-craftsmanship'] || []).length,
@@ -50,12 +50,10 @@ export class PageNotepad extends PageElement {
       <section class="hero">
         <div class="container">
           <div class="hero-inner">
-            <!--<img class="logo" src="images/logo.svg"></img>-->
-
             <h1>My Growth Notepad</h1>
             <div class="goal-items">
               <ul>
-                ${topicList.map(
+                ${getTopics().map(
                   ({ key, name }, index) => html`
                     <li class="${topic === key ? 'active' : ''}">
                       <a
@@ -83,13 +81,13 @@ export class PageNotepad extends PageElement {
             </p>
           </div>
           <div class="result-data">
-            ${notepad.sections.map(
-              section => html`
+            ${sections.map(
+              (section) => html`
                 <div class="result-box">
                   <div class="left-box">
                     <div class="box-title">${section}</div>
                     <div class="box-subtitle">
-                      ${config.sectionDescriptions[section]}
+                      ${sectionMetadata[section].description}
                     </div>
                     <div class="box-questions">
                       ${!this.state[section]
@@ -97,30 +95,30 @@ export class PageNotepad extends PageElement {
                         : this.state[section]
                             .sort((a, b) => a.key.localeCompare(b.key))
                             .map(
-                              item => html`
+                              ({
+                                key,
+                                section,
+                                topic,
+                                status,
+                                updatedAt
+                              }) => html`
                                 <div>
                                   <div>
-                                    <fc-checkbox
-                                      @click="${() =>
-                                        notepad.changeStatus(
-                                          {
-                                            [item.key]: { ...item, status: this.checked ? 'added' : 'work' }
-                                          },
-                                          item.key,
-                                          item.section,
-                                          item.topic,
-                                          () => this.firstUpdated()
-                                        )}"
-                                      ?checked=${item.status === 'done'}
-                                    ></fc-checkbox>
+                                    ${StatusCheckbox({
+                                      key,
+                                      section,
+                                      topic,
+                                      status,
+                                      callback
+                                    })}
                                     <span
-                                      >${item.key}
+                                      >${key}
                                       <span
                                         class="green"
-                                        ?hidden=${item.status !== 'done'}
+                                        ?hidden=${status !== 'done'}
                                       >
                                         Done on the
-                                        ${new Date(item.updatedAt)
+                                        ${new Date(updatedAt)
                                           .toString()
                                           .split('(')[0]}
                                       </span>
