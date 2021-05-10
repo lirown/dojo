@@ -19,7 +19,7 @@
     "lint": "npm-run-all --parallel lint:*",
     "lint:eslint": "eslint  --ignore-path .gitignore",
     "lint:stylelint": "stylelint \"index.css\" --ignore-path .gitignore",
-    "lit:type-checking": "lit-analyzer \"src/{components,pages}/**/*.js\" --strict",
+    "lit:type-checking": "lit-analyzer \"client/{components,pages}/**/*.js\" --strict",
     "serve": "web-dev-server --watch",
     "start": "npm run serve",
     "test": "echo \"Error: no test specified\"",

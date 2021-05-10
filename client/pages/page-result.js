@@ -1,13 +1,16 @@
-import { html, css } from '../components/base';
-import { Logo } from '../components';
-import config from '../config';
-
+import { html } from '../components/base';
 import { PageElement } from '../helpers/page-element';
 import { urlForName } from '../router';
 import { topicMetadata, topics, getCategoriesByTopic } from '../stores/topic';
 import { roleMetadata } from '../stores/role';
 
+/**
+ * Page Result - A page that shows the result of the quiz with the estimated level of engineering.
+ *
+ * @element page-result
+ */
 export class PageResult extends PageElement {
+  /** @inheritdoc */
   render() {
     const { role } = this.location.params;
 

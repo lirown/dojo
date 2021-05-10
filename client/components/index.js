@@ -8,3 +8,4 @@ export { HiringButton } from './hiring-button';
 export { NavButton } from './nav-button';
 export { NavDropdownItem } from './nav-dropdown-item';
 export { GoogleDocsSpreadsheetLink } from './google-docs-spreadsheet-link';
+export { MadeWithLove } from './made-with-love';

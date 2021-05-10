@@ -1,3 +1,6 @@
+/**
+ * Mapping between roles and labels
+ */
 export const ROLES = {
   ENTRY: 'Entry Level Engineer',
   NORMAL: 'Software Engineer',
@@ -6,6 +9,9 @@ export const ROLES = {
   STAFF: 'Staff Software Engineer'
 };
 
+/**
+ * Mapping between roles and labels
+ */
 export var quizQuestions = [
   {
     question:
@@ -135,5 +141,34 @@ export var quizQuestions = [
     ]
   }
 ];
+
+/**
+ * Will return the level of engineeing by the answers submitted.
+ * @param {Object} answers of the quiz questions.
+ * @returns {String} with the role resulted by quiz
+ */
+export function getQuizResult({ answers }) {
+  const roles = Array.from(new Set(answers)).filter((x) => x !== undefined);
+
+  if (roles.length === 1 && roles.includes(ROLES.ENTRY)) {
+    return 'entry-level-engineer';
+  } else if (
+    !roles.includes(ROLES.ENTRY) &&
+    !roles.includes(ROLES.NORMAL) &&
+    !roles.includes(ROLES.SENIOR) &&
+    !roles.includes(ROLES.STAFF)
+  ) {
+    return 'principal-software-engineer';
+  } else if (
+    !roles.includes(ROLES.ENTRY) &&
+    !roles.includes(ROLES.NORMAL) &&
+    (roles.includes(ROLES.PRINCIPAL) || roles.includes(ROLES.STAFF))
+  ) {
+    params.role = 'staff-software-engineer';
+  } else if (!roles.includes(ROLES.ENTRY) && !roles.includes(ROLES.NORMAL)) {
+    return 'senior-software-engineer';
+  }
+  return 'software-engineer';
+}
 
 export default { quizQuestions, ROLES };

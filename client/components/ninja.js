@@ -1,7 +1,11 @@
-import { svg, html } from './base';
+import { svg } from './base';
 
+/**
+ * Creating a the ninja for animation in the home page
+ * @return {HTMLElement}
+ */
 export function Ninja() {
-  return html`
+  return svg`
     <svg
       class="slide-top-bottom"
       width="156"

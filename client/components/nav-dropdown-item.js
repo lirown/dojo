@@ -24,11 +24,22 @@ export function NavDropdownItem({
    * description of the hiring
    * @type {String}
    */
-  label = 'My Growth Notepad'
+  label = 'My Growth Notepad',
+
+  /**
+   * flag wether the item is chosen
+   * @type {Boolean}
+   */
+  active = false
 }) {
   return html`
     <li>
-      <a href="${urlForName(name, params)}" aria-label="subemnu">${label}</a>
+      <a
+        ?active=${active}
+        href="${urlForName(name, params)}"
+        aria-label="subemnu"
+        >${label}</a
+      >
     </li>
   `;
 }

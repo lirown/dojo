@@ -1,17 +1,26 @@
-import { html, css } from '../components/base';
-import { Logo } from '../components';
-import { quizQuestions, ROLES } from '../components/quiz';
+import { html } from '../components/base';
+import { PageElement } from '../helpers/page-element';
+import { getQuizResult, quizQuestions } from '../stores/quiz';
 import { urlForName } from '../router';
 
-import { PageElement } from '../helpers/page-element';
-
+/**
+ * Page Quiz - a quick 5 questions check to evaluate your engineering level.
+ *
+ * @element page-quiz
+ */
 export class PageQuiz extends PageElement {
+  /** @inheritdoc */
   static get properties() {
     return {
+      /**
+       * currect question presented.
+       * @type {Number}
+       */
       selected: { type: Number, default: 0 }
     };
   }
 
+  /** @inheritdoc */
   render() {
     this.answers = this.answers || [];
     this.selected = this.selected || 0;
@@ -88,28 +97,9 @@ export class PageQuiz extends PageElement {
    */
   goToResult() {
     const { answers } = this;
-    const roles = Array.from(new Set(answers)).filter((x) => x !== undefined);
-    const params = { role: 'software-engineer' };
-
-    if (roles.length === 1 && roles.includes(ROLES.ENTRY)) {
-      params.role = 'entry-level-engineer';
-    } else if (
-      !roles.includes(ROLES.ENTRY) &&
-      !roles.includes(ROLES.NORMAL) &&
-      !roles.includes(ROLES.SENIOR) &&
-      !roles.includes(ROLES.STAFF)
-    ) {
-      params.role = 'principal-software-engineer';
-    } else if (
-      !roles.includes(ROLES.ENTRY) &&
-      !roles.includes(ROLES.NORMAL) &&
-      (roles.includes(ROLES.PRINCIPAL) || roles.includes(ROLES.STAFF))
-    ) {
-      params.role = 'staff-software-engineer';
-    } else if (!roles.includes(ROLES.ENTRY) && !roles.includes(ROLES.NORMAL)) {
-      params.role = 'senior-software-engineer';
-    }
+    const params = { role: getQuizResult({ answers }) };
     location.href = urlForName('result', params);
   }
 }
+
 customElements.define('page-quiz', PageQuiz);

@@ -5,7 +5,6 @@ import { urlForName } from '../router';
  * Creating a floating button for hiring
  * @return {HTMLElement}
  */
-
 export function NavButton({
   /**
    * link to go on click

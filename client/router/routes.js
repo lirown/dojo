@@ -1,5 +1,4 @@
 import config from '../config';
-import { db } from '../app.db';
 
 /**
  * Update the navbar items by route

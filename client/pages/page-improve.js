@@ -2,21 +2,34 @@ import { html } from '../components/base';
 import { Logo, StatusCheckbox, StatusButton } from '../components';
 import { PageElement } from '../helpers/page-element';
 
-import { db } from '../app.db';
+import { db } from '../stores/db';
 import { sections, getActionableItems, sectionMetadata } from '../stores/topic';
 import { roleMetadata } from '../stores/role';
 
+/**
+ * Improve Page - to show engineer how he can emprove his profession.
+ *
+ * @element page-improve
+ */
+
 export class PageImprove extends PageElement {
+  /** @inheritdoc */
   static get properties() {
     return {
+      /**
+       * contains the actionable items we should do to improve by role and topic.
+       * @type {Object<Object>}
+       */
       state: { type: Object }
     };
   }
 
+  /** @inheritdoc */
   async firstUpdated() {
     this.state = await db.query({ groupBy: 'key', flat: true });
   }
 
+  /** @inheritdoc */
   render() {
     const { topic, role } = this.location.params;
     const callback = this.firstUpdated.bind(this);

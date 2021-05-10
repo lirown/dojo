@@ -1,9 +1,16 @@
 import { html } from 'lit';
-import { Logo, Feature, Ninja, GoogleDocsSpreadsheetLink } from '../components';
+import { Feature, Ninja, GoogleDocsSpreadsheetLink } from '../components';
 import { urlForName } from '../router';
 import { PageElement } from '../helpers/page-element';
 
+/**
+ * Home Page when opening the app.
+ * <!-- Author: Liron Goldenberg <lgoldenberg@forter.com> -->
+ *
+ * @element page-home
+ */
 export class PageHome extends PageElement {
+  /** @inheritdoc */
   render() {
     return html` <section class="main-hero">
         <div class="container">

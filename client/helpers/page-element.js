@@ -9,7 +9,7 @@ import { updateMetadata } from './html-meta-manager';
 export class PageElement extends LitElement {
   location = {};
 
-  data = new Promise(res => res);
+  data = new Promise((res) => res);
 
   defaultTitleTemplate = `%s | ${config.appName}`;
 
@@ -56,10 +56,14 @@ export class PageElement extends LitElement {
   }
 
   startCase(string) {
-    return string.split('-').map(x => {
-      return (
-        x.substring(0, 1).toUpperCase() + x.substring(1, x.length).toLowerCase()
-      );
-    }).join(' ');
+    return string
+      .split('-')
+      .map((x) => {
+        return (
+          x.substring(0, 1).toUpperCase() +
+          x.substring(1, x.length).toLowerCase()
+        );
+      })
+      .join(' ');
   }
 }

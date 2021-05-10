@@ -1,14 +1,14 @@
 import { html } from '../components/base';
 
 import { DEFAULT_STATUS, nextStatus } from '../stores/notepad';
-import { db } from '../app.db';
+import { db } from '../stores/db';
 
 /**
  * Creating a checkbox to show wether topic is done or not
  * @return {HTMLElement}
  */
 
-export function StatusButton({
+export function StatusCheckbox({
   /**
    * whether if the topic done
    * @type {String}
@@ -29,15 +29,9 @@ export function StatusButton({
 
   /**
    * which topic of category this related
-   * @type {String}
+   * @type {Number}
    */
   topic,
-
-  /**
-   * default label of work status
-   * @type {String}
-   */
-  label = 'Work on it',
 
   /**
    * callback once a click button finish
@@ -46,20 +40,19 @@ export function StatusButton({
   callback
 }) {
   return html`
-    <fc-button
-      style="--fc-button-text-transform:uppercase;--fc-button-color:white;"
-      @click="${() =>
-        db
-          .create('key', {
-            status: nextStatus[status] || DEFAULT_STATUS,
-            key,
-            section,
-            topic
-          })
-          .then(callback)}"
-      class="${status}"
-      size="medium"
-      >${status === 'work' ? label : status}</fc-button
-    >
+    <fc-tooltip tooltip="done?" position="top">
+      <fc-checkbox
+        ?checked=${status === 'done'}
+        @click="${({ target: { checked } }) =>
+          db
+            .create(key, {
+              status: checked ? 'added' : 'done',
+              key,
+              section,
+              topic
+            })
+            .then(callback)}"
+      ></fc-checkbox
+    ></fc-tooltip>
   `;
 }
