@@ -1,4 +1,5 @@
 import { app } from './index';
+import { createFile } from './storage';
 
 export async function signIn(email, password) {
   return await new Promise((resolve, reject) => {
@@ -7,6 +8,9 @@ export async function signIn(email, password) {
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+
+        // todo: sync indexdb with firebase
+
         resolve(user);
       })
       .catch((error) => {
@@ -79,6 +83,8 @@ export async function signUp(email, password, displayName) {
         const res = await userCredential.user.updateProfile({
           displayName
         });
+
+        await createFile();
 
         const user = userCredential.user;
         resolve(user);

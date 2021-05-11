@@ -1,4 +1,5 @@
 import { openDB } from 'idb';
+import { updateFile, getFile } from '../helpers/firebase/storage';
 
 const STORE_NAME = 'dojo-improve';
 
@@ -15,7 +16,9 @@ const dbPromise = openDB('dojo-notepad', 1, {
  * @return {Promise<string>}
  */
 export async function get(key) {
-  return (await dbPromise).get(STORE_NAME, key);
+  const localStorage = (await dbPromise).get(STORE_NAME, key);
+  const db = await getFile()?.[key];
+  return localStorage || db;
 }
 
 /**
@@ -26,7 +29,7 @@ export async function get(key) {
  * @return {Promise<string>}
  */
 export async function create(key, value) {
-  return (await dbPromise).put(
+  const localStorage = (await dbPromise).put(
     STORE_NAME,
     {
       ...value,
@@ -34,15 +37,20 @@ export async function create(key, value) {
     },
     key
   );
+
+  await updateFile(key, value);
+  return localStorage;
 }
 
 /**
  * delete sepecific key from a store
  *
- * @return {Promise<string>}
+ * @return {Promise<void>}
  */
 export async function remove(key) {
-  return (await dbPromise).delete(STORE_NAME, key);
+  const localStorage = (await dbPromise).delete(STORE_NAME, key);
+  await updateFile(key, '');
+  return localStorage;
 }
 
 /**

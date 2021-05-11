@@ -16,7 +16,9 @@ const FORM_STATES = {
   SIGNUP: 'SIGNUP'
 };
 
-export class MainActionButton extends LitElement {
+import { db } from '../stores/db';
+
+export class LoginOrForwardNotebookButton extends LitElement {
   static styles = [
     css`
       img {
@@ -90,12 +92,8 @@ export class MainActionButton extends LitElement {
     };
   }
 
-  openQuiz() {
-    window.location.href = urlForName('quiz');
-  }
-
-  openResults() {
-    window.location.href = urlForName('quiz');
+  async openNotebook(role) {
+    location.href = urlForName('notepad', { role });
   }
 
   getInputProps() {
@@ -115,16 +113,19 @@ export class MainActionButton extends LitElement {
     const { password, email } = this.getInputProps();
     const result = await signIn(email, password);
     console.log(result);
-    this.openQuiz();
+
+    const ROLE = db.get('ROLE');
+    await this.openNotebook(ROLE.role);
   }
 
   async signUpUser() {
     console.log('signing up...');
     const { password, email, name } = this.getInputProps();
     const result = await signUp(email, password, name);
-
     console.log(result);
-    this.openQuiz();
+
+    const ROLE = db.get('ROLE');
+    await this.openNotebook(ROLE.role);
   }
 
   async forgotPassword() {
@@ -154,11 +155,10 @@ export class MainActionButton extends LitElement {
 
   async toggleModal() {
     const user = await getUser();
-    if (user?.uid) {
-      if (user?.hasGrowthNotepad) {
-        return this.openResults();
-      }
-      return this.openQuiz();
+
+    if (user) {
+      const ROLE = db.get('ROLE');
+      return await this.openNotebook(ROLE.role);
     }
 
     this.shadowRoot.querySelector('#modal').toggle();
@@ -252,4 +252,7 @@ export class MainActionButton extends LitElement {
   }
 }
 
-customElements.define('main-action-button', MainActionButton);
+customElements.define(
+  'login-or-forward-notebook-button',
+  LoginOrForwardNotebookButton
+);

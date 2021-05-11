@@ -135,6 +135,7 @@ export class FcModal extends LitElement {
    * if modal is opened fire a close of the modal that hide it or vice versa
    */
   toggle() {
+    debugger;
     if (this.opened) {
       return this.close();
     }
@@ -146,7 +147,7 @@ export class FcModal extends LitElement {
     const { opened } = this;
     return html`
       <slot @click="${() => this.open()}" name="button"></slot>
-      <div class="fc-modal" ?opened=${opened}>
+      <div id="liron" class="fc-modal" ?opened=${opened}>
         <label class="fc-modal-bg" @click="${() => this.close()}"></label>
         <div
           class="fc-modal-inner"

@@ -10,8 +10,11 @@ export async function getFile(file) {
     starsRef
       .getDownloadURL()
       .then((url) => {
-        // Insert url into an <img> tag to "download"
-        resolve(url);
+        try {
+          resolve(JSON.parse(url));
+        } catch (e) {
+          resolve(url);
+        }
       })
       .catch((error) => {
         // A full list of error codes is available at
@@ -21,18 +24,20 @@ export async function getFile(file) {
   });
 }
 
-export async function updateFile(str) {
+export async function updateFile(key, value) {
   const user = await getUser();
   if (!user) {
     throw 'not logged in';
   }
   return await new Promise(async (resolve) => {
+    const originalFile = await getFile();
+
     const fileRef = storageRef.child(`user/${user.uid}`);
     // Put the new file in the same child ref.
-    await fileRef.put(`user/${user.uid}`);
-    // Get the new URL
-    const url = await fileRef.getDownloadURL();
-    resolve(url);
+    const res = await fileRef.put(
+      JSON.stringify({ ...originalFile, [key]: value })
+    );
+    resolve(res);
   });
 }
 
