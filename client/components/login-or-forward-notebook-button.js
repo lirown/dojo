@@ -182,6 +182,22 @@ export class LoginOrForwardNotebookButton extends LitElement {
     return '205px';
   }
 
+  onEnterPress(event) {
+    if (event.which === 13 || event.keyCode === 13) {
+      //code to execute here
+      return true;
+    }
+    return false;
+  }
+
+  action() {
+    return this.formState === FORM_STATES.SIGNUP
+      ? this.signUpUser()
+      : this.formState === FORM_STATES.SIGNIN
+      ? this.signInUser()
+      : this.forgotPassword();
+  }
+
   render() {
     return html`<span>
       <fc-button @click="${async () =>
@@ -214,7 +230,9 @@ export class LoginOrForwardNotebookButton extends LitElement {
             class="field"
           >
             <label>Password</label>
-            <fc-input type="password" id="password" label=" "></fc-input>
+            <fc-input type="password" id="password" label=" " @keypress="${(
+              e
+            ) => (this.onEnterPress(e) ? this.action() : '')}"></fc-input>
           </div>
           
           ${
@@ -241,12 +259,7 @@ export class LoginOrForwardNotebookButton extends LitElement {
           
           <div class="buttons">
             <fc-button
-              @click="${() =>
-                this.formState === FORM_STATES.SIGNUP
-                  ? this.signUpUser()
-                  : this.formState === FORM_STATES.SIGNIN
-                  ? this.signInUser()
-                  : this.forgotPassword()}"
+              @click="${() => this.action()}"
             >
               ${
                 this.formState === FORM_STATES.SIGNUP

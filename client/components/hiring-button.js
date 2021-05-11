@@ -26,7 +26,11 @@ export function HiringButton({
 } = {}) {
   return html`
     <div class="hiring">
-      <a href="${href}"><img src="${src}" alt="${alt}" /></a>
+      <img src="${src}" alt="${alt}" @click="${() => openInNewTab(href)}" />
     </div>
   `;
+}
+
+function openInNewTab(url) {
+  window.open(url, '_blank').focus();
 }
