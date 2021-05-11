@@ -895,74 +895,25 @@ fc-checkbox[checked] + span {
   -moz-transform: scale(0.93);
   -ms-transform: scale(0.93);
   transform: scale(0.93);
+  -webkit-animation: pulse 1.3s ease-out infinite 75ms;
+  -moz-animation: pulse 1.3s ease-out infinite 75ms;
+  animation: pulse 1.3s ease-out infinite 75ms;
 }
 
-.hi-icon-effect-8 .hi-icon:hover::after {
-  -webkit-animation: sonareffect 1.3s ease-out 75ms;
-  -moz-animation: sonareffect 1.3s ease-out 75ms;
-  animation: sonarEffect 1.3s ease-out 75ms;
-}
-
-@-webkit-keyframes sonarEffect {
+@-webkit-keyframes pulse {
   0% {
-    opacity: 0.3;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.3);
+    transform: scale(0.95);
   }
 
-  40% {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1),
-      0 0 10px 10px #fff,
-      0 0 0 10px rgba(255, 255, 255, 0.5);
-    opacity: 0.5;
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    transform: scale(1);
   }
 
   100% {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1),
-      0 0 10px 10px #fff,
-      0 0 0 10px rgba(255, 255, 255, 0.5);
-    -webkit-transform: scale(1.5);
-    opacity: 0;
-  }
-}
-
-@-moz-keyframes sonarEffect {
-  0% {
-    opacity: 0.3;
-  }
-
-  40% {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1),
-      0 0 10px 10px #fff,
-      0 0 0 10px rgba(255, 255, 255, 0.5);
-    opacity: 0.5;
-  }
-
-  100% {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1),
-      0 0 10px 10px #fff,
-      0 0 0 10px rgba(255, 255, 255, 0.5);
-    -moz-transform: scale(1.5);
-    opacity: 0;
-  }
-}
-
-@keyframes sonarEffect {
-  0% {
-    opacity: 0.3;
-  }
-
-  40% {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1),
-      0 0 10px 10px #fff,
-      0 0 0 10px rgba(255, 255, 255, 0.5);
-    opacity: 0.5;
-  }
-
-  100% {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1),
-      0 0 10px 10px #fff,
-      0 0 0 10px rgba(255, 255, 255, 0.5);
-    transform: scale(1.5);
-    opacity: 0;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    transform: scale(0.95);
   }
 }
 
