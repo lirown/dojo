@@ -165,10 +165,11 @@ header {
 
 header.sticky {
   position: sticky;
-  top: 10px;
+  top: 0;
   z-index: 9;
   width: auto;
   margin: -41px;
+  transition: 0.3s;
 }
 
 .scrolled header.sticky {
