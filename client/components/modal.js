@@ -135,7 +135,6 @@ export class FcModal extends LitElement {
    * if modal is opened fire a close of the modal that hide it or vice versa
    */
   toggle() {
-    debugger;
     if (this.opened) {
       return this.close();
     }

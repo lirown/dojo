@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, css } from 'lit';
 import { Feature, Ninja, GoogleDocsSpreadsheetLink } from '../components';
 import { urlForName } from '../router';
 import { PageElement } from '../helpers/page-element';
@@ -10,6 +10,25 @@ import { PageElement } from '../helpers/page-element';
  * @element page-home
  */
 export class PageHome extends PageElement {
+  static styles = css`
+    fc-button[size='large'] {
+      --fc-button-min-height: 60px;
+      font-size: 24px;
+    }
+    fc-button {
+      --fc-button-background-color: var(--fc-secondary);
+      --fc-button-item-color: white;
+      --fc-button-min-height: 36px;
+      --fc-button-padding: 20px;
+      --fc-button-default-border-radius: 30px;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 34px;
+      text-decoration: none;
+      border-radius: 66px;
+    }
+  `;
+
   /** @inheritdoc */
   render() {
     return html` <section class="main-hero">
@@ -26,7 +45,9 @@ export class PageHome extends PageElement {
               make bigger impact.
             </h2>
             <div class="bottom-data">
-              <fc-button @click="${() => urlForName('quiz')}"
+              <fc-button
+                size="large"
+                @click="${() => (location.href = urlForName('quiz'))}"
                 >I'm Ready! Show Me</fc-button
               >
               <p>all free, no emails, no BS. We're Engineers...</p>
