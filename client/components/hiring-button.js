@@ -26,7 +26,12 @@ export function HiringButton({
 } = {}) {
   return html`
     <div class="hiring">
-      <img src="${src}" alt="${alt}" @click="${() => openInNewTab(href)}" />
+      <img
+        style="cursor: pointer;"
+        src="${src}"
+        alt="${alt}"
+        @click="${() => openInNewTab(href)}"
+      />
     </div>
   `;
 }
