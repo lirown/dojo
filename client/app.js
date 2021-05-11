@@ -36,7 +36,9 @@ export class App extends LitElement {
     const topic = getTopicFromURL();
     const { pathname } = location;
 
-    return html` <header>
+    return html` <header
+        class="${pathname.includes('notepad') ? 'sticky' : ''}"
+      >
         <div class="container">
           <div class="header-inner">
             ${Logo()}
@@ -113,9 +115,27 @@ export class App extends LitElement {
     return this;
   }
 
+  spyScroll() {
+    const myID = document.body;
+    const y = window.scrollY;
+    if (y >= 278) {
+      myID.classList.add('scrolled');
+    } else {
+      myID.classList.remove('scrolled');
+    }
+  }
+
   /** @inheritdoc */
   firstUpdated() {
     attachRouter(this.querySelector('main'));
+    const that = this;
+    window.addEventListener(
+      'scroll',
+      function () {
+        that.spyScroll();
+      },
+      false
+    );
   }
 }
 

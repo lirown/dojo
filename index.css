@@ -163,6 +163,18 @@ header {
   width: 100%;
 }
 
+header.sticky {
+  position: sticky;
+  top: 10px;
+  z-index: 9;
+  width: auto;
+  margin: -41px;
+}
+
+.scrolled header.sticky {
+  background: #201885;
+}
+
 ul#main-menu li {
   position: relative;
   cursor: pointer;
@@ -466,6 +478,16 @@ page-home .hero-inner > h1 {
 a.creator img {
   max-width: 100%;
   height: auto;
+}
+
+a.creator::after {
+  position: absolute;
+  top: calc(50% - 55px);
+  left: calc(50% - 55px);
+  z-index: 1;
+  transform: scale(0.5);
+  content: url(./images/play.png);
+  pointer-events: none;
 }
 
 .featuring-data > a:last-child {
@@ -895,6 +917,9 @@ fc-checkbox[checked] + span {
   -moz-transform: scale(0.93);
   -ms-transform: scale(0.93);
   transform: scale(0.93);
+}
+
+.creator:hover .hi-icon {
   -webkit-animation: pulse 1.3s ease-out infinite 75ms;
   -moz-animation: pulse 1.3s ease-out infinite 75ms;
   animation: pulse 1.3s ease-out infinite 75ms;
