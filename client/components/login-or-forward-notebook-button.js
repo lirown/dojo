@@ -157,6 +157,7 @@ export class LoginOrForwardNotebookButton extends LitElement {
   }
 
   toggleFormState() {
+    this.error = '';
     if (this.formState === FORM_STATES.SIGNIN) {
       this.formState = FORM_STATES.SIGNUP;
       return;
