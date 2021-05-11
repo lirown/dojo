@@ -1,4 +1,5 @@
 import { html, LitElement, css } from './base';
+import { restore } from '../stores/notepad';
 import { urlForName } from '../router';
 import {
   signUp,
@@ -7,7 +8,6 @@ import {
   signOut,
   getUser
 } from '../helpers/firebase/authentication';
-import { createFile } from '../helpers/firebase/storage';
 
 const FORM_STATES = {
   FORGOT: 'FORGOT',
@@ -114,6 +114,7 @@ export class MainActionButton extends LitElement {
     console.log('signing in...');
     const { password, email } = this.getInputProps();
     const result = await signIn(email, password);
+    await restore();
     console.log(result);
     this.openQuiz();
   }

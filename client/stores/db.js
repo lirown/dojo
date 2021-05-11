@@ -10,6 +10,7 @@ const dbPromise = openDB('dojo-notepad', 1, {
 });
 
 /**
+ *
  * get a sepecific key from a store
  *
  * @return {Promise<string>}
@@ -26,14 +27,27 @@ export async function get(key) {
  * @return {Promise<string>}
  */
 export async function create(key, value) {
-  return (await dbPromise).put(
-    STORE_NAME,
-    {
-      ...value,
-      updatedAt: Date.now()
-    },
-    key
+  const data = {
+    ...value,
+    updatedAt: Date.now()
+  };
+  (await dbPromise).put(STORE_NAME, data, key);
+  return { [key]: data };
+}
+
+/**
+ * create a new record by a key and value
+ *
+ * @param {Object<String, Object>} a object restored data
+ * @return {Promise<string>}
+ */
+export async function restore(data) {
+  const dbInstance = await dbPromise;
+  const putTasks = [];
+  Object.keys(data).map((key) =>
+    putTasks.push(dbInstance.put(STORE_NAME, data[key], key))
   );
+  return Promise.all(putTasks);
 }
 
 /**
@@ -120,6 +134,7 @@ export async function aggregate({
   Object.keys(result).map((key) => (counters[key] = result[key].length || 0));
   return counters;
 }
+
 /**
  * exposing different methods of our indexeddb
  */
@@ -131,6 +146,7 @@ export const db = {
   remove,
   clear,
   keys,
+  restore,
   aggregate,
   dbPromise
 };

@@ -1,6 +1,6 @@
 import { html } from '../components/base';
 
-import { DEFAULT_STATUS, nextStatus } from '../stores/notepad';
+import { DEFAULT_STATUS, nextStatus, backup } from '../stores/notepad';
 import { db } from '../stores/db';
 
 /**
@@ -51,12 +51,13 @@ export function StatusButton({
       ?valid=${['done', 'added'].includes(status)}
       @click="${() =>
         db
-          .create('key', {
+          .create(key, {
             status: nextStatus[status] || DEFAULT_STATUS,
             key,
             section,
             topic
           })
+          .then(backup)
           .then(callback)}"
       class="${status}"
       size="medium"

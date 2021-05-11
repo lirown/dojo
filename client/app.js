@@ -37,7 +37,7 @@ export class App extends LitElement {
     const { pathname } = location;
 
     return html` <header>
-        <div class="container">
+        <div class="container" id="container" role="container">
           <div class="header-inner">
             ${Logo()}
             <nav>
