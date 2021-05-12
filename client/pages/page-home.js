@@ -14,25 +14,6 @@ import { urlForName } from '../router';
  * @element page-home
  */
 export class PageHome extends PageElement {
-  static styles = css`
-    fc-button[size='large'] {
-      --fc-button-min-height: 60px;
-      font-size: 24px;
-    }
-    fc-button {
-      --fc-button-background-color: var(--fc-secondary);
-      --fc-button-item-color: white;
-      --fc-button-min-height: 36px;
-      --fc-button-padding: 20px;
-      --fc-button-default-border-radius: 30px;
-      font-weight: 600;
-      font-size: 18px;
-      line-height: 34px;
-      text-decoration: none;
-      border-radius: 66px;
-    }
-  `;
-
   /** @inheritdoc */
   render() {
     return html` <section class="main-hero">

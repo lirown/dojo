@@ -47,6 +47,20 @@ fc-button[size='large'] {
   border-radius: 66px;
 }
 
+fc-button {
+  --fc-button-background-color: var(--fc-secondary);
+  --fc-button-item-color: white;
+  --fc-button-min-height: 36px;
+  --fc-button-padding: 20px;
+  --fc-button-default-border-radius: 30px;
+
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 34px;
+  text-decoration: none;
+  border-radius: 66px;
+}
+
 fc-checkbox {
   --fc-checkbox-check-color: white;
   --fc-checkbox-checked-color: var(--fc-blue);
