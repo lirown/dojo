@@ -16,8 +16,6 @@ const FORM_STATES = {
   SIGNUP: 'SIGNUP'
 };
 
-import { db } from '../stores/db';
-
 export class LoginOrForwardNotebookButton extends LitElement {
   static styles = [
     css`
