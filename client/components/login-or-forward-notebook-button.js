@@ -144,7 +144,6 @@ export class LoginOrForwardNotebookButton extends LitElement {
     console.log('forgot password...');
     const { email } = this.getInputProps();
     const result = await forgotPassword(email);
-    console.log(result);
   }
 
   constructor() {

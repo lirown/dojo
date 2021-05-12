@@ -50,7 +50,7 @@ export class PageNotepad extends PageElement {
 
   constructor(props) {
     super(props);
-    this.topic = this.location.params || DEFAULT_TOPIC;
+    this.topic = location.pathname.split('/')[2] || DEFAULT_TOPIC;
   }
 
   changeTab(e) {
@@ -77,8 +77,10 @@ export class PageNotepad extends PageElement {
             <div class="goal-items">
                 <elastic-tabs @change="${(e) =>
                   this.changeTab(e)}" .tabs="${getTopics().map((item) => {
-      return { ...item, count: this.topicsCount[item.key] };
-    })}" activeElementName="${getTopics()[0].name}"></elastic-tabs>
+      return { ...item, count: this.topicsCount[item.key] || 0 };
+    })}" activeElementName="${
+      getTopics().find((item) => item.key === this.topic).name
+    }"></elastic-tabs>
             </div>
           </div>
         </div>

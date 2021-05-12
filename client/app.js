@@ -119,7 +119,7 @@ export class App extends LitElement {
   spyScroll() {
     const myID = document.body;
     const y = window.scrollY;
-    if (y >= 278) {
+    if (y >= 242) {
       myID.classList.add('scrolled');
     } else {
       myID.classList.remove('scrolled');

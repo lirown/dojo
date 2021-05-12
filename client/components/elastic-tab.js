@@ -51,6 +51,17 @@ export class ElasticTabs extends LitElement {
         transition-duration: 0.45s;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         background: rgba(255, 255, 255, 0.2);
+        opacity: 0;
+        animation: fadein 1.5s 0.3s forwards;
+      }
+
+      @keyframes fadein {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
 
       .count {
@@ -79,20 +90,28 @@ export class ElasticTabs extends LitElement {
     super();
     this.left = 0;
     this.top = 0;
-    this.width = 298;
-    this.height = 48;
+    this.width = 0;
+    this.height = 0;
   }
 
-  tabClick(activeElementName, e) {
-    const tabs = document.querySelectorAll('[elastictab]');
-    for (const tab of tabs) {
-      tab.classList.remove('active');
-    }
+  updated(changedProperties) {
+    changedProperties.forEach((key, value) => {
+      const allowedUpdates = ['activeElementName'];
+      if (allowedUpdates.includes(value)) {
+        this.tabClick(this.activeElementName);
+      }
+    });
+  }
+
+  tabClick(activeElementName) {
     this.activeElementName = activeElementName;
-    this.width = e.target.clientWidth;
-    this.left = e.target.offsetLeft - 5;
-    this.top = e.target.offsetTop;
-    this.height = e.target.clientHeight;
+    const selectedTab = this.shadowRoot.querySelector(
+      `[name='${activeElementName}']`
+    );
+    this.width = selectedTab.clientWidth;
+    this.left = selectedTab.offsetLeft - 5;
+    this.top = selectedTab.offsetTop;
+    this.height = selectedTab.clientHeight;
 
     const item = this.tabs.find((tab) => tab.name === activeElementName);
 
@@ -109,7 +128,8 @@ export class ElasticTabs extends LitElement {
       ${(this.tabs || []).map(
         (item) => html`
           <span
-            elastictab="true"
+            name="${item.name}"
+            elastictab
             class="${this.activeElementName === item.name ? 'active' : ''}"
             @click=${(e) => this.tabClick(item.name, e)}
           >
