@@ -1,5 +1,6 @@
 import config from '../config';
-import { signOut } from '../helpers/firebase/authentication';
+import { db } from '../services/db';
+import { signOut } from '../services/firebase/authentication';
 
 /**
  * Update the navbar items by route
@@ -40,6 +41,7 @@ export const routes = [
     },
     action: async () => {
       await signOut();
+      await db.clear();
       await import('../pages/page-home');
       updateNavbar();
     }

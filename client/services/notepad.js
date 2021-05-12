@@ -1,5 +1,5 @@
-import * as storage from '../helpers/firebase/storage';
-import { db } from '../stores/db';
+import * as storage from '../services/firebase/storage';
+import { db } from '../services/db';
 
 /**
  * default status when no status defined

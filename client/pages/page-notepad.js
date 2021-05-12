@@ -1,7 +1,6 @@
 import { html } from '../components/base';
-import { PageElement } from '../helpers/page-element';
-import { StatusCheckbox } from '../components';
-import { db } from '../stores/db';
+import { PageElement, StatusCheckbox } from '../components';
+import { db } from '../services/db';
 import { urlForName } from '../router';
 
 import {
@@ -9,7 +8,7 @@ import {
   getTopics,
   sectionMetadata,
   sections
-} from '../stores/topic';
+} from '../services/topic';
 
 /**
  * Notepad Page - An Engineer personal followup on actionable items he want to work on.

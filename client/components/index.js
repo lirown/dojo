@@ -1,3 +1,4 @@
+export { PageElement } from './page-element';
 export { Logo } from './logo';
 export { MainActionButton } from './main-action-button';
 export { FcModal } from './modal';

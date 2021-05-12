@@ -1,5 +1,5 @@
 import { html, LitElement, css } from './base';
-import { restore } from '../stores/notepad';
+import { restore } from '../services/notepad';
 import { urlForName } from '../router';
 import {
   signUp,
@@ -7,7 +7,7 @@ import {
   signIn,
   signOut,
   getUser
-} from '../helpers/firebase/authentication';
+} from '../services/firebase/authentication';
 
 const FORM_STATES = {
   FORGOT: 'FORGOT',

@@ -1,7 +1,11 @@
-import { html } from 'lit';
-import { Feature, Ninja, GoogleDocsSpreadsheetLink } from '../components';
+import { html } from '../components/base';
+import {
+  PageElement,
+  Feature,
+  Ninja,
+  GoogleDocsSpreadsheetLink
+} from '../components';
 import { urlForName } from '../router';
-import { PageElement } from '../helpers/page-element';
 
 /**
  * Home Page when opening the app.

@@ -1,8 +1,8 @@
 import { html } from '../components/base';
-import { PageElement } from '../helpers/page-element';
+import { PageElement } from '../components';
 import { urlForName } from '../router';
-import { topicMetadata, topics, getCategoriesByTopic } from '../stores/topic';
-import { roleMetadata } from '../stores/role';
+import { topicMetadata, topics, getCategoriesByTopic } from '../services/topic';
+import { roleMetadata } from '../services/role';
 
 /**
  * Page Result - A page that shows the result of the quiz with the estimated level of engineering.

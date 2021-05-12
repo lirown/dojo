@@ -1,12 +1,12 @@
 import { html } from '../components/base';
-import { PageElementNotFound } from '../helpers/page-element-not-found';
+import { PageElement } from '../components';
 
 /**
  * Not Found Page - 404 when trying to access none existing route.
  *
  * @element page-not-found
  */
-export class PageNotFound extends PageElementNotFound {
+export class PageNotFound extends PageElement {
   /** @inheritdoc */
   render() {
     return html`
@@ -16,6 +16,20 @@ export class PageNotFound extends PageElementNotFound {
         <h3>We can't seem to find the page you're looking for...</h3>
       </section>
     `;
+  }
+
+  /** @inheritdoc */
+  connectedCallback() {
+    super.connectedCallback();
+
+    setMetaTag('name', 'render:status_code', '404');
+  }
+
+  /** @inheritdoc */
+  disconnectedCallback() {
+    removeMetaTag('name', 'render:status_code');
+
+    super.disconnectedCallback();
   }
 }
 
