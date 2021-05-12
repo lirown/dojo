@@ -10,4 +10,5 @@ export { HiringButton } from './hiring-button';
 export { NavButton } from './nav-button';
 export { NavDropdownItem } from './nav-dropdown-item';
 export { GoogleDocsSpreadsheetLink } from './google-docs-spreadsheet-link';
+export { ElasticTabs } from './elastic-tab';
 export { MadeWithLove } from './made-with-love';

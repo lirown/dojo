@@ -66,6 +66,9 @@ export class PageNotepad extends PageElement {
           <div class="hero-inner">
             <h1>My Growth Notepad</h1>
             <div class="goal-items">
+                <elastic-tabs .tabs="${getTopics().map((item) => {
+                  return { ...item, count: 2 };
+                })}" activeElementName="${getTopics()[0].name}"></elastic-tabs>
               <ul>
                 ${getTopics().map(
                   ({ key, name }, index) => html`

@@ -19,6 +19,7 @@ import '@forter/tooltip';
 import '@forter/input';
 
 import './components/login-or-forward-notebook-button.js';
+import './components/elastic-tab.js';
 import './components/modal.js';
 
 import 'pwa-helper-components/pwa-install-button.js';
