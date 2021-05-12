@@ -1,8 +1,50 @@
 import { storageRef } from './index';
 import { getUser } from './authentication';
 
+/**
+ * Get a state file  key from a store
+ *
+ * @return {Promise<String>}
+ */
+export async function put(content) {
+  const user = await getUser();
+  if (!user) {
+    throw 'not logged in';
+  }
+  const fileRef = storageRef.child(`user/${user.uid}`);
+  return fileRef.putString(JSON.stringify(content));
+}
+
+/**
+ * Get a state of user after login
+ * @return {Promise<String>}
+ */
+export async function get() {
+  // Create a reference to the file we want to download
+  const user = await getUser();
+
+  if (!user) {
+    throw 'not logged in';
+  }
+
+  // Get the download URL
+  const fileRef = storageRef.child(`user/${user.uid}`);
+  const url = await fileRef.getDownloadURL();
+  const res = await fetch(url, {
+    method: 'GET' // *GET, POST, PUT, DELETE, etc.
+  });
+  try {
+    return await res.json();
+  } catch (err) {
+    console.log(err, res);
+    return {};
+  }
+}
+
 export async function getFile(file) {
   // Create a reference to the file we want to download
+  const user = await getUser();
+
   const starsRef = storage.child(file);
 
   // Get the download URL
@@ -38,19 +80,6 @@ export async function updateFile(key, value) {
       JSON.stringify({ ...originalFile, [key]: value })
     );
     resolve(res);
-  });
-}
-
-export async function createFile() {
-  const user = await getUser();
-  if (!user) {
-    throw 'not logged in';
-  }
-  return await new Promise((resolve) => {
-    const fileRef = storageRef.child(`user/${user.uid}`);
-    fileRef.putString('{}').then((snapshot) => {
-      resolve(snapshot);
-    });
   });
 }
 

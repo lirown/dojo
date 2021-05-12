@@ -1,6 +1,6 @@
 import { html } from '../components/base';
 
-import { DEFAULT_STATUS, nextStatus } from '../stores/notepad';
+import { DEFAULT_STATUS, nextStatus, backup } from '../stores/notepad';
 import { db } from '../stores/db';
 
 /**
@@ -51,6 +51,7 @@ export function StatusCheckbox({
               section,
               topic
             })
+            .then(backup)
             .then(callback)}"
       ></fc-checkbox
     ></fc-tooltip>

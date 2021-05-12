@@ -1,4 +1,5 @@
 import { html, LitElement, css } from './base';
+import { restore } from '../stores/notepad';
 import { urlForName } from '../router';
 import {
   signUp,
@@ -7,7 +8,6 @@ import {
   signOut,
   getUser
 } from '../helpers/firebase/authentication';
-import { createFile } from '../helpers/firebase/storage';
 
 const FORM_STATES = {
   FORGOT: 'FORGOT',
@@ -121,6 +121,7 @@ export class LoginOrForwardNotebookButton extends LitElement {
     try {
       this.error = '';
       const result = await signIn(email, password);
+      await restore();
       this.openNotebook();
     } catch (e) {
       this.error = e;

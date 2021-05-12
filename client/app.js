@@ -40,7 +40,7 @@ export class App extends LitElement {
     return html` <header
         class="${pathname.includes('notepad') ? 'sticky' : ''}"
       >
-        <div class="container">
+        <div class="container" id="container" role="container">
           <div class="header-inner">
             ${Logo()}
             <nav>
