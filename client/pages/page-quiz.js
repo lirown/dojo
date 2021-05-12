@@ -2,7 +2,6 @@ import { html } from '../components/base';
 import { PageElement } from '../components';
 import { getQuizResult, quizQuestions } from '../services/quiz';
 import { urlForName } from '../router';
-import { db } from '../stores/db';
 
 /**
  * Page Quiz - a quick 5 questions check to evaluate your engineering level.
