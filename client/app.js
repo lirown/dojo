@@ -9,8 +9,8 @@ import {
 } from './components';
 
 import { attachRouter } from './router';
-import { getTopics, getTopicFromURL } from './stores/topic';
-import { getRoles, getRoleFromURL } from './stores/role';
+import { getTopics, getTopicFromURL } from './services/topic';
+import { getRoles, getRoleFromURL } from './services/role';
 
 import '@forter/checkbox';
 import '@forter/button';

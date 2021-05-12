@@ -1,7 +1,7 @@
 import { html } from '../components/base';
 
-import { DEFAULT_STATUS, nextStatus, backup } from '../stores/notepad';
-import { db } from '../stores/db';
+import { DEFAULT_STATUS, nextStatus, backup } from '../services/notepad';
+import { db } from '../services/db';
 
 /**
  * Creating a checkbox to show wether topic is done or not

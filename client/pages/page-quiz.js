@@ -1,6 +1,6 @@
 import { html } from '../components/base';
-import { PageElement } from '../helpers/page-element';
-import { getQuizResult, quizQuestions } from '../stores/quiz';
+import { PageElement } from '../components';
+import { getQuizResult, quizQuestions } from '../services/quiz';
 import { urlForName } from '../router';
 import { db } from '../stores/db';
 

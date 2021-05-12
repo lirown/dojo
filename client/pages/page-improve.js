@@ -1,10 +1,13 @@
 import { html } from '../components/base';
-import { StatusCheckbox, StatusButton } from '../components';
-import { PageElement } from '../helpers/page-element';
+import { PageElement, StatusCheckbox, StatusButton } from '../components';
 
-import { db } from '../stores/db';
-import { sections, getActionableItems, sectionMetadata } from '../stores/topic';
-import { roleMetadata } from '../stores/role';
+import { db } from '../services/db';
+import {
+  sections,
+  getActionableItems,
+  sectionMetadata
+} from '../services/topic';
+import { roleMetadata } from '../services/role';
 
 /**
  * Improve Page - to show engineer how he can emprove his profession.

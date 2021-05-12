@@ -2,7 +2,7 @@ import { LitElement } from '../components/base';
 
 import config from '../config';
 
-import { updateMetadata } from './html-meta-manager';
+import { updateMetadata } from '../services/html-meta-manager';
 
 // Add metadata options to the @vaadin/router BaseRoute
 
