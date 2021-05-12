@@ -98,7 +98,6 @@ export class PageQuiz extends PageElement {
   async goToResult() {
     const { answers } = this;
     const params = { role: getQuizResult({ answers }) };
-    await db.create('ROLE', params);
     location.href = urlForName('result', params);
   }
 }
