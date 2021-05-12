@@ -16,28 +16,19 @@ const FORM_STATES = {
   SIGNUP: 'SIGNUP'
 };
 
-export class MainActionButton extends LitElement {
+export class LoginOrForwardNotebookButton extends LitElement {
   static styles = [
     css`
       img {
         margin-bottom: 25px;
       }
+
       fc-button[size='large'] {
-        --fc-button-min-height: 60px;
-        font-size: 24px;
-      }
-      fc-button {
-        --fc-button-background-color: var(--fc-secondary);
+        --fc-button-background-color: rgba(255, 255, 255, 0.3);
         --fc-button-item-color: white;
-        --fc-button-min-height: 36px;
-        --fc-button-padding: 20px;
-        --fc-button-default-border-radius: 30px;
-        font-weight: 600;
         font-size: 18px;
-        line-height: 34px;
-        text-decoration: none;
-        border-radius: 66px;
       }
+
       fc-button[secondary] {
         --fc-button-background-color: transparent;
         --fc-button-item-color: white;
@@ -55,7 +46,7 @@ export class MainActionButton extends LitElement {
       .buttons {
         display: grid;
         place-items: center;
-        margin: 40px 0px 10px;
+        margin: 20px 0px 10px;
         gap: 10px;
       }
       fc-input {
@@ -78,6 +69,19 @@ export class MainActionButton extends LitElement {
         font-size: 14px;
         color: var(--gray-8);
       }
+
+      #guest {
+        text-align: center;
+        color: var(--gray-6);
+        cursor: pointer;
+      }
+
+      #error {
+        margin: 10px 0;
+        text-transform: uppercase;
+        color: red;
+        font-size: 12px;
+      }
     `
   ];
 
@@ -86,16 +90,15 @@ export class MainActionButton extends LitElement {
       modalOpened: { type: Boolean },
       label: { type: String },
       formState: { type: Boolean },
-      height: { type: String }
+      height: { type: String },
+      error: { type: String }
     };
   }
 
-  openQuiz() {
-    window.location.href = urlForName('quiz');
-  }
-
-  openResults() {
-    window.location.href = urlForName('quiz');
+  openNotebook() {
+    location.href = urlForName('notepad', {
+      topic: 'engineering-craftsmanship'
+    });
   }
 
   getInputProps() {
@@ -113,19 +116,26 @@ export class MainActionButton extends LitElement {
   async signInUser() {
     console.log('signing in...');
     const { password, email } = this.getInputProps();
-    const result = await signIn(email, password);
-    await restore();
-    console.log(result);
-    this.openQuiz();
+    try {
+      this.error = '';
+      const result = await signIn(email, password);
+      await restore();
+      this.openNotebook();
+    } catch (e) {
+      this.error = e;
+    }
   }
 
   async signUpUser() {
     console.log('signing up...');
     const { password, email, name } = this.getInputProps();
-    const result = await signUp(email, password, name);
-
-    console.log(result);
-    this.openQuiz();
+    try {
+      this.error = '';
+      const result = await signUp(email, password, name);
+      this.openNotebook();
+    } catch (e) {
+      this.error = e;
+    }
   }
 
   async forgotPassword() {
@@ -134,7 +144,6 @@ export class MainActionButton extends LitElement {
     console.log('forgot password...');
     const { email } = this.getInputProps();
     const result = await forgotPassword(email);
-    console.log(result);
   }
 
   constructor() {
@@ -146,20 +155,19 @@ export class MainActionButton extends LitElement {
   }
 
   toggleFormState() {
-    if (this.formState === FORM_STATES.SIGNUP) {
-      this.formState = FORM_STATES.SIGNIN;
+    this.error = '';
+    if (this.formState === FORM_STATES.SIGNIN) {
+      this.formState = FORM_STATES.SIGNUP;
       return;
     }
-    this.formState = FORM_STATES.SIGNUP;
+    this.formState = FORM_STATES.SIGNIN;
   }
 
   async toggleModal() {
     const user = await getUser();
-    if (user?.uid) {
-      if (user?.hasGrowthNotepad) {
-        return this.openResults();
-      }
-      return this.openQuiz();
+
+    if (user) {
+      return this.openNotebook();
     }
 
     this.shadowRoot.querySelector('#modal').toggle();
@@ -172,8 +180,24 @@ export class MainActionButton extends LitElement {
     return '205px';
   }
 
+  onEnterPress(event) {
+    if (event.which === 13 || event.keyCode === 13) {
+      //code to execute here
+      return true;
+    }
+    return false;
+  }
+
+  action() {
+    return this.formState === FORM_STATES.SIGNUP
+      ? this.signUpUser()
+      : this.formState === FORM_STATES.SIGNIN
+      ? this.signInUser()
+      : this.forgotPassword();
+  }
+
   render() {
-    return html`<a>
+    return html`<span>
       <fc-button @click="${async () =>
         await this.toggleModal()}" size="large">${this.label}</fc-button>
       <fc-modal width="${this.getWidth()}" id="modal">
@@ -204,8 +228,18 @@ export class MainActionButton extends LitElement {
             class="field"
           >
             <label>Password</label>
-            <fc-input type="password" id="password" label=" "></fc-input>
+            <fc-input type="password" id="password" label=" " @keypress="${(
+              e
+            ) => (this.onEnterPress(e) ? this.action() : '')}"></fc-input>
           </div>
+          
+          ${
+            this.error
+              ? html`<div id="error">
+                  ${this.error.split('/')[1].replaceAll('-', ' ')}
+                </div>`
+              : ''
+          }
           <span
               id="forgot"
             ?hidden=${[
@@ -220,14 +254,10 @@ export class MainActionButton extends LitElement {
             ?hidden=${![FORM_STATES.FORGOT_POST_EMAIL].includes(this.formState)}
             >A Link to log in has been sent to your mail, if such exist.</span
           >
+          
           <div class="buttons">
             <fc-button
-              @click="${() =>
-                this.formState === FORM_STATES.SIGNUP
-                  ? this.signUpUser()
-                  : this.formState === FORM_STATES.SIGNIN
-                  ? this.signInUser()
-                  : this.forgotPassword()}"
+              @click="${() => this.action()}"
             >
               ${
                 this.formState === FORM_STATES.SIGNUP
@@ -244,13 +274,18 @@ export class MainActionButton extends LitElement {
               secondary
               @click="${() => this.toggleFormState()}"
               >SIGN
-              ${this.formState === FORM_STATES.SIGNUP ? 'IN' : 'UP'}</fc-button
+              ${this.formState === FORM_STATES.SIGNIN ? 'UP' : 'IN'}</fc-button
             >
           </div>
+          <div id="guest" @click="${() =>
+            this.openNotebook()}">Continue as a guest</div>
         </div>
       </fc-modal>
     </a>`;
   }
 }
 
-customElements.define('main-action-button', MainActionButton);
+customElements.define(
+  'login-or-forward-notebook-button',
+  LoginOrForwardNotebookButton
+);

@@ -47,21 +47,6 @@ export const routes = [
     }
   },
   {
-    path: '/forgot',
-    redirect: '/',
-    name: 'forgot',
-    component: 'page-home',
-    metadata: {
-      title: config.appName,
-      titleTemplate: null,
-      description: config.appDescription
-    },
-    action: async () => {
-      await import('../pages/page-home');
-      updateNavbar();
-    }
-  },
-  {
     path: '/result/:role',
     name: 'result',
     component: 'page-result',

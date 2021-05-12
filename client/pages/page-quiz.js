@@ -46,7 +46,7 @@ export class PageQuiz extends PageElement {
                   <div class="quiz-a">
                     <fc-radio-group
                       name="q-radio"
-                      @change=${(e) => this.answerChosen(e, index)}
+                      @change=${async (e) => await this.answerChosen(e, index)}
                     >
                       ${answers
                         //.sort(this.reshuffle)
@@ -78,13 +78,13 @@ export class PageQuiz extends PageElement {
    * @param {Object} target element value
    * @param {Nunber} number of question
    */
-  answerChosen({ target }, index) {
+  async answerChosen({ target }, index) {
     // adding small interval to see animation
     this.answers.push(target.value);
 
-    setTimeout(() => {
+    setTimeout(async () => {
       if (this.selected === 4) {
-        return this.goToResult();
+        return await this.goToResult();
       }
 
       this.selected = index + 1;
@@ -95,7 +95,7 @@ export class PageQuiz extends PageElement {
   /**
    * go to result by the engineering level result after quiz
    */
-  goToResult() {
+  async goToResult() {
     const { answers } = this;
     const params = { role: getQuizResult({ answers }) };
     location.href = urlForName('result', params);

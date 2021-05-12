@@ -18,7 +18,8 @@ import '@forter/radio';
 import '@forter/tooltip';
 import '@forter/input';
 
-import './components/main-action-button.js';
+import './components/login-or-forward-notebook-button.js';
+import './components/elastic-tab.js';
 import './components/modal.js';
 
 import 'pwa-helper-components/pwa-install-button.js';
@@ -36,7 +37,9 @@ export class App extends LitElement {
     const topic = getTopicFromURL();
     const { pathname } = location;
 
-    return html` <header>
+    return html` <header
+        class="${pathname.includes('notepad') ? 'sticky' : ''}"
+      >
         <div class="container" id="container" role="container">
           <div class="header-inner">
             ${Logo()}
@@ -90,11 +93,9 @@ export class App extends LitElement {
                     )}
                   </ul>
                 </li>
-                ${NavButton({
-                  name: 'notepad',
-                  params: { topic },
-                  label: 'My Growth Notepad'
-                })}
+                <login-or-forward-notebook-button
+                  label="My Growth Notebook"
+                ></login-or-forward-notebook-button>
               </ul>
             </nav>
           </div>
@@ -115,9 +116,27 @@ export class App extends LitElement {
     return this;
   }
 
+  spyScroll() {
+    const myID = document.body;
+    const y = window.scrollY;
+    if (y >= 242) {
+      myID.classList.add('scrolled');
+    } else {
+      myID.classList.remove('scrolled');
+    }
+  }
+
   /** @inheritdoc */
   firstUpdated() {
     attachRouter(this.querySelector('main'));
+    const that = this;
+    window.addEventListener(
+      'scroll',
+      function () {
+        that.spyScroll();
+      },
+      false
+    );
   }
 }
 

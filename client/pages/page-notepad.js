@@ -40,13 +40,24 @@ export class PageNotepad extends PageElement {
   }
 
   /** @inheritdoc */
-  async firstUpdated() {
-    const { topic = DEFAULT_TOPIC } = this.location.params;
+  async updated() {
     this.state = await db.query({
       groupBy: 'section',
-      filter: (notepad) => notepad.topic === topic
+      filter: (notepad) => notepad.topic === this.topic
     });
     this.topicsCount = await db.aggregate({ groupBy: 'topic' });
+  }
+
+  constructor(props) {
+    super(props);
+    this.topic = location.pathname.split('/')[2] || DEFAULT_TOPIC;
+  }
+
+  changeTab(e) {
+    console.log(e);
+    const { key } = e.detail;
+    this.topic = key;
+    history.pushState(null, '', `/notepad/${key}`);
   }
 
   /** @inheritdoc */
@@ -56,7 +67,6 @@ export class PageNotepad extends PageElement {
       return html`Loading...`;
     }
 
-    const { topic = DEFAULT_TOPIC } = this.location.params;
     const callback = this.firstUpdated.bind(this);
 
     return html`
@@ -65,20 +75,12 @@ export class PageNotepad extends PageElement {
           <div class="hero-inner">
             <h1>My Growth Notepad</h1>
             <div class="goal-items">
-              <ul>
-                ${getTopics().map(
-                  ({ key, name }, index) => html`
-                    <li class="${topic === key ? 'active' : ''}">
-                      <a
-                        href="${urlForName('notepad', {
-                          topic: key
-                        })}"
-                        >${name} <span>${this.topicsCount[key] || 0}</span></a
-                      >
-                    </li>
-                  `
-                )}
-              </ul>
+                <elastic-tabs @change="${(e) =>
+                  this.changeTab(e)}" .tabs="${getTopics().map((item) => {
+      return { ...item, count: this.topicsCount[item.key] || 0 };
+    })}" activeElementName="${
+      getTopics().find((item) => item.key === this.topic).name
+    }"></elastic-tabs>
             </div>
           </div>
         </div>

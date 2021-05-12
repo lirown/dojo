@@ -1,6 +1,6 @@
 export { PageElement } from './page-element';
 export { Logo } from './logo';
-export { MainActionButton } from './main-action-button';
+export { LoginOrForwardNotebookButton } from './login-or-forward-notebook-button';
 export { FcModal } from './modal';
 export { Feature } from './feature';
 export { Ninja } from './ninja';
@@ -11,4 +11,5 @@ export { HiringButton } from './hiring-button';
 export { NavButton } from './nav-button';
 export { NavDropdownItem } from './nav-dropdown-item';
 export { GoogleDocsSpreadsheetLink } from './google-docs-spreadsheet-link';
+export { ElasticTabs } from './elastic-tab';
 export { MadeWithLove } from './made-with-love';

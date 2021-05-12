@@ -26,7 +26,7 @@ export function HiringButton({
 } = {}) {
   return html`
     <div class="hiring">
-      <a href="${href}"><img src="${src}" alt="${alt}" /></a>
+      <a href="${href}" target="_blank"><img src="${src}" alt="${alt}" /></a>
     </div>
   `;
 }

@@ -1,4 +1,4 @@
-import { html } from '../components/base';
+import { html, css } from '../components/base';
 import {
   PageElement,
   Feature,
@@ -30,9 +30,11 @@ export class PageHome extends PageElement {
               make bigger impact.
             </h2>
             <div class="bottom-data">
-              <main-action-button
-                label="I'M READY! SHOW ME"
-              ></main-action-button>
+              <fc-button
+                size="large"
+                @click="${() => (location.href = urlForName('quiz'))}"
+                >I'm Ready! Show Me</fc-button
+              >
               <p>all free, no emails, no BS. We're Engineers...</p>
             </div>
           </div>
