@@ -93,6 +93,10 @@ export class ElasticTabs extends LitElement {
     this.left = e.target.offsetLeft - 5;
     this.top = e.target.offsetTop;
     this.height = e.target.clientHeight;
+
+    const item = this.tabs.find((tab) => tab.name === activeElementName);
+
+    this.dispatchEvent(new CustomEvent('change', { detail: item }));
   }
 
   render() {

@@ -1,4 +1,4 @@
-import { html } from '../components/base';
+import { html, css } from '../components/base';
 import {
   PageElement,
   Feature,
