@@ -49,6 +49,7 @@ fc-button[size='large'] {
 
 fc-button {
   --fc-button-background-color: var(--fc-secondary);
+  --fc-button-hover-background-shadow: inset 0 0 0 99999px #00ba7f;
   --fc-button-item-color: white;
   --fc-button-min-height: 36px;
   --fc-button-padding: 20px;
@@ -202,6 +203,7 @@ ul#main-menu li {
 ul#main-menu {
   display: flex;
   flex: 1;
+  gap: 20px;
   align-self: stretch;
   justify-content: flex-end;
   height: 30px;
@@ -786,8 +788,7 @@ li.type-drop a[active] {
 #sub-menu > li {
   display: flex;
   justify-content: center;
-  padding: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 5px 0;
 }
 
 #sub-menu > li > a {
@@ -808,6 +809,7 @@ li.type-drop a[active] {
 
 li.type-drop a {
   position: relative;
+  width: max-content;
   background: 0;
 }
 
@@ -1047,8 +1049,29 @@ fc-checkbox[checked] + span {
   }
 
   .hero-result {
-    /* height: 218px; */
-    background-image: url('./images/result-backdrop.svg');
+    height: 275px;
+    -webkit-transition: background-image 0.2s ease-in-out;
+    transition: background-image 0.2s ease-in-out;
+  }
+
+  .hero-result.level-1 {
+    background-image: url('./images/result/result-backdrop-0.svg');
+  }
+
+  .hero-result.level-2 {
+    background-image: url('./images/result/result-backdrop-1.svg');
+  }
+
+  .hero-result.level-3 {
+    background-image: url('./images/result/result-backdrop-2.svg');
+  }
+
+  .hero-result.level-4 {
+    background-image: url('./images/result/result-backdrop-3.svg');
+  }
+
+  .hero-result.level-5 {
+    background-image: url('./images/result/result-backdrop-4.svg');
   }
 
   .hero-improve {

@@ -15,7 +15,9 @@ export class PageResult extends PageElement {
     const { role } = this.location.params;
 
     return html`
-      <section class="hero hero-result">
+      <section class="hero hero-result level-${
+        roleMetadata[role].level.split(' ')[1]
+      }">
         <div class="container">
           <div class="hero-inner">
             <p>
