@@ -46,12 +46,11 @@ export class PageNotepad extends PageElement {
       filter: (notepad) => notepad.topic === this.topic
     });
     this.topicsCount = await db.aggregate({ groupBy: 'topic' });
-    this.topic = this.location.params.topic;
   }
 
   constructor(props) {
     super(props);
-    this.topic = location.pathname.split('/')[2] || DEFAULT_TOPIC;
+    this.topic = this.location.params.topic;
   }
 
   changeTab(e) {
