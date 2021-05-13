@@ -202,7 +202,7 @@ export class LoginOrForwardNotebookButton extends LitElement {
         await this.toggleModal()}" size="large">${this.label}</fc-button>
       <fc-modal width="${this.getWidth()}" id="modal">
         <div>
-          <img src="images/logodark.png"></img>
+          <img src="images/logodark.svg"></img>
           <div
             ?hidden=${![FORM_STATES.SIGNUP].includes(this.formState)}
             class="field"
