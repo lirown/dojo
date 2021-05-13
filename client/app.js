@@ -78,7 +78,7 @@ export class App extends LitElement {
                 </li>
 
                 <li class="type-drop" ?hidden=${!pathname.includes('/improve')}>
-                  <a>Change Topic</a>
+                  <a>Change topic</a>
                   <ul id="sub-menu">
                     ${getTopics().map(({ key, name }) =>
                       NavDropdownItem({

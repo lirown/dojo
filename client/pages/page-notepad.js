@@ -129,10 +129,11 @@ export class PageNotepad extends PageElement {
                                     <span
                                       >${key}
                                       <span
-                                        class="green"
+                                        class="green done-text"
+                                        style=""
                                         ?hidden=${status !== 'done'}
                                       >
-                                        Done on the
+                                        done on the
                                         ${new Date(updatedAt)
                                           .toString()
                                           .split('(')[0]}

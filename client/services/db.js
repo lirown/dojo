@@ -5,7 +5,7 @@ const STORE_NAME = 'dojo-improve';
 const dbPromise = openDB('dojo-notepad', 1, {
   upgrade(db) {
     const store = db.createObjectStore(STORE_NAME);
-    store.createIndex('createdAt', 'createdAt');
+    store.createIndex('updatedAt', 'updatedAt');
   }
 });
 

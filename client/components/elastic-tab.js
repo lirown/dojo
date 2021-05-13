@@ -121,8 +121,8 @@ export class ElasticTabs extends LitElement {
   render() {
     return html`<nav class="tabs">
       <div
-        style="left: ${this.left}px; width: ${this.width}px; top: ${this
-          .top}px; height: ${this.height}px;"
+        style="transform: translateX(${this.left}px); width: ${this
+          .width}px; top: ${this.top}px; height: ${this.height}px;"
         class="selector"
       ></div>
       ${(this.tabs || []).map(

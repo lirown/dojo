@@ -33,6 +33,10 @@ body,
   color: var(--fc-secondary);
 }
 
+.done-text {
+  margin-left: 10px;
+}
+
 fc-button[size='large'] {
   --fc-button-background-color: var(--fc-secondary);
   --fc-button-item-color: white;
@@ -999,7 +1003,7 @@ fc-checkbox[checked] + span {
   }
 
   ul#main-menu {
-    width: 480px;
+    width: 495px;
   }
 
   page-home .hero-inner > h2 {
@@ -1206,9 +1210,9 @@ fc-checkbox[checked] + span {
   fc-button.added,
   fc-button.done,
   fc-button.work {
-    --fc-button-min-width: 130px;
+    --fc-button-min-width: 170px;
 
-    width: 120px;
+    width: 170px;
     margin-bottom: 10px;
   }
 
@@ -1218,6 +1222,10 @@ fc-checkbox[checked] + span {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
+  }
+
+  login-or-forward-notebook-button {
+    margin-left: 10px;
   }
 }
 
