@@ -1,6 +1,7 @@
 import config from '../config';
 import { db } from '../services/db';
 import { signOut } from '../services/firebase/authentication';
+import { restore } from '../services/notepad';
 
 /**
  * Update the navbar items by route
@@ -81,6 +82,7 @@ export const routes = [
       description: 'Suggestions for improve due to  quiz result'
     },
     action: async () => {
+      await restore();
       await import('../pages/page-improve');
       updateNavbar();
     }
@@ -94,6 +96,7 @@ export const routes = [
       description: 'Suggestions for improve due to  quiz result'
     },
     action: async () => {
+      await restore();
       await import('../pages/page-notepad');
       updateNavbar();
     }

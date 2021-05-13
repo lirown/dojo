@@ -2,6 +2,7 @@ import * as storage from '../services/firebase/storage';
 import { db } from '../services/db';
 import { getUser } from '../services/firebase/authentication';
 
+export const LAST_UPDATED_KEY = 'restore-last-updated-key';
 /**
  * default status when no status defined
  */
@@ -21,7 +22,7 @@ export const nextStatus = {
  * @returns {Promise} backup data
  */
 export async function backup() {
-  const user = await getUser();
+  const user = getUser();
 
   if (!user) {
     return;
@@ -32,14 +33,21 @@ export async function backup() {
 }
 
 /**
- * state from storage to indexeddb
+ * state from storage to indexeddb if last updated different
  * @returns {Promise} db restore result
  */
 export async function restore() {
-  const user = await getUser();
+  const user = getUser();
   if (!user) {
     return;
   }
-  const state = await storage.get(`user/${user.uid}`);
+  const path = `user/${user.uid}`;
+  const { updated } = await storage.metadata(path);
+  const currentUpdated = localStorage.getItem(LAST_UPDATED_KEY);
+  if (updated == currentUpdated) {
+    return;
+  }
+  localStorage.setItem(LAST_UPDATED_KEY, updated);
+  const state = await storage.get(path);
   await db.restore(state);
 }

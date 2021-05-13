@@ -1,12 +1,15 @@
 import { app } from './index';
+const LOGGED_IN_KEY = 'logged-in-uid';
 
 /**
  * fetch user details will work after login otherwise return null
  * @return {Promise<String>}
  */
 
-export async function getUser() {
-  return app.auth().currentUser;
+export function getUser() {
+  const user = app.auth().currentUser;
+  const uid = localStorage.getItem(LOGGED_IN_KEY);
+  return user || (uid ? { uid } : null);
 }
 
 /**
@@ -18,7 +21,10 @@ export function signIn(email, password) {
   return app
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then(({ user }) => user);
+    .then(({ user }) => {
+      localStorage.setItem(LOGGED_IN_KEY, user.uid);
+      return user;
+    });
 }
 
 /**
@@ -27,6 +33,7 @@ export function signIn(email, password) {
  */
 
 export async function signOut() {
+  localStorage.removeItem(LOGGED_IN_KEY);
   return app.auth().signOut();
 }
 

@@ -28,3 +28,11 @@ export async function get(path) {
     return {};
   }
 }
+
+/**
+ * Get a metadata of uploaded file
+ * @return {Promise<String>}
+ */
+export async function metadata(path) {
+  return storageRef.child(path).getMetadata();
+}

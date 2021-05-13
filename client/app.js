@@ -127,7 +127,7 @@ export class App extends LitElement {
   }
 
   /** @inheritdoc */
-  firstUpdated() {
+  async firstUpdated() {
     attachRouter(this.querySelector('main'));
     const that = this;
     window.addEventListener(
