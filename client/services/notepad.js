@@ -1,5 +1,6 @@
 import * as storage from '../services/firebase/storage';
 import { db } from '../services/db';
+import { getUser } from '../services/firebase/authentication';
 
 /**
  * default status when no status defined
@@ -21,6 +22,10 @@ export const nextStatus = {
  * @returns {Promise} result of the file creation
  */
 export async function backup(data) {
+  const user = await getUser();
+  if (!user) {
+    return;
+  }
   const content = await db.query({ groupBy: 'key', flat: true });
   return await storage.put(content);
 }
