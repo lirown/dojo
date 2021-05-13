@@ -5,6 +5,8 @@
   "start_url": "/?utm_source=web_app_manifest",
   "display": "standalone",
   "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "categories": ["engineering", "dojo"],
   "background_color": "#ffffff",
   "icons": [
     {
@@ -28,6 +30,24 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "preview.png",
+      "sizes": "1280x720",
+      "type": "image/webp"
+    },
+    {
+      "src": "preview.png",
+      "sizes": "1280x720",
+      "type": "image/webp"
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "play",
+      "id": "com.android.chrome"
     }
   ]
 }
