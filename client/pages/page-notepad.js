@@ -46,6 +46,7 @@ export class PageNotepad extends PageElement {
       filter: (notepad) => notepad.topic === this.topic
     });
     this.topicsCount = await db.aggregate({ groupBy: 'topic' });
+    this.topic = this.location.params.topic;
   }
 
   constructor(props) {
