@@ -6,7 +6,8 @@ import { getUser } from './authentication';
  *
  * @return {Promise<String>}
  */
-export async function put({ path, content }) {
+
+export async function put(path, content) {
   return storageRef.child(path).putString(JSON.stringify(content));
 }
 
@@ -14,7 +15,8 @@ export async function put({ path, content }) {
  * Get a state of user after login
  * @return {Promise<String>}
  */
-export async function get({ path }) {
+
+export async function get(path) {
   try {
     // Get the download URL
     const url = await storageRef.child(path).getDownloadURL();
