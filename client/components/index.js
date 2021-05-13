@@ -1,6 +1,6 @@
 export { PageElement } from './page-element';
 export { Logo } from './logo';
-export { LoginOrForwardNotebookButton } from './login-or-forward-notebook-button';
+export { NavBar } from './nav-bar';
 export { FcModal } from './modal';
 export { Feature } from './feature';
 export { Ninja } from './ninja';

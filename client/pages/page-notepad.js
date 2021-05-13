@@ -82,7 +82,7 @@ export class PageNotepad extends PageElement {
           </div>
         </div>
       </section>
-      <section>
+        <section style="min-height: 1000px">
         <div class="container">
           <div class="result-inner">
             <p>

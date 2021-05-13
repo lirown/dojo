@@ -8,7 +8,7 @@ import { restore } from '../services/notepad';
  */
 
 function updateNavbar() {
-  setTimeout(() => document.querySelector('app-index').requestUpdate(), 0);
+  setTimeout(() => document.querySelector('nav-bar').requestUpdate(), 0);
 }
 
 /**
@@ -27,7 +27,6 @@ export const routes = [
     },
     action: async () => {
       await import('../pages/page-home');
-      updateNavbar();
     }
   },
   {

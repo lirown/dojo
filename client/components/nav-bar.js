@@ -1,6 +1,10 @@
 import { html, LitElement, css } from './base';
 import { restore } from '../services/notepad';
 import { urlForName } from '../router';
+import { NavButton, NavDropdownItem } from '../components';
+import { getTopics, getTopicFromURL } from '../services/topic';
+import { getRoles, getRoleFromURL } from '../services/role';
+
 import {
   signUp,
   forgotPassword,
@@ -16,7 +20,7 @@ const FORM_STATES = {
   SIGNUP: 'SIGNUP'
 };
 
-export class LoginOrForwardNotebookButton extends LitElement {
+export class NavBar extends LitElement {
   static styles = [
     css`
       img {
@@ -81,6 +85,137 @@ export class LoginOrForwardNotebookButton extends LitElement {
         text-transform: uppercase;
         color: red;
         font-size: 12px;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+      }
+
+      ul#main-menu {
+        display: flex;
+        flex: 1;
+        gap: 20px;
+        align-self: stretch;
+        justify-content: flex-end;
+        height: 30px;
+      }
+
+      ul#main-menu li {
+        position: relative;
+        cursor: pointer;
+      }
+
+      ul#main-menu > li:first-child a {
+        margin-left: 0;
+      }
+
+      li.type-drop a {
+        position: relative;
+        width: max-content;
+        background: 0;
+      }
+
+      li.type-drop a:hover {
+        color: #fff !important;
+        background: #002255b3;
+      }
+
+      li.type-drop > a::after {
+        position: relative;
+        top: 1px;
+        right: -3px;
+        display: block;
+        width: 16px;
+        height: 16px;
+        background: url(./images/arrow-down.svg);
+        content: '';
+      }
+      #main-menu > li:hover #sub-menu {
+        visibility: visible;
+        opacity: 1;
+      }
+      nav li a {
+        display: flex;
+        align-items: center;
+        padding: 5px 20px;
+        color: #fff;
+        font-weight: 400;
+        font-size: 14px;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50px;
+      }
+
+      #sub-menu {
+        position: absolute;
+        left: 0;
+        width: 230px;
+        margin-top: 5px;
+        overflow: hidden;
+        background: rgb(0 34 85 / 70%);
+        border-radius: 10px;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.15s ease-in;
+        padding-inline-start: 0;
+      }
+
+      #sub-menu > li > a {
+        display: flex;
+        justify-content: start;
+        width: 100%;
+        margin: 0;
+        padding: 5px 20px 8px;
+        color: #bdd8ff;
+        text-decoration: none;
+        border-radius: 0;
+      }
+
+      #sub-menu > li {
+        display: flex;
+        justify-content: center;
+        padding: 5px 0;
+      }
+
+      li.type-drop a[active] {
+        color: #fff !important;
+      }
+
+      li.type-drop a:hover {
+        color: #fff !important;
+        background: #002255b3;
+      }
+
+      @media (min-width: 992px) {
+        ul#main-menu {
+          width: 495px;
+        }
+        ul#main-menu > li:not(.type-notepad) {
+          display: block;
+        }
+        nav a {
+          padding: 5px 20px 6px;
+          font-size: 16px;
+        }
+      }
+      [hidden] {
+        display: none !important;
+      }
+      pwa-install-button > button,
+      pwa-update-available > button {
+        display: flex;
+        align-items: center;
+        margin-top: 3px;
+        padding: 5px 20px;
+        color: #fff;
+        font-weight: 400;
+        font-size: 14px;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
       }
     `
   ];
@@ -169,22 +304,78 @@ export class LoginOrForwardNotebookButton extends LitElement {
   async toggleModal() {
     const user = await getUser();
     const modal = this.shadowRoot.querySelector('#modal');
-
-    if (user) {
-      return this.openNotebook();
+    if (!user) {
+      modal.toggle();
     }
-
-    modal.toggle();
   }
 
   render() {
+    const role = getRoleFromURL();
+    const topic = getTopicFromURL();
+    const { pathname } = location;
+
     const { FORGOT, FORGOT_POST_EMAIL, SIGNUP, SIGNIN } = FORM_STATES;
     const { enterPressed, formState, emailValue, toggleModal, getWidth } = this;
 
-    return html`<span>
-      <fc-button @click="${toggleModal.bind(this)}" size="large">
-        ${this.label}
-      </fc-button>
+    return html`
+      <nav>
+              <ul id="main-menu">
+                <li class="type-drop" ?hidden=${!pathname.includes('/improve')}>
+                  <a>Change level</a>
+                  <ul id="sub-menu">
+                    ${getRoles().map(({ key, name }) =>
+                      NavDropdownItem({
+                        name: 'improve',
+                        params: {
+                          topic,
+                          role: key
+                        },
+                        active: pathname.includes(`/${key}`),
+                        label: name
+                      })
+                    )}
+                  </ul>
+                </li>
+                <li class="type-drop" ?hidden=${!pathname.includes('/result')}>
+                  <a>Change level</a>
+                  <ul id="sub-menu">
+                    ${getRoles().map(({ key, name }) =>
+                      NavDropdownItem({
+                        name: 'result',
+                        params: {
+                          role: key
+                        },
+                        active: pathname.includes(`/${key}`),
+                        label: name
+                      })
+                    )}
+                  </ul>
+                </li>
+
+                <li class="type-drop" ?hidden=${!pathname.includes('/improve')}>
+                  <a>Change topic</a>
+                  <ul id="sub-menu">
+                    ${getTopics().map(({ key, name }) =>
+                      NavDropdownItem({
+                        name: 'improve',
+                        params: {
+                          topic: key,
+                          role
+                        },
+                        active: pathname.includes(`/${key}`),
+                        label: name
+                      })
+                    )}
+                  </ul>
+                </li>
+            </ul>
+
+      <span>
+      <a href="${getUser() ? urlForName('notepad', { topic }) : ''}">
+        <fc-button @click="${toggleModal.bind(this)}" size="large">
+          ${this.label}
+        </fc-button>
+       </a>
       <fc-modal width="${getWidth()}" id="modal">
         <div>
           <img src="images/logodark.png"></img>
@@ -250,11 +441,8 @@ export class LoginOrForwardNotebookButton extends LitElement {
             this.openNotebook()}">Continue as a guest</div>
         </div>
       </fc-modal>
-    </a>`;
+      </a></nav>`;
   }
 }
 
-customElements.define(
-  'login-or-forward-notebook-button',
-  LoginOrForwardNotebookButton
-);
+customElements.define('nav-bar', NavBar);

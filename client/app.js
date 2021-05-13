@@ -9,16 +9,13 @@ import {
 } from './components';
 
 import { attachRouter } from './router';
-import { getTopics, getTopicFromURL } from './services/topic';
-import { getRoles, getRoleFromURL } from './services/role';
-
 import '@forter/checkbox';
 import '@forter/button';
 import '@forter/radio';
 import '@forter/tooltip';
 import '@forter/input';
 
-import './components/login-or-forward-notebook-button.js';
+import './components/nav-bar.js';
 import './components/elastic-tab.js';
 import './components/modal.js';
 
@@ -33,71 +30,14 @@ import 'pwa-helper-components/pwa-update-available.js';
 export class App extends LitElement {
   /** @inheritdoc */
   render() {
-    const role = getRoleFromURL();
-    const topic = getTopicFromURL();
     const { pathname } = location;
-
     return html` <header
         class="${pathname.includes('notepad') ? 'sticky' : ''}"
       >
         <div class="container" id="container" role="container">
           <div class="header-inner">
             ${Logo()}
-            <nav>
-              <ul id="main-menu">
-                <li class="type-drop" ?hidden=${!pathname.includes('/improve')}>
-                  <a>Change level</a>
-                  <ul id="sub-menu">
-                    ${getRoles().map(({ key, name }) =>
-                      NavDropdownItem({
-                        name: 'improve',
-                        params: {
-                          topic,
-                          role: key
-                        },
-                        active: pathname.includes(`/${key}`),
-                        label: name
-                      })
-                    )}
-                  </ul>
-                </li>
-                <li class="type-drop" ?hidden=${!pathname.includes('/result')}>
-                  <a>Change level</a>
-                  <ul id="sub-menu">
-                    ${getRoles().map(({ key, name }) =>
-                      NavDropdownItem({
-                        name: 'result',
-                        params: {
-                          role: key
-                        },
-                        active: pathname.includes(`/${key}`),
-                        label: name
-                      })
-                    )}
-                  </ul>
-                </li>
-
-                <li class="type-drop" ?hidden=${!pathname.includes('/improve')}>
-                  <a>Change topic</a>
-                  <ul id="sub-menu">
-                    ${getTopics().map(({ key, name }) =>
-                      NavDropdownItem({
-                        name: 'improve',
-                        params: {
-                          topic: key,
-                          role
-                        },
-                        active: pathname.includes(`/${key}`),
-                        label: name
-                      })
-                    )}
-                  </ul>
-                </li>
-                <login-or-forward-notebook-button
-                  label="My Growth Notebook"
-                ></login-or-forward-notebook-button>
-              </ul>
-            </nav>
+            <nav-bar label="My Growth Notebook"></nav-bar>
           </div>
         </div>
       </header>
