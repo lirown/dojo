@@ -50,7 +50,7 @@ export class PageNotepad extends PageElement {
 
   constructor(props) {
     super(props);
-    this.topic = this.location.params.topic;
+    this.topic = location.pathname.split('/').reverse()[0] || DEFAULT_TOPIC;
   }
 
   changeTab(e) {
