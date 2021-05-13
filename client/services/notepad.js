@@ -17,24 +17,29 @@ export const nextStatus = {
 };
 
 /**
- * update app state to storage
- * @param {String} content that was updated
- * @returns {Promise} result of the file creation
+ * state from db to storage
+ * @returns {Promise} backup data
  */
-export async function backup(data) {
+export async function backup() {
+  const user = await getUser();
+
+  if (!user) {
+    return;
+  }
+
+  const state = await db.query({ groupBy: 'key', flat: true });
+  return await storage.put(`user/${user.uid}`, state);
+}
+
+/**
+ * state from storage to indexeddb
+ * @returns {Promise} db restore result
+ */
+export async function restore() {
   const user = await getUser();
   if (!user) {
     return;
   }
-  const content = await db.query({ groupBy: 'key', flat: true });
-  return await storage.put(content);
-}
-
-/**
- *  app state to strage
- * @param {String} content that was updated
- */
-export async function restore() {
-  const state = await storage.get();
+  const state = await storage.get(`user/${user.uid}`);
   await db.restore(state);
 }

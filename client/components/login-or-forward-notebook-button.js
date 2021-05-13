@@ -95,116 +95,101 @@ export class LoginOrForwardNotebookButton extends LitElement {
     };
   }
 
-  openNotebook() {
-    location.href = urlForName('notepad', {
-      topic: 'engineering-craftsmanship'
-    });
-  }
-
-  getInputProps() {
-    const email = this.shadowRoot.querySelector('#email').value;
-    const name = this.shadowRoot.querySelector('#name').value;
-    const password = this.shadowRoot.querySelector('#password').value;
-
-    return {
-      email,
-      name,
-      password
-    };
-  }
-
-  async signInUser() {
-    console.log('signing in...');
-    const { password, email } = this.getInputProps();
-    try {
-      this.error = '';
-      const result = await signIn(email, password);
-      await restore();
-      this.openNotebook();
-    } catch (e) {
-      this.error = e;
-    }
-  }
-
-  async signUpUser() {
-    console.log('signing up...');
-    const { password, email, name } = this.getInputProps();
-    try {
-      this.error = '';
-      const result = await signUp(email, password, name);
-      this.openNotebook();
-    } catch (e) {
-      this.error = e;
-    }
-  }
-
-  async forgotPassword() {
-    this.formState = FORM_STATES.FORGOT_POST_EMAIL;
-
-    console.log('forgot password...');
-    const { email } = this.getInputProps();
-    const result = await forgotPassword(email);
-  }
-
   constructor() {
     super();
     this.modalOpened = false;
     this.label = '';
     this.formState = FORM_STATES.SIGNIN;
     this.emailValue = window.localStorage.getItem('emailForSignIn') || '';
+    this.enterPressed = (event) => event.which === 13 || event.keyCode === 13;
+    this.getWidth = () => (window.innerWidth < 500 ? '80%' : '205px');
   }
 
+  /**
+   * forward to the notebook route
+   */
+  openNotebook() {
+    location.href = urlForName('notepad', {
+      topic: 'engineering-craftsmanship'
+    });
+  }
+
+  /**
+   * @returns {Object<email, password, name>} properties for authentication
+   */
+  getInputProps() {
+    const root = this.shadowRoot;
+
+    return {
+      email: root.querySelector('#email').value,
+      name: root.querySelector('#name').value,
+      password: root.querySelector('#password').value
+    };
+  }
+
+  /**
+   * fire auth request by the state of the form
+   */
+  async action() {
+    try {
+      const { password, email, name } = this.getInputProps();
+      const { formState } = this;
+      const { SIGNUP, SIGNIN } = FORM_STATES;
+
+      console.log(`${this.formState}...`);
+
+      if (formState === SIGNUP) {
+        await signUp(email, password, name);
+      } else if (formState === SIGNIN) {
+        await signIn(email, password);
+      } else {
+        await forgotPassword(email);
+      }
+
+      this.openNotebook();
+    } catch (e) {
+      this.error = e.message;
+    }
+  }
+
+  /**
+   * toggle between signup and signin
+   */
   toggleFormState() {
     this.error = '';
-    if (this.formState === FORM_STATES.SIGNIN) {
-      this.formState = FORM_STATES.SIGNUP;
-      return;
-    }
-    this.formState = FORM_STATES.SIGNIN;
+    this.formState =
+      this.formState === FORM_STATES.SIGNIN
+        ? FORM_STATES.SIGNUP
+        : FORM_STATES.SIGNIN;
   }
 
+  /**
+   * toggle between opening notebook when loged in or modal
+   */
   async toggleModal() {
     const user = await getUser();
+    const modal = this.shadowRoot.querySelector('#modal');
 
     if (user) {
       return this.openNotebook();
     }
 
-    this.shadowRoot.querySelector('#modal').toggle();
-  }
-
-  getWidth() {
-    if (window.innerWidth < 500) {
-      return '80%';
-    }
-    return '205px';
-  }
-
-  onEnterPress(event) {
-    if (event.which === 13 || event.keyCode === 13) {
-      //code to execute here
-      return true;
-    }
-    return false;
-  }
-
-  action() {
-    return this.formState === FORM_STATES.SIGNUP
-      ? this.signUpUser()
-      : this.formState === FORM_STATES.SIGNIN
-      ? this.signInUser()
-      : this.forgotPassword();
+    modal.toggle();
   }
 
   render() {
+    const { FORGOT, FORGOT_POST_EMAIL, SIGNUP, SIGNIN } = FORM_STATES;
+    const { enterPressed, formState, emailValue, toggleModal, getWidth } = this;
+
     return html`<span>
-      <fc-button @click="${async () =>
-        await this.toggleModal()}" size="large">${this.label}</fc-button>
-      <fc-modal width="${this.getWidth()}" id="modal">
+      <fc-button @click="${toggleModal.bind(this)}" size="large">
+        ${this.label}
+      </fc-button>
+      <fc-modal width="${getWidth()}" id="modal">
         <div>
           <img src="images/logodark.png"></img>
           <div
-            ?hidden=${![FORM_STATES.SIGNUP].includes(this.formState)}
+            ?hidden=${![SIGNUP].includes(formState)}
             class="field"
           >
             <label>Name</label>
@@ -215,50 +200,35 @@ export class LoginOrForwardNotebookButton extends LitElement {
             <fc-input
               id="email"
               label=" "
-              value="${
-                !this.formState === FORM_STATES.SIGNIN ? this.emailValue : ''
-              }"
+              value="${!formState === SIGNIN ? emailValue : ''}"
+              @keypress="${(e) => (enterPressed(e) ? this.action() : '')}"
             ></fc-input>
           </div>
           <div
-            ?hidden=${[
-              FORM_STATES.FORGOT,
-              FORM_STATES.FORGOT_POST_EMAIL
-            ].includes(this.formState)}
-            class="field"
-          >
+            ?hidden=${[FORGOT, FORGOT_POST_EMAIL].includes(formState)}
+            class="field">
             <label>Password</label>
-            <fc-input type="password" id="password" label=" " @keypress="${(
-              e
-            ) => (this.onEnterPress(e) ? this.action() : '')}"></fc-input>
+            <fc-input
+              @keypress="${(e) => (enterPressed(e) ? this.action() : '')}"
+              type="password" id="password" label=" " ></fc-input>
           </div>
-          
-          ${
-            this.error
-              ? html`<div id="error">
-                  ${this.error.split('/')[1].replaceAll('-', ' ')}
-                </div>`
-              : ''
-          }
+
+          ${this.error ? html`<div id="error">${this.error}</div>` : ''}
           <span
               id="forgot"
-            ?hidden=${[
-              FORM_STATES.FORGOT,
-              FORM_STATES.FORGOT_POST_EMAIL
-            ].includes(this.formState)}
-            @click="${() => (this.formState = FORM_STATES.FORGOT)}"
+            ?hidden=${[FORGOT, FORGOT_POST_EMAIL].includes(formState)}
+            @click="${() => (formState = FORGOT)}"
             >Forgot Password?</span
           >
           <span
             id="reset-confirm"
-            ?hidden=${![FORM_STATES.FORGOT_POST_EMAIL].includes(this.formState)}
+            ?hidden=${![FORGOT_POST_EMAIL].includes(formState)}
             >A Link to log in has been sent to your mail, if such exist.</span
           >
-          
+
           <div class="buttons">
             <fc-button
-              @click="${() => this.action()}"
-            >
+              @click="${() => this.action()}">
               ${
                 this.formState === FORM_STATES.SIGNUP
                   ? 'SIGN UP'
@@ -267,16 +237,15 @@ export class LoginOrForwardNotebookButton extends LitElement {
                   : 'RECOVER USER'
               }
             </fc-button>
+
             <fc-button
-              ?hidden="${![
-                FORM_STATES.FORGOT_POST_EMAIL.includes(this.formState)
-              ]}"
+              ?hidden="${![FORGOT_POST_EMAIL.includes(formState)]}"
               secondary
-              @click="${() => this.toggleFormState()}"
-              >SIGN
-              ${this.formState === FORM_STATES.SIGNIN ? 'UP' : 'IN'}</fc-button
-            >
+              @click="${() => this.toggleFormState()}">
+              SIGN ${formState === SIGNIN ? 'UP' : 'IN'}
+            </fc-button>
           </div>
+
           <div id="guest" @click="${() =>
             this.openNotebook()}">Continue as a guest</div>
         </div>
