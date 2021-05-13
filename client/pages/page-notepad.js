@@ -29,7 +29,7 @@ export class PageNotepad extends PageElement {
        * contains the actionable items we should do to improve grouped by topic.
        * @type {Object<Object>}
        */
-      topicsCount: { type: Object },
+      topicsCount: { type: Object, default: {} },
 
       /**
        * currect topic extracted from URLParams.
@@ -50,6 +50,7 @@ export class PageNotepad extends PageElement {
 
   constructor(props) {
     super(props);
+    this.topicsCount = {};
     this.topic = location.pathname.split('/').reverse()[0] || DEFAULT_TOPIC;
   }
 
@@ -63,10 +64,6 @@ export class PageNotepad extends PageElement {
   /** @inheritdoc */
   render() {
     const { state, topicsCount } = this;
-    if (!state || !topicsCount) {
-      return html`Loading...`;
-    }
-
     const callback = this.firstUpdated.bind(this);
 
     return html`
@@ -96,58 +93,62 @@ export class PageNotepad extends PageElement {
             </p>
           </div>
           <div class="result-data">
-            ${sections.map(
-              (section) => html`
-                <div class="result-box">
-                  <div class="left-box">
-                    <div class="box-title">${section}</div>
-                    <div class="box-subtitle">
-                      ${sectionMetadata[section].description}
-                    </div>
-                    <div class="box-questions">
-                      ${!state[section]
-                        ? html` <div>Nothing here yet.</div> `
-                        : state[section]
-                            .sort((a, b) => a.key.localeCompare(b.key))
-                            .map(
-                              ({
-                                key,
-                                section,
-                                topic,
-                                status,
-                                updatedAt
-                              }) => html`
-                                <div>
-                                  <div>
-                                    ${StatusCheckbox({
+            ${
+              !state
+                ? 'loading...'
+                : sections.map(
+                    (section) => html`
+                      <div class="result-box">
+                        <div class="left-box">
+                          <div class="box-title">${section}</div>
+                          <div class="box-subtitle">
+                            ${sectionMetadata[section].description}
+                          </div>
+                          <div class="box-questions">
+                            ${!state[section]
+                              ? html` <div>Nothing here yet.</div> `
+                              : state[section]
+                                  .sort((a, b) => a.key.localeCompare(b.key))
+                                  .map(
+                                    ({
                                       key,
                                       section,
                                       topic,
                                       status,
-                                      callback
-                                    })}
-                                    <span
-                                      >${key}
-                                      <span
-                                        class="green done-text"
-                                        style=""
-                                        ?hidden=${status !== 'done'}
-                                      >
-                                        done on the
-                                        ${new Date(updatedAt)
-                                          .toString()
-                                          .split('(')[0]}
-                                      </span>
-                                    </span>
-                                  </div>
-                                </div>
-                              `
-                            )}
-                    </div>
-                  </div>
-                </div>
-              `
-            )}
+                                      updatedAt
+                                    }) => html`
+                                      <div>
+                                        <div>
+                                          ${StatusCheckbox({
+                                            key,
+                                            section,
+                                            topic,
+                                            status,
+                                            callback
+                                          })}
+                                          <span
+                                            >${key}
+                                            <span
+                                              class="green done-text"
+                                              style=""
+                                              ?hidden=${status !== 'done'}
+                                            >
+                                              done on the
+                                              ${new Date(updatedAt)
+                                                .toString()
+                                                .split('(')[0]}
+                                            </span>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    `
+                                  )}
+                          </div>
+                        </div>
+                      </div>
+                    `
+                  )
+            }
            </div>
           </div>
         </div>
