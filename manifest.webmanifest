@@ -34,13 +34,13 @@
   ],
   "screenshots": [
     {
-      "src": "preview.png",
-      "sizes": "1280x720",
+      "src": "images/manifest/screenshot.png",
+      "sizes": "1552x1068",
       "type": "image/webp"
     },
     {
-      "src": "preview.png",
-      "sizes": "1280x720",
+      "src": "images/manifest/screenshot.png",
+      "sizes": "3104x2136",
       "type": "image/webp"
     }
   ],
