@@ -35,11 +35,6 @@
   "screenshots": [
     {
       "src": "images/manifest/screenshot.png",
-      "sizes": "1552x1068",
-      "type": "image/webp"
-    },
-    {
-      "src": "images/manifest/screenshot.png",
       "sizes": "3104x2136",
       "type": "image/webp"
     }
