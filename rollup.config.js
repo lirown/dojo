@@ -3,7 +3,6 @@ import renameExtensions from '@betit/rollup-plugin-rename-extensions';
 import replace from '@rollup/plugin-replace';
 import { babel } from '@rollup/plugin-babel';
 import { copy } from '@web/rollup-plugin-copy';
-import { json } from '@rollup/plugin-json';
 import { visualizer } from 'rollup-plugin-visualizer';
 
 import merge from 'deepmerge';
@@ -47,7 +46,6 @@ const config = merge(
   {
     input: 'index.html',
     plugins: [
-      json(),
       babel({ babelHelpers: 'bundled' }),
       replace({
         preventAssignment: true,
