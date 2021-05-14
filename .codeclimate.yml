@@ -1,7 +1,8 @@
-method-lines:
+checks:
+  method-lines:
     enabled: false
     config:
-      threshold: 25exclude_patterns:
+      threshold: 25
 exclude_patterns:
   - packages/**/*.spec.js
   - packages/**/.babelrc.js
