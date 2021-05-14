@@ -12,7 +12,7 @@ export const ROLES = {
 /**
  * Mapping between roles and labels
  */
-export var quizQuestions = [
+export var QUIZ_QUESTIONS = [
   {
     question:
       'When it’s unclear why you need to build a certain capability, what do you do?',

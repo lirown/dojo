@@ -1,6 +1,9 @@
 import { html } from '../components/base';
 import { PageElement } from '../components';
-import { getQuizResult, quizQuestions } from '../services/quiz';
+import {
+  getQuizResult,
+  QUIZ_QUESTIONS as quizQuestions
+} from '../services/quiz';
 import { urlForName } from '../router';
 
 /**
