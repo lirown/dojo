@@ -54,16 +54,4 @@ export class PageElement extends LitElement {
 
     this.updateMetadata();
   }
-
-  startCase(string) {
-    return string
-      .split('-')
-      .map((x) => {
-        return (
-          x.substring(0, 1).toUpperCase() +
-          x.substring(1, x.length).toLowerCase()
-        );
-      })
-      .join(' ');
-  }
 }

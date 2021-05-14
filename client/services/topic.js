@@ -90,7 +90,7 @@ export function getCategoriesByTopic(topic) {
 /**
  * @return {String} transform regular case to start case
  */
-function startCase(string) {
+export function startCase(string) {
   return string
     .split('-')
     .map((x) => {

@@ -3,6 +3,7 @@ import { PageElement, StatusCheckbox, StatusButton } from '../components';
 
 import { db } from '../services/db';
 import {
+  startCase,
   sections,
   getActionableItems,
   sectionMetadata
@@ -45,7 +46,7 @@ export class PageImprove extends PageElement {
       <section class="hero hero-improve">
         <div class="container">
           <div class="hero-inner">
-            <h1> Improving at ${this.startCase(topic)}
+            <h1> Improving at ${startCase(topic)}
             <p>
               Level: ${roleMetadata[role].title}
             </p>

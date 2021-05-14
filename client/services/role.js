@@ -1,4 +1,5 @@
 import careerLadder from './career-ladder.js';
+import { startCase } from './topic';
 
 /**
  * default role when no route defined
@@ -54,7 +55,7 @@ export function getRoles() {
 export function getActionableItems() {
   const { topic, role } = this.location.params;
   const [content] = Object.values(
-    careerLadder.Ladder[this.startCase(topic)].Ladder.filter(
+    careerLadder.Ladder[startCase(topic)].Ladder.filter(
       (level) => roleMetadata[role].level === Object.keys(level)[0]
     )[0]
   );
