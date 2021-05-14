@@ -1,6 +1,6 @@
-import * as storage from '../services/firebase/storage';
+import * as storage from '../services/storage';
 import { db } from '../services/db';
-import { getUser } from '../services/firebase/authentication';
+import { getUser } from '../services/authentication';
 
 export const LAST_UPDATED_KEY = 'restore-last-updated-key';
 /**

@@ -1,6 +1,6 @@
 import config from '../config';
 import { db } from '../services/db';
-import { signOut } from '../services/firebase/authentication';
+import { signOut } from '../services/authentication';
 import { restore } from '../services/notepad';
 
 /**

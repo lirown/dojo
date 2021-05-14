@@ -11,7 +11,7 @@ import {
   signIn,
   signOut,
   getUser
-} from '../services/firebase/authentication';
+} from '../services/authentication';
 
 const FORM_STATES = {
   FORGOT: 'FORGOT',

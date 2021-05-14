@@ -1,4 +1,4 @@
-import { storageRef } from './index';
+import { storageRef } from './firebase';
 import { getUser } from './authentication';
 
 /**

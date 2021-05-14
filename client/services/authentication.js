@@ -1,4 +1,4 @@
-import { app } from './index';
+import { app } from './firebase';
 const LOGGED_IN_KEY = 'logged-in-uid';
 
 /**
