@@ -1,11 +1,14 @@
 import { Router } from '@vaadin/router';
-
 import { routes } from './routes';
 
+/**
+ * vaadin router
+ */
 const router = new Router();
 
-window.__router = router;
-
+/**
+ * configure routes
+ */
 router.setRoutes([
   // Redirect to URL without trailing slash
   {

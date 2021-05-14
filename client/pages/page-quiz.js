@@ -22,7 +22,14 @@ export class PageQuiz extends PageElement {
 
   /** @inheritdoc */
   render() {
+    /**
+     * assign answers or empty array
+     */
     this.answers = this.answers || [];
+
+    /**
+     * assign selected answer or first one
+     */
     this.selected = this.selected || 0;
 
     return html`

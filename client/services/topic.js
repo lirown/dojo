@@ -1,7 +1,11 @@
 import careerLadder from './career-ladder.js';
 import { roleMetadata } from './role';
 
+/**
+ * default topic when no route defined
+ */
 export const DEFAULT_TOPIC = 'engineering-craftsmanship';
+
 /**
  * hold translation of topic key to level, title of engineering
  */

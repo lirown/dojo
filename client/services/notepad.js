@@ -2,7 +2,11 @@ import * as storage from '../services/storage';
 import { db } from '../services/db';
 import { getUser } from '../services/authentication';
 
+/**
+ * key of last updated db for snapshot
+ */
 export const LAST_UPDATED_KEY = 'restore-last-updated-key';
+
 /**
  * default status when no status defined
  */

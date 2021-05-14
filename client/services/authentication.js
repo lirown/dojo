@@ -1,4 +1,8 @@
 import { app } from './firebase';
+
+/**
+ * key to save uid of logged in user
+ */
 const LOGGED_IN_KEY = 'logged-in-uid';
 
 /**

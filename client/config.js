@@ -1,5 +1,11 @@
+/**
+ * define the firebase apo name
+ */
 const firebaseAppName = 'dojo-ae8b1';
 
+/**
+ * config file
+ */
 export default {
   branch: 'roee-static-design',
   environment: 'development',

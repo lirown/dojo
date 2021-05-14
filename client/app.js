@@ -56,6 +56,9 @@ export class App extends LitElement {
     return this;
   }
 
+  /**
+   * scroll check for sticky header
+   */
   spyScroll() {
     const myID = document.body;
     const y = window.scrollY;

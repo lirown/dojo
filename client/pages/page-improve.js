@@ -28,6 +28,9 @@ export class PageImprove extends PageElement {
 
   /** @inheritdoc */
   async firstUpdated() {
+    /**
+     * fetching actionable items to improve
+     */
     this.state = await db.query({ groupBy: 'key', flat: true });
   }
 

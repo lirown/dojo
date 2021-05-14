@@ -1,5 +1,8 @@
 import careerLadder from './career-ladder.js';
 
+/**
+ * default role when no route defined
+ */
 export const DEFAULT_ROLE = 'software-engineer';
 
 /**

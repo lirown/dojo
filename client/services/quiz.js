@@ -170,5 +170,3 @@ export function getQuizResult({ answers }) {
   }
   return 'software-engineer';
 }
-
-export default { quizQuestions, ROLES };
