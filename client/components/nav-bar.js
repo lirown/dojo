@@ -92,6 +92,11 @@ export class NavBar extends LitElement {
         align-items: center;
       }
 
+      ul,
+      li {
+        list-style-type: none;
+      }
+
       ul#main-menu {
         display: flex;
         flex: 1;
@@ -187,10 +192,20 @@ export class NavBar extends LitElement {
         background: #002255b3;
       }
 
+      ul#main-menu > li.type-drop {
+        display: none;
+      }
+
       @media (min-width: 992px) {
+
+        ul#main-menu > li.type-drop {
+          display: block;
+        }
+
         ul#main-menu {
           width: 495px;
         }
+
         ul#main-menu > li:not(.type-notepad) {
           display: block;
         }
