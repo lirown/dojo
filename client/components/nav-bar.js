@@ -315,11 +315,11 @@ export class NavBar extends LitElement {
         await forgotPassword(email);
       }
 
+      const modal = this.shadowRoot.querySelector('#modal');
+      modal.toggle();
+
       this.openNotebook();
 
-    const modal = this.shadowRoot.querySelector('#modal');
-    modal.toggle();
-    
     } catch (e) {
       this.error = e.message;
     }
