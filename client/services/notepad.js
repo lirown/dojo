@@ -53,5 +53,6 @@ export async function restore() {
   }
   localStorage.setItem(LAST_UPDATED_KEY, updated);
   const state = await storage.get(path);
+  await db.clear();
   await db.restore(state);
 }

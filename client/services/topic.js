@@ -34,6 +34,13 @@ export const topicMetadata = {
 export const topics = Object.keys(topicMetadata);
 
 /**
+ * hold list of topics routes
+ */
+export const topicRoutes = Object.keys(topicMetadata).map((x) =>
+  x.toLowerCase().split(' ').join('-')
+);
+
+/**
  * hold translation of section key to description, title of engineering ladder
  */
 export const sectionMetadata = {

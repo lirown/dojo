@@ -1,12 +1,14 @@
 import { html } from '../components/base';
 import { PageElement, StatusCheckbox, StatusDeleteButton } from '../components';
 import { db } from '../services/db';
+import { redirectNotFound } from '../router';
 import { urlForName } from '../router';
 
 import {
   DEFAULT_TOPIC,
   getTopics,
   sectionMetadata,
+  topicRoutes,
   sections
 } from '../services/topic';
 
@@ -72,6 +74,10 @@ export class PageNotepad extends PageElement {
 
   /** @inheritdoc */
   render() {
+    if (!topicRoutes.includes(topic)) {
+      redirectNotFound();
+    }
+
     const { state, topicsCount } = this;
     const callback = this.fetch.bind(this);
     const topic = this.getTopic();

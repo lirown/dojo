@@ -30,6 +30,11 @@ export const roleMetadata = {
 };
 
 /**
+ * hold list of role routes
+ */
+export const roleRoutes = Object.keys(roleMetadata);
+
+/**
  * @return {String} extract role from url path
  */
 export function getRoleFromURL() {

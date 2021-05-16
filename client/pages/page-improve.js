@@ -7,13 +7,15 @@ import {
 } from '../components';
 
 import { db } from '../services/db';
+import { goto, redirectNotFound } from '../router';
 import {
   startCase,
   sections,
   getActionableItems,
+  topicRoutes,
   sectionMetadata
 } from '../services/topic';
-import { roleMetadata } from '../services/role';
+import { roleMetadata, roleRoutes } from '../services/role';
 
 /**
  * Improve Page - to show engineer how he can emprove his profession.
@@ -43,6 +45,11 @@ export class PageImprove extends PageElement {
   /** @inheritdoc */
   render() {
     const { topic, role } = this.location.params;
+
+    if (!topicRoutes.includes(topic) || !roleRoutes.includes(role)) {
+      return redirectNotFound();
+    }
+
     const callback = this.firstUpdated.bind(this);
     const actionableItems = getActionableItems({ topic, role });
     const { state } = this;

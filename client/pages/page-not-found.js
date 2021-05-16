@@ -1,5 +1,6 @@
 import { html } from '../components/base';
 import { PageElement } from '../components';
+import { setMetaTag } from '../services/html-meta-manager';
 
 /**
  * Not Found Page - 404 when trying to access none existing route.

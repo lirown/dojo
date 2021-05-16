@@ -39,12 +39,20 @@ export const attachRouter = (outlet) => {
 export const urlForName = (name, params) => {
   return router.urlForName(name, params);
 };
-/**
- * go to speicific router from code
- */
 
-export const goto = (url, params) => {
+/**
+ * go to specified router from code
+ */
+export const goto = (url, params = {}) => {
   const a = document.createElement('a');
   a.setAttribute('href', urlForName(url, params));
   a.click();
+};
+
+/**
+ * go to not found from code
+ */
+export const redirectNotFound = () => {
+  location.href = '/404';
+  return;
 };
