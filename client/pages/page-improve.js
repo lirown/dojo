@@ -94,6 +94,7 @@ export class PageImprove extends PageElement {
                                           key,
                                           section,
                                           topic,
+                                          link: data.link,
                                           callback
                                         })}
                                         <a
@@ -106,6 +107,7 @@ export class PageImprove extends PageElement {
                                       ${StatusButton({
                                         status,
                                         key,
+                                        link: data.link,
                                         topic,
                                         section,
                                         label: 'Explore Later',

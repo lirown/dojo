@@ -64,7 +64,7 @@ export const sections = Object.keys(sectionMetadata);
  */
 export function getTopicFromURL() {
   if (location.pathname.split('/').length > 3) {
-    return location.pathname.split('/').reverse()[1];
+    return location.pathname.split('/').reverse()[0];
   }
   return DEFAULT_TOPIC;
 }

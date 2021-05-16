@@ -34,7 +34,7 @@ export const roleMetadata = {
  */
 export function getRoleFromURL() {
   if (location.pathname.split('/').length > 3) {
-    return location.pathname.split('/').reverse()[0];
+    return location.pathname.split('/').reverse()[1];
   }
   return DEFAULT_ROLE;
 }

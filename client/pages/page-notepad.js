@@ -39,8 +39,7 @@ export class PageNotepad extends PageElement {
   }
 
   async fetch(key) {
-    const topic =
-      location.href.split('/').reverse()[0] || this.locations.params.topic;
+    const topic = this.getTopic();
     this.state = await db.query({
       groupBy: 'section',
       filter: (notepad) =>
@@ -51,6 +50,7 @@ export class PageNotepad extends PageElement {
 
   constructor(props) {
     super(props);
+    this.getTopic = this.getTopic.bind(this);
     this.topicsCount = {};
   }
 
@@ -61,12 +61,21 @@ export class PageNotepad extends PageElement {
     this.fetch(key);
   }
 
+  getTopic() {
+    const last = location.href.split('/').reverse()[0];
+    const topic =
+      !last || last.includes('software') ? this.location.params.topic : last;
+    if (topic.includes('software')) {
+      return DEFAULT_TOPIC;
+    }
+    return topic;
+  }
+
   /** @inheritdoc */
   render() {
     const { state, topicsCount } = this;
     const callback = this.fetch.bind(this);
-    const topic =
-      location.href.split('/').reverse()[0] || this.locations.params.topic;
+    const topic = this.getTopic();
 
     return html`
       <section class="hero">
@@ -117,6 +126,7 @@ export class PageNotepad extends PageElement {
                                       section,
                                       topic,
                                       status,
+                                      link,
                                       updatedAt
                                     }) => html`
                                       <div>
@@ -126,10 +136,21 @@ export class PageNotepad extends PageElement {
                                             section,
                                             topic,
                                             status,
+                                            link,
                                             callback
                                           })}
-                                          <span
-                                            >${key}
+                                          <span>
+                                            ${link
+                                              ? html`
+                                                  <a
+                                                    class="link"
+                                                    href="${link}"
+                                                    target="_blank"
+                                                    >${key}</a
+                                                  >
+                                                `
+                                              : html` ${key} `}
+
                                             <span
                                               class="green done-text"
                                               style=""
