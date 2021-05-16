@@ -44,7 +44,7 @@ export const urlForName = (name, params) => {
  * go to specified router from code
  */
 export const goto = (url, params = {}) => {
-  const a = document.createElement('a');
+  const a = document.querySelector('#link');
   a.setAttribute('href', urlForName(url, params));
   a.click();
 };

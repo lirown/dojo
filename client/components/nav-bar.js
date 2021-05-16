@@ -469,8 +469,9 @@ export class NavBar extends LitElement {
               </fc-button>
             </div>
 
-            <div id="guest" @click="${() =>
-              this.openNotebook()}">Continue as a guest</div>
+            <div id="guest">
+              <a href="${urlForName('notepad', { topic })}">
+                Continue as a guest<a></div>
           </div>
         </fc-modal>
       </a>
