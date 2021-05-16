@@ -1,5 +1,10 @@
 import { html } from '../components/base';
-import { PageElement, StatusCheckbox, StatusButton } from '../components';
+import {
+  PageElement,
+  StatusCheckbox,
+  StatusButton,
+  StatusDeleteButton
+} from '../components';
 
 import { db } from '../services/db';
 import {
@@ -119,8 +124,14 @@ export class PageImprove extends PageElement {
                                           callback
                                         })}
                                         <span class="improve-label"
-                                          >${key}</span
-                                        >
+                                          >${key}
+                                          ${!['added', 'done'].includes(status)
+                                            ? ''
+                                            : StatusDeleteButton({
+                                                key,
+                                                callback
+                                              })}
+                                        </span>
                                       </div>
                                       ${StatusButton({
                                         status,

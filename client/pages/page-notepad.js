@@ -1,5 +1,5 @@
 import { html } from '../components/base';
-import { PageElement, StatusCheckbox } from '../components';
+import { PageElement, StatusCheckbox, StatusDeleteButton } from '../components';
 import { db } from '../services/db';
 import { urlForName } from '../router';
 
@@ -29,21 +29,22 @@ export class PageNotepad extends PageElement {
        * contains the actionable items we should do to improve grouped by topic.
        * @type {Object<Object>}
        */
-      topicsCount: { type: Object, default: {} },
-
-      /**
-       * currect topic extracted from URLParams.
-       * @type {String}
-       */
-      topic: { type: String }
+      topicsCount: { type: Object, default: {} }
     };
   }
 
   /** @inheritdoc */
-  async updated() {
+  async firstUpdated() {
+    await this.fetch();
+  }
+
+  async fetch(key) {
+    const topic =
+      location.href.split('/').reverse()[0] || this.locations.params.topic;
     this.state = await db.query({
       groupBy: 'section',
-      filter: (notepad) => notepad.topic === this.topic
+      filter: (notepad) =>
+        notepad.topic === (typeof key === 'string' ? key : topic)
     });
     this.topicsCount = await db.aggregate({ groupBy: 'topic' });
   }
@@ -51,20 +52,21 @@ export class PageNotepad extends PageElement {
   constructor(props) {
     super(props);
     this.topicsCount = {};
-    this.topic = location.pathname.split('/').reverse()[0] || DEFAULT_TOPIC;
   }
 
   changeTab(e) {
     console.log(e);
     const { key } = e.detail;
-    this.topic = key;
     history.pushState(null, '', `/notepad/${key}`);
+    this.fetch(key);
   }
 
   /** @inheritdoc */
   render() {
     const { state, topicsCount } = this;
-    const callback = this.firstUpdated.bind(this);
+    const callback = this.fetch.bind(this);
+    const topic =
+      location.href.split('/').reverse()[0] || this.locations.params.topic;
 
     return html`
       <section class="hero">
@@ -76,7 +78,7 @@ export class PageNotepad extends PageElement {
                   this.changeTab(e)}" .tabs="${getTopics().map((item) => {
       return { ...item, count: this.topicsCount[item.key] || 0 };
     })}" activeElementName="${
-      getTopics().find((item) => item.key === this.topic).name
+      getTopics().find((item) => item.key === topic).name
     }"></elastic-tabs>
             </div>
           </div>
@@ -138,6 +140,10 @@ export class PageNotepad extends PageElement {
                                                 .toString()
                                                 .split('(')[0]}
                                             </span>
+                                            ${StatusDeleteButton({
+                                              key,
+                                              callback
+                                            })}
                                           </span>
                                         </div>
                                       </div>

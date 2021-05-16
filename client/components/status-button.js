@@ -57,8 +57,8 @@ export function StatusButton({
             section,
             topic
           })
-          .then(backup)
-          .then(callback)}"
+          .then(callback)
+          .then(backup)}"
       class="${status}"
       size="medium"
       >${status === 'work' ? `${label} +` : status}</fc-button

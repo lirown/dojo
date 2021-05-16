@@ -4,7 +4,7 @@ import {
   getQuizResult,
   QUIZ_QUESTIONS as quizQuestions
 } from '../services/quiz';
-import { urlForName } from '../router';
+import { goto } from '../router';
 
 /**
  * Page Quiz - a quick 5 questions check to evaluate your engineering level.
@@ -108,7 +108,7 @@ export class PageQuiz extends PageElement {
   async goToResult() {
     const { answers } = this;
     const params = { role: getQuizResult({ answers }) };
-    location.href = urlForName('result', params);
+    goto('result', params);
   }
 }
 

@@ -164,7 +164,7 @@ export function getQuizResult({ answers }) {
     !roles.includes(ROLES.NORMAL) &&
     (roles.includes(ROLES.PRINCIPAL) || roles.includes(ROLES.STAFF))
   ) {
-    params.role = 'staff-software-engineer';
+    return 'staff-software-engineer';
   } else if (!roles.includes(ROLES.ENTRY) && !roles.includes(ROLES.NORMAL)) {
     return 'senior-software-engineer';
   }

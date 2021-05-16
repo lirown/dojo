@@ -1,5 +1,6 @@
 import config from '../config';
 import { db } from '../services/db';
+import { LAST_UPDATED_KEY } from '../services/notepad';
 import { signOut } from '../services/authentication';
 import { restore } from '../services/notepad';
 
@@ -42,6 +43,7 @@ export const routes = [
     action: async () => {
       await signOut();
       await db.clear();
+      localStorage.setItem(LAST_UPDATED_KEY, '');
       await import('../pages/page-home');
       updateNavbar();
     }
@@ -73,7 +75,7 @@ export const routes = [
     }
   },
   {
-    path: '/improve/:topic/:role',
+    path: '/improve/:role/:topic',
     name: 'improve',
     component: 'page-improve',
     metadata: {

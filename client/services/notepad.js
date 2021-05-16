@@ -18,7 +18,7 @@ export const DEFAULT_STATUS = 'work';
 export const nextStatus = {
   work: 'added',
   added: 'done',
-  done: 'work'
+  done: 'added'
 };
 
 /**
@@ -33,7 +33,7 @@ export async function backup() {
   }
 
   const state = await db.query({ groupBy: 'key', flat: true });
-  return await storage.put(`user/${user.uid}`, state);
+  await storage.put(`user/${user.uid}`, state);
 }
 
 /**

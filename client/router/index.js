@@ -5,6 +5,7 @@ import { routes } from './routes';
  * vaadin router
  */
 const router = new Router();
+window.__router = router;
 
 /**
  * configure routes
@@ -37,4 +38,13 @@ export const attachRouter = (outlet) => {
  */
 export const urlForName = (name, params) => {
   return router.urlForName(name, params);
+};
+/**
+ * go to speicific router from code
+ */
+
+export const goto = (url, params) => {
+  const a = document.createElement('a');
+  a.setAttribute('href', urlForName(url, params));
+  a.click();
 };

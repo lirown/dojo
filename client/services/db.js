@@ -92,6 +92,7 @@ export async function query({
   flat = false,
   filter = () => true
 }) {
+  const start = Date.now();
   const store = await dbPromise;
   const result = (await store.getAllFromIndex(STORE_NAME, index)).filter(
     filter
@@ -111,6 +112,7 @@ export async function query({
     }
     groupByMap[groupedBy].push(item);
   });
+  console.log('query time:', Date.now() - start);
 
   return groupByMap;
 }
@@ -129,9 +131,11 @@ export async function aggregate({
   flat = false,
   filter = () => true
 }) {
+  const start = Date.now();
   const result = await query({ index, groupBy, flat, filter });
   const counters = {};
   Object.keys(result).map((key) => (counters[key] = result[key].length || 0));
+  console.log('aggregated time:', Date.now() - start);
   return counters;
 }
 

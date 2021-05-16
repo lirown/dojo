@@ -40,7 +40,10 @@ export function StatusCheckbox({
   callback
 }) {
   return html`
-    <fc-tooltip tooltip="done?" position="top">
+    <fc-tooltip
+      tooltip="${status === 'done' ? 'added?' : 'done?'}"
+      position="top"
+    >
       <fc-checkbox
         ?checked=${status === 'done'}
         @click="${({ target: { checked } }) =>
@@ -51,8 +54,8 @@ export function StatusCheckbox({
               section,
               topic
             })
-            .then(backup)
-            .then(callback)}"
+            .then(callback)
+            .then(backup)}"
       ></fc-checkbox
     ></fc-tooltip>
   `;

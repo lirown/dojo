@@ -13,3 +13,4 @@ export { NavDropdownItem } from './nav-dropdown-item';
 export { GoogleDocsSpreadsheetLink } from './google-docs-spreadsheet-link';
 export { ElasticTabs } from './elastic-tab';
 export { MadeWithLove } from './made-with-love';
+export { StatusDeleteButton } from './status-delete-button';

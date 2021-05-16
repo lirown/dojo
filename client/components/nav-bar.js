@@ -1,6 +1,6 @@
 import { html, LitElement, css } from './base';
 import { restore } from '../services/notepad';
-import { urlForName } from '../router';
+import { goto, urlForName } from '../router';
 import { NavButton, NavDropdownItem } from '../components';
 import { getTopics, getTopicFromURL } from '../services/topic';
 import { getRoles, getRoleFromURL } from '../services/role';
@@ -30,7 +30,8 @@ export class NavBar extends LitElement {
       fc-button[size='large'] {
         --fc-button-background-color: rgba(255, 255, 255, 0.3);
         --fc-button-item-color: white;
-        font-size: 18px;
+        font-size: 14px;
+        margin-right: 5px;
       }
 
       fc-button[secondary] {
@@ -104,6 +105,12 @@ export class NavBar extends LitElement {
         align-self: stretch;
         justify-content: flex-end;
         height: 30px;
+
+        position: absolute;
+        top: 45px;
+        left: 0;
+        height: 30px;
+        margin-right: 30px;
       }
 
       ul#main-menu li {
@@ -146,10 +153,11 @@ export class NavBar extends LitElement {
         padding: 5px 20px;
         color: #fff;
         font-weight: 400;
-        font-size: 14px;
+        font-size: 16px;
         text-decoration: none;
         background: rgba(255, 255, 255, 0.2);
         border-radius: 50px;
+        margin-right: 5px;
       }
 
       #sub-menu {
@@ -193,10 +201,21 @@ export class NavBar extends LitElement {
       }
 
       ul#main-menu > li.type-drop {
-        display: none;
+        /* display: none; */
       }
 
       @media (min-width: 992px) {
+        ul#main-menu {
+          position: relative;
+          top: auto;
+          left: auto;
+        }
+
+        fc-button[size='large'] {
+          --fc-button-background-color: rgba(255, 255, 255, 0.3);
+          --fc-button-item-color: white;
+          font-size: 18px;
+        }
 
         ul#main-menu > li.type-drop {
           display: block;
@@ -210,7 +229,7 @@ export class NavBar extends LitElement {
           display: block;
         }
         nav a {
-          padding: 5px 20px 6px;
+          padding: 5px 5px 6px;
           font-size: 16px;
         }
       }
@@ -259,7 +278,7 @@ export class NavBar extends LitElement {
    * forward to the notebook route
    */
   openNotebook() {
-    location.href = urlForName('notepad', {
+    goto('notepad', {
       topic: 'engineering-craftsmanship'
     });
   }
@@ -334,129 +353,128 @@ export class NavBar extends LitElement {
 
     return html`
       <nav>
-              <ul id="main-menu">
-                <li class="type-drop" ?hidden=${!pathname.includes('/improve')}>
-                  <a>Change level</a>
-                  <ul id="sub-menu">
-                    ${getRoles().map(({ key, name }) =>
-                      NavDropdownItem({
-                        name: 'improve',
-                        params: {
-                          topic,
-                          role: key
-                        },
-                        active: pathname.includes(`/${key}`),
-                        label: name
-                      })
-                    )}
-                  </ul>
-                </li>
-                <li class="type-drop" ?hidden=${!pathname.includes('/result')}>
-                  <a>Change level</a>
-                  <ul id="sub-menu">
-                    ${getRoles().map(({ key, name }) =>
-                      NavDropdownItem({
-                        name: 'result',
-                        params: {
-                          role: key
-                        },
-                        active: pathname.includes(`/${key}`),
-                        label: name
-                      })
-                    )}
-                  </ul>
-                </li>
-
-                <li class="type-drop" ?hidden=${!pathname.includes('/improve')}>
-                  <a>Change topic</a>
-                  <ul id="sub-menu">
-                    ${getTopics().map(({ key, name }) =>
-                      NavDropdownItem({
-                        name: 'improve',
-                        params: {
-                          topic: key,
-                          role
-                        },
-                        active: pathname.includes(`/${key}`),
-                        label: name
-                      })
-                    )}
-                  </ul>
-                </li>
+        <ul id="main-menu">
+          <li class="type-drop" ?hidden=${
+            !pathname.includes('/result') && !pathname.includes('/improve')
+          }>
+            <a>Change level</a>
+            <ul id="sub-menu">
+              ${getRoles().map(({ key, name }) =>
+                NavDropdownItem({
+                  name: !pathname.includes('/improve') ? 'result' : 'improve',
+                  params: !pathname.includes('/improve')
+                    ? {
+                        role: key
+                      }
+                    : {
+                        topic,
+                        role: key
+                      },
+                  active: pathname.includes(`/${key}`),
+                  label: name
+                })
+              )}
             </ul>
+          </li>
 
-      <span>
-      <a href="${getUser() ? urlForName('notepad', { topic }) : ''}">
-        <fc-button @click="${toggleModal.bind(this)}" size="large">
-          ${this.label}
-        </fc-button>
-       </a>
-      <fc-modal width="${getWidth()}" id="modal">
-        <div>
-          <img src="images/logodark.png"></img>
-          <div
-            ?hidden=${![SIGNUP].includes(formState)}
-            class="field"
-          >
-            <label>Name</label>
-            <fc-input id="name" label=" "></fc-input>
+          <li class="type-drop" ?hidden=${!pathname.includes('/improve')}>
+            <a>Change topic</a>
+            <ul id="sub-menu">
+              ${getTopics().map(({ key, name }) =>
+                NavDropdownItem({
+                  name: 'improve',
+                  params: {
+                    topic: key,
+                    role
+                  },
+                  active: pathname.includes(`/${key}`),
+                  label: name
+                })
+              )}
+            </ul>
+          </li>
+        </ul>
+        <a href="${getUser() ? urlForName('notepad', { topic }) : ''}">
+          <fc-button @click="${toggleModal.bind(this)}" size="large">
+            ${this.label}
+          </fc-button>
+         </a>
+        ${
+          !getUser()
+            ? ''
+            : html`
+                <a href="${urlForName('logout')}">
+                  <fc-button size="large"> Sign out </fc-button>
+                </a>
+              `
+        }
+         <fc-modal width="${getWidth()}" id="modal">
+          <div>
+            <img src="images/logodark.png"></img>
+            <div
+              ?hidden=${![SIGNUP].includes(formState)}
+              class="field"
+            >
+              <label>Name</label>
+              <fc-input id="name" label=" "></fc-input>
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <fc-input
+                id="email"
+                label=" "
+                value="${!formState === SIGNIN ? emailValue : ''}"
+                @keypress="${(e) => (enterPressed(e) ? this.action() : '')}"
+              ></fc-input>
+            </div>
+            <div
+              ?hidden=${[FORGOT, FORGOT_POST_EMAIL].includes(formState)}
+              class="field">
+              <label>Password</label>
+              <fc-input
+                @keypress="${(e) => (enterPressed(e) ? this.action() : '')}"
+                type="password" id="password" label=" " ></fc-input>
+            </div>
+
+            ${this.error ? html`<div id="error">${this.error}</div>` : ''}
+            <span
+                id="forgot"
+              ?hidden=${[FORGOT, FORGOT_POST_EMAIL].includes(formState)}
+              @click="${() => (formState = FORGOT)}"
+              >Forgot Password?</span
+            >
+            <span
+              id="reset-confirm"
+              ?hidden=${![FORGOT_POST_EMAIL].includes(formState)}
+              >A Link to log in has been sent to your mail, if such exist.</span
+            >
+
+            <div class="buttons">
+              <fc-button
+                @click="${() => this.action()}">
+                ${
+                  this.formState === FORM_STATES.SIGNUP
+                    ? 'SIGN UP'
+                    : this.formState === FORM_STATES.SIGNIN
+                    ? 'SIGN IN'
+                    : 'RECOVER USER'
+                }
+              </fc-button>
+
+              <fc-button
+                ?hidden="${![FORGOT_POST_EMAIL.includes(formState)]}"
+                secondary
+                @click="${() => this.toggleFormState()}">
+                SIGN ${formState === SIGNIN ? 'UP' : 'IN'}
+              </fc-button>
+            </div>
+
+            <div id="guest" @click="${() =>
+              this.openNotebook()}">Continue as a guest</div>
           </div>
-          <div class="field">
-            <label>Email</label>
-            <fc-input
-              id="email"
-              label=" "
-              value="${!formState === SIGNIN ? emailValue : ''}"
-              @keypress="${(e) => (enterPressed(e) ? this.action() : '')}"
-            ></fc-input>
-          </div>
-          <div
-            ?hidden=${[FORGOT, FORGOT_POST_EMAIL].includes(formState)}
-            class="field">
-            <label>Password</label>
-            <fc-input
-              @keypress="${(e) => (enterPressed(e) ? this.action() : '')}"
-              type="password" id="password" label=" " ></fc-input>
-          </div>
-
-          ${this.error ? html`<div id="error">${this.error}</div>` : ''}
-          <span
-              id="forgot"
-            ?hidden=${[FORGOT, FORGOT_POST_EMAIL].includes(formState)}
-            @click="${() => (formState = FORGOT)}"
-            >Forgot Password?</span
-          >
-          <span
-            id="reset-confirm"
-            ?hidden=${![FORGOT_POST_EMAIL].includes(formState)}
-            >A Link to log in has been sent to your mail, if such exist.</span
-          >
-
-          <div class="buttons">
-            <fc-button
-              @click="${() => this.action()}">
-              ${
-                this.formState === FORM_STATES.SIGNUP
-                  ? 'SIGN UP'
-                  : this.formState === FORM_STATES.SIGNIN
-                  ? 'SIGN IN'
-                  : 'RECOVER USER'
-              }
-            </fc-button>
-
-            <fc-button
-              ?hidden="${![FORGOT_POST_EMAIL.includes(formState)]}"
-              secondary
-              @click="${() => this.toggleFormState()}">
-              SIGN ${formState === SIGNIN ? 'UP' : 'IN'}
-            </fc-button>
-          </div>
-
-          <div id="guest" @click="${() =>
-            this.openNotebook()}">Continue as a guest</div>
-        </div>
-      </fc-modal>
-      </a></nav>`;
+        </fc-modal>
+      </a>
+      </nav>`;
   }
 }
 

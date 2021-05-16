@@ -31,9 +31,7 @@ export class App extends LitElement {
   /** @inheritdoc */
   render() {
     const { pathname } = location;
-    return html` <header
-        class="${pathname.includes('notepad') ? 'sticky' : ''}"
-      >
+    return html` <header>
         <div class="container" id="container" role="container">
           <div class="header-inner">
             ${Logo()}
@@ -72,14 +70,14 @@ export class App extends LitElement {
   /** @inheritdoc */
   async firstUpdated() {
     attachRouter(this.querySelector('main'));
-    const that = this;
+    /*    const that = this;
     window.addEventListener(
       'scroll',
       function () {
         that.spyScroll();
       },
       false
-    );
+    ); */
   }
 }
 

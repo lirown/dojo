@@ -21,6 +21,7 @@ body,
   --fc-brand-blue: #bdd8ff;
   --fc-link: #0043a9;
   --fc-gray: #8696ac;
+  --fc-blue-link: #0043a9;
   --gray-1: #f1f3f5;
   --gray-2: #e9ecef;
   --gray-6: #868e96;
@@ -82,6 +83,14 @@ fc-checkbox {
   margin-left: 40px;
   color: var(--fc-dark-blue);
   text-decoration: none;
+  cursor: pointer;
+}
+
+.delete-link {
+  margin-left: 10px;
+  color: var(--fc-blue-link);
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .text-white {
