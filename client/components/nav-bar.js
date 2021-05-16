@@ -316,6 +316,10 @@ export class NavBar extends LitElement {
       }
 
       this.openNotebook();
+
+    const modal = this.shadowRoot.querySelector('#modal');
+    modal.toggle();
+    
     } catch (e) {
       this.error = e.message;
     }
