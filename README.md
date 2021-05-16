@@ -118,6 +118,13 @@ npm run build
 firebase deploy
 ```
 
+Alternatively to 3, you could also make a preview, which is parralel to the production deploy and will be auto-deleted.:
+Note this is a beta feature and will later on be automatically created in PRs.
+
+```sh
+firebase hosting:channel:deploy YOUR_PREVIEW_NAME_HERE
+```
+
 ## 💂 Coverage
 
 [Istanbul](https://github.com/gotwarlost/istanbul) is used to produce a test coverage report. Look inside the `coverage` folder after running `npm run coverage` to see the results.
