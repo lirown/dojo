@@ -7,9 +7,9 @@ on:
     branches:
       - main
 jobs:
-   build_and_deploy:
-     runs-on: ubuntu-latest
-     steps:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v2
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
