@@ -4,7 +4,7 @@
   "private": true,
   "description": "A template for building Progressive Web Applications using LitElement and Vaadin Router",
   "license": "MIT",
-  "repository": "github:IBM/pwa-lit-template",
+  "repository": "github:lirown/pwa-dojo-starter",
   "engines": {
     "node": ">=14.0.0",
     "npm": ">=7.0.0"
