@@ -314,9 +314,9 @@ export class NavBar extends LitElement {
       } else {
         await forgotPassword(email);
       }
-
+      this.error = '';
       const modal = this.shadowRoot.querySelector('#modal');
-      modal.toggle();
+      modal.close();
 
       this.openNotebook();
 
