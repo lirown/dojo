@@ -278,6 +278,9 @@ export class NavBar extends LitElement {
    * forward to the notebook route
    */
   openNotebook() {
+    const modal = this.shadowRoot.querySelector('#modal');
+    modal.close();
+
     goto('notepad', {
       topic: 'engineering-craftsmanship'
     });
@@ -307,6 +310,8 @@ export class NavBar extends LitElement {
 
       console.log(`${this.formState}...`);
 
+      this.error = '';
+
       if (formState === SIGNUP) {
         await signUp(email, password, name);
       } else if (formState === SIGNIN) {
@@ -314,9 +319,6 @@ export class NavBar extends LitElement {
       } else {
         await forgotPassword(email);
       }
-      this.error = '';
-      const modal = this.shadowRoot.querySelector('#modal');
-      modal.close();
 
       this.openNotebook();
 
