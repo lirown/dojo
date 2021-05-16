@@ -95,6 +95,29 @@ There are examples for each library in `test/foo.spec.js`.
 npm test
 ```
 
+## 🚀 Deployment
+
+The service knows to auto-deploy itself using firebase automatically.
+If you still need to manually deploy, run the following commands:
+
+1. Globally install firebase tools:
+
+```sh
+npm install -g firebase-tools
+```
+
+2. Run in root folder:
+
+```sh
+npm run build
+```
+
+3. Run in root folder:
+
+```sh
+firebase deploy
+```
+
 ## 💂 Coverage
 
 [Istanbul](https://github.com/gotwarlost/istanbul) is used to produce a test coverage report. Look inside the `coverage` folder after running `npm run coverage` to see the results.
