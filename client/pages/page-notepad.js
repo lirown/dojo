@@ -55,7 +55,6 @@ export class PageNotepad extends PageElement {
   }
 
   changeTab(e) {
-    console.log(e);
     const { key } = e.detail;
     history.pushState(null, '', `/notepad/${key}`);
     this.fetch(key);
