@@ -53,6 +53,6 @@ export const goto = (url, params = {}) => {
  * go to not found from code
  */
 export const redirectNotFound = () => {
-  location.href = urlForName('not-found');
+  goto('not-found');
   return;
 };
