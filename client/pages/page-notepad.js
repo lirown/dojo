@@ -74,13 +74,14 @@ export class PageNotepad extends PageElement {
 
   /** @inheritdoc */
   render() {
+    const topic = this.getTopic();
+
     if (!topicRoutes.includes(topic)) {
       redirectNotFound();
     }
 
     const { state, topicsCount } = this;
     const callback = this.fetch.bind(this);
-    const topic = this.getTopic();
 
     return html`
       <section class="hero">
