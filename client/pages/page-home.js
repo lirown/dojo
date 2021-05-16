@@ -50,7 +50,7 @@ export class PageHome extends PageElement {
               We built the Engineering Dojo based on our Career Ladder while
               taking out things that are too specific. If you’re trying to build
               your own, don’t start with a blank page. You can have both and see
-              what you like to use.
+              what you like to use
             </p>
             <div class="doc-btns">
               ${GoogleDocsSpreadsheetLink({
