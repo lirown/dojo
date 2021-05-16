@@ -11,6 +11,7 @@
   },
   "scripts": {
     "build": "rimraf server/dist/ && rollup --config",
+    "build-prod": "NODE_ENV=production npm run build",
     "build:preview": "rimraf server/dist/ && GIT_HASH=`git branch --show-current` rollup --config",
     "docs": "./node_modules/.bin/esdoc --help",
     "docs:coverage": "./node_modules/.bin/esdoc",
