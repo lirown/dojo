@@ -34,6 +34,12 @@ export function StatusCheckbox({
   topic,
 
   /**
+   * link to resource to read
+   * @type {String}
+   */
+  link,
+
+  /**
    * callback once a click button finish
    * @type {Function}
    */
@@ -50,6 +56,7 @@ export function StatusCheckbox({
           db
             .create(key, {
               status: checked ? 'added' : 'done',
+              link,
               key,
               section,
               topic

@@ -40,6 +40,12 @@ export function StatusButton({
   label = 'Work on it',
 
   /**
+   * link to resource to read
+   * @type {String}
+   */
+  link,
+
+  /**
    * callback once a click button finish
    * @type {Function}
    */
@@ -55,6 +61,7 @@ export function StatusButton({
             status: nextStatus[status] || DEFAULT_STATUS,
             key,
             section,
+            link,
             topic
           })
           .then(callback)
