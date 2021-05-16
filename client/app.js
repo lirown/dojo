@@ -46,7 +46,7 @@ export class App extends LitElement {
       <footer>
         <div class="container">${ShareSection()} ${MadeWithLove()}</div>
         ${HiringButton()}
-        <a hidden id="link><a>"
+        <a hidden id="link"><a>
       </footer>`;
   }
 
