@@ -29,9 +29,11 @@ npm i
 - `coverage` runs nyc to produce a test coverage report
 - `check-outdated` runs `david` which check if package npm dependencies are out of date
 - `check-vulnerabilities"` runs `nsp` which check if package npm dependencies have security issues
-  :
-  👨‍🏭 Installing
-  Clone from the current repo and then run the following command inside the root folder:
+  
+
+👨‍🏭 Installing
+  
+Clone from the current repo and then run the following command inside the root folder:
 
 ```bash
 npm i
