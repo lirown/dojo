@@ -278,9 +278,9 @@ export class NavBar extends LitElement {
    * forward to the notebook route
    */
   openNotebook() {
-    // goto('notepad', {
-    //   topic: 'engineering-craftsmanship'
-    // });
+    goto('notepad', {
+      topic: 'engineering-craftsmanship'
+    });
 
     const modal = this.shadowRoot.getElementById('modal');
     modal.close();
