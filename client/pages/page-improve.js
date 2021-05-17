@@ -72,7 +72,7 @@ export class PageImprove extends PageElement {
             <p>
               Navigate between the different topics and mark things you believe
               you’re doing well today, or add to your growth notepad ideas and
-              suggestions you’d like to work on later. Got it, thanks.
+              suggestions you’d like to work on later.
             </p>
           </div>
           <div class="result-data">

@@ -10,7 +10,7 @@ export function GoogleDocsSpreadsheetLink({
    * link to go on click
    * @type {String}
    */
-  href = 'https://docs.google.com/spreadsheets/d/1e71fL0b5lYyac_SMSZZFHqID_VjixPwUOuCqFXtzGL4',
+  href = 'https://docs.google.com/spreadsheets/d/14veIcZKVLGjcGAKDSLUnXQg5t2VGkHFZFfCEl3aJvIA/edit?usp=sharing',
 
   /**
    * image source of the button

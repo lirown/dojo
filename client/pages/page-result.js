@@ -36,14 +36,12 @@ export class PageResult extends PageElement {
         <div class="container">
           <div class="result-inner">
             <h3>
-              Interested in our Career Ladder and the journey we had behind it?
+                Which area would you like to improve at in the next 6 months?
             </h3>
-            <p>
-              We built the Engineering Dojo based on our Career Ladder while
-              taking out things that are too specific. If you’re trying to build
-              your own, don’t start with a blank page. You can have both and see
-              what you like to use.
-            </p>
+              
+              <p>
+                  We’ve put 4 areas that should serve as a nice distinction between different skills and experience to work on.</p>
+              <p>Go ahead, click on one of them. You can always explore other areas later.</p>
           </div>
           <div class="result-data">
             ${topics.map(

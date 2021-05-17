@@ -278,12 +278,12 @@ export class NavBar extends LitElement {
    * forward to the notebook route
    */
   openNotebook() {
-    const modal = this.shadowRoot.querySelector('#modal');
-    modal.close();
+    // goto('notepad', {
+    //   topic: 'engineering-craftsmanship'
+    // });
 
-    goto('notepad', {
-      topic: 'engineering-craftsmanship'
-    });
+    const modal = this.shadowRoot.getElementById('modal');
+    modal.close();
   }
 
   /**
@@ -308,8 +308,6 @@ export class NavBar extends LitElement {
       const { formState } = this;
       const { SIGNUP, SIGNIN } = FORM_STATES;
 
-      console.log(`${this.formState}...`);
-
       this.error = '';
 
       if (formState === SIGNUP) {
@@ -321,7 +319,6 @@ export class NavBar extends LitElement {
       }
 
       this.openNotebook();
-
     } catch (e) {
       this.error = e.message;
     }
@@ -336,6 +333,15 @@ export class NavBar extends LitElement {
       this.formState === FORM_STATES.SIGNIN
         ? FORM_STATES.SIGNUP
         : FORM_STATES.SIGNIN;
+  }
+
+  onModalChange(e) {
+    const { opened } = e.detail;
+    this.modalOpened = opened;
+  }
+
+  isHidden(el) {
+    return el.parentElement.hidden === true;
   }
 
   /**
@@ -401,7 +407,7 @@ export class NavBar extends LitElement {
           </li>
         </ul>
         <a href="${getUser() ? urlForName('notepad', { topic }) : ''}">
-          <fc-button @click="${toggleModal.bind(this)}" size="large">
+          <fc-button @click="${() => this.toggleModal()}" size="large">
             ${this.label}
           </fc-button>
          </a>
@@ -414,7 +420,8 @@ export class NavBar extends LitElement {
                 </a>
               `
         }
-         <fc-modal width="${getWidth()}" id="modal">
+         <fc-modal @change="${(e) =>
+           this.onModalChange(e)}" width="${getWidth()}" id="modal">
           <div>
             <img src="images/logodark.png"></img>
             <div
