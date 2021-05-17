@@ -27,7 +27,7 @@ export class PageHome extends PageElement {
             <h2>
               We'll share with you ideas, concepts, frameworks and resources
               that can help you improve your skills, expand your knowledge and
-              make bigger impact.
+              make bigger impact
             </h2>
             <div class="bottom-data">
               <fc-button
