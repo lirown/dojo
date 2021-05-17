@@ -145,7 +145,7 @@ export class PageNotepad extends PageElement {
                                             link,
                                             callback
                                           })}
-                                          <span>
+                                          <span class="${status ==='done' ? 'gray-text' : ''}">
                                             ${link
                                               ? html`
                                                   <a
@@ -163,9 +163,8 @@ export class PageNotepad extends PageElement {
                                               ?hidden=${status !== 'done'}
                                             >
                                               done on the
-                                              ${new Date(updatedAt)
-                                                .toString()
-                                                .split('(')[0]}
+                                              ${(new Date(updatedAt))
+                                                 .toLocaleString('en-us', { day: 'numeric', month:'long', year: 'numeric', hour: 'numeric', minute: 'numeric' })}
                                             </span>
                                             ${StatusDeleteButton({
                                               key,
