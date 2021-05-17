@@ -9,7 +9,7 @@ import config from '../config';
 export function MadeWithLove() {
   return html`
     <div>
-      Made with ❤️ by Forter Engineering
+      Made with ❤️ by <a target="_blank" href="https://forter.dev"> Forter Engineering </a>
       ${config.environment !== 'production'
         ? `(Environment: ${config.environment})`
         : ''}
