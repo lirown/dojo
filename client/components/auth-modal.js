@@ -1,9 +1,4 @@
 import { html, LitElement, css } from './base';
-import { restore } from '../services/notepad';
-import { goto, urlForName } from '../router';
-import { NavButton, NavDropdownItem } from '../components';
-import { getTopics, getTopicFromURL } from '../services/topic';
-import { getRoles, getRoleFromURL } from '../services/role';
 
 import {
   signUp,
@@ -12,6 +7,7 @@ import {
   signOut,
   getUser
 } from '../services/authentication';
+import { goto } from '../router';
 
 const FORM_STATES = {
   FORGOT: 'FORGOT',
@@ -19,8 +15,7 @@ const FORM_STATES = {
   SIGNIN: 'SIGNIN',
   SIGNUP: 'SIGNUP'
 };
-
-export class NavBar extends LitElement {
+export class AuthModal extends LitElement {
   static styles = [
     css`
       img {
@@ -251,10 +246,6 @@ export class NavBar extends LitElement {
         border-radius: 50px;
         cursor: pointer;
       }
-
-      [hidden] {
-        display: none !important;
-      }
     `
   ];
 
@@ -269,81 +260,148 @@ export class NavBar extends LitElement {
 
   constructor() {
     super();
-    this.label = '';
+    this.formState = FORM_STATES.SIGNIN;
+    this.emailValue = window.localStorage.getItem('emailForSignIn') || '';
+    this.enterPressed = (event) => event.which === 13 || event.keyCode === 13;
+    this.getWidth = () => (window.innerWidth < 500 ? '80%' : '205px');
+  }
+
+  /**
+   * @returns {Object<email, password, name>} properties for authentication
+   */
+  getInputProps() {
+    const root = this.shadowRoot;
+
+    return {
+      email: root.querySelector('#email').value,
+      name: root.querySelector('#name').value,
+      password: root.querySelector('#password').value
+    };
+  }
+
+  isHidden(el) {
+    return el.parentElement.hidden === true;
+  }
+
+  /**
+   * fire auth request by the state of the form
+   */
+  async action() {
+    try {
+      const { password, email, name } = this.getInputProps();
+      const { formState } = this;
+      const { SIGNUP, SIGNIN } = FORM_STATES;
+
+      this.error = '';
+
+      if (formState === SIGNUP) {
+        await signUp(email, password, name);
+      } else if (formState === SIGNIN) {
+        await signIn(email, password);
+      } else {
+        await forgotPassword(email);
+      }
+
+      this.closeModal();
+    } catch (e) {
+      this.error = e.message;
+    }
+  }
+
+  /**
+   * toggle between signup and signin
+   */
+  toggleFormState() {
+    this.error = '';
+    this.formState =
+      this.formState === FORM_STATES.SIGNIN
+        ? FORM_STATES.SIGNUP
+        : FORM_STATES.SIGNIN;
   }
 
   /**
    * forward to the notepad route
    */
-  openNotepad() {
-    goto('notepad', {
-      topic: 'engineering-craftsmanship'
-    });
+  openModal() {
+    const modal = this.shadowRoot.getElementById('modal');
+    modal.open();
+  }
+
+  closeModal() {
+    const modal = this.shadowRoot.getElementById('modal');
+    modal.close();
   }
 
   render() {
-    const role = getRoleFromURL();
-    const topic = getTopicFromURL();
-    const { pathname } = location;
+    const { FORGOT, FORGOT_POST_EMAIL, SIGNUP, SIGNIN } = FORM_STATES;
+    const { enterPressed, formState, emailValue, getWidth } = this;
 
-    return html`
-      <nav>
-        <ul id="main-menu">
-          <li class="type-drop" ?hidden=${
-            !pathname.includes('/result') && !pathname.includes('/improve')
-          }>
-            <a>Change level</a>
-            <ul id="sub-menu">
-              ${getRoles().map(({ key, name }) =>
-                NavDropdownItem({
-                  name: !pathname.includes('/improve') ? 'result' : 'improve',
-                  params: !pathname.includes('/improve')
-                    ? {
-                        role: key
-                      }
-                    : {
-                        topic,
-                        role: key
-                      },
-                  active: pathname.includes(`/${key}`),
-                  label: name
-                })
-              )}
-            </ul>
-          </li>
+    return html`<fc-modal width="${getWidth()}" id="modal">
+          <div>
+            <img src="images/logodark.png"></img>
+            <div
+              ?hidden=${![SIGNUP].includes(formState)}
+              class="field"
+            >
+              <label>Name</label>
+              <fc-input id="name" label=" "></fc-input>
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <fc-input
+                id="email"
+                label=" "
+                value="${!formState === SIGNIN ? emailValue : ''}"
+                @keypress="${(e) => (enterPressed(e) ? this.action() : '')}"
+              ></fc-input>
+            </div>
+            <div
+              ?hidden=${[FORGOT, FORGOT_POST_EMAIL].includes(formState)}
+              class="field">
+              <label>Password</label>
+              <fc-input
+                @keypress="${(e) => (enterPressed(e) ? this.action() : '')}"
+                type="password" id="password" label=" " ></fc-input>
+            </div>
 
-          <li class="type-drop" ?hidden=${!pathname.includes('/improve')}>
-            <a>Change topic</a>
-            <ul id="sub-menu">
-              ${getTopics().map(({ key, name }) =>
-                NavDropdownItem({
-                  name: 'improve',
-                  params: {
-                    topic: key,
-                    role
-                  },
-                  active: pathname.includes(`/${key}`),
-                  label: name
-                })
-              )}
-            </ul>
-          </li>
-        </ul>
-          <fc-button @click="${() => this.openNotepad()}" size="large">
-            ${this.label}
-          </fc-button>
-        ${
-          !getUser()
-            ? ''
-            : html`
-                <a href="${urlForName('logout')}">
-                  <fc-button size="large"> Sign out </fc-button>
-                </a>
-              `
-        }
-      </a>
-      </nav>`;
+            ${this.error ? html`<div id="error">${this.error}</div>` : ''}
+            <span
+                id="forgot"
+              ?hidden=${[FORGOT, FORGOT_POST_EMAIL].includes(formState)}
+              @click="${() => (this.formState = FORGOT)}"
+              >Forgot Password?</span
+            >
+            <span
+              id="reset-confirm"
+              ?hidden=${![FORGOT_POST_EMAIL].includes(formState)}
+              >A Link to log in has been sent to your mail, if such exist.</span
+            >
+
+            <div class="buttons">
+              <fc-button
+                @click="${() => this.action()}">
+                ${
+                  this.formState === FORM_STATES.SIGNUP
+                    ? 'SIGN UP'
+                    : this.formState === FORM_STATES.SIGNIN
+                    ? 'SIGN IN'
+                    : 'RECOVER USER'
+                }
+              </fc-button>
+
+              <fc-button
+                ?hidden="${![FORGOT_POST_EMAIL.includes(formState)]}"
+                secondary
+                @click="${() => this.toggleFormState()}">
+                SIGN ${formState === SIGNIN ? 'UP' : 'IN'}
+              </fc-button>
+            </div>
+
+            <div id="guest" @click=${() => this.closeModal()}>
+                Continue as a guest</div>
+          </div>
+        </fc-modal>`;
   }
 }
 
-customElements.define('nav-bar', NavBar);
+customElements.define('fc-auth-modal', AuthModal);

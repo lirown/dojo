@@ -3,6 +3,7 @@ import { PageElement } from '../components';
 import { redirectNotFound, urlForName } from '../router';
 import { topicMetadata, topics, getCategoriesByTopic } from '../services/topic';
 import { roleMetadata, roleRoutes } from '../services/role';
+import { create } from '../services/db';
 
 /**
  * Page Result - A page that shows the result of the quiz with the estimated level of engineering.
@@ -16,6 +17,8 @@ export class PageResult extends PageElement {
     if (!roleRoutes.includes(role)) {
       return redirectNotFound();
     }
+
+    create('user', { role });
 
     return html`
       <section class="hero hero-result level-${

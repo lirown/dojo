@@ -2,6 +2,7 @@ export { PageElement } from './page-element';
 export { Logo } from './logo';
 export { NavBar } from './nav-bar';
 export { FcModal } from './modal';
+export { AuthModal } from './auth-modal';
 export { Feature } from './feature';
 export { Ninja } from './ninja';
 export { StatusButton } from './status-button';

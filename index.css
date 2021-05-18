@@ -1249,4 +1249,14 @@ fc-checkbox[checked] + span {
   display: none !important;
 }
 
+#auth-text {
+  color: var(--fc-link);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+b {
+  font-weight: 600;
+}
+
 /* stylein-enable rule-empty-line-before, declaration-colon-newline-after */

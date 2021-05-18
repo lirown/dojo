@@ -72,6 +72,10 @@ export class PageNotepad extends PageElement {
     return topic;
   }
 
+  openModal() {
+    document.querySelector('#auth-modal').openModal();
+  }
+
   /** @inheritdoc */
   render() {
     const topic = this.getTopic();
@@ -103,11 +107,12 @@ export class PageNotepad extends PageElement {
         <div class="container">
           <div class="result-inner">
             <p>
-              Note: By default, things you’ve added or marked as done will be
+              <b>Note:</b> By default, things you’ve added or marked as done will be
               stored on your browser. If you want to persist them so you can
-              change devices or browsers, we do recommend you to Sign up / sign
-              in
+              change devices or browsers, we do recommend you to <span id="auth-text" @click="${() =>
+                this.openModal()}">Sign up / sign in</span>.
             </p>
+            <fc-auth-modal id="auth-modal"></fc-auth-modal>
           </div>
           <div class="result-data">
             ${
