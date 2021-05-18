@@ -13,6 +13,6 @@ export function MadeWithLove() {
       ${config.environment !== 'production'
         ? `(Environment: ${config.environment})`
         : ''}
-    </div>
+    </a>
   `;
 }

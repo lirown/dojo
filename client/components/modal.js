@@ -117,11 +117,18 @@ export class FcModal extends LitElement {
     this.opened = false;
   }
 
+  keydown(e) {
+    if (e.keyCode === 27) {
+      this.close();
+    }
+  }
+
   /**
    * fire a open of the modal that show it
    */
   open() {
     this.opened = true;
+    this.dispatchEvent(new CustomEvent('change', { detail: { opened: true } }));
   }
 
   /**
@@ -129,6 +136,9 @@ export class FcModal extends LitElement {
    */
   close() {
     this.opened = false;
+    this.dispatchEvent(
+      new CustomEvent('change', { detail: { opened: false } })
+    );
   }
 
   /**
@@ -150,7 +160,6 @@ export class FcModal extends LitElement {
         <label class="fc-modal-bg" @click="${() => this.close()}"></label>
         <div
           class="fc-modal-inner"
-          @click="${() => this.open()}"
           style="width:${this.width || 'fit-content'};height:${this.height ||
           'fit-content'};"
         >

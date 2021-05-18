@@ -162,9 +162,11 @@ export class PageNotepad extends PageElement {
                                               style=""
                                               ?hidden=${status !== 'done'}
                                             >
+
                                               done on the
                                               ${(new Date(updatedAt))
                                                  .toLocaleString('en-us', { day: 'numeric', month:'long', year: 'numeric', hour: 'numeric', minute: 'numeric' })}
+
                                             </span>
                                             ${StatusDeleteButton({
                                               key,
@@ -186,6 +188,18 @@ export class PageNotepad extends PageElement {
         </div>
       </section>
     `;
+  }
+
+  convertDate(
+    t,
+    a = [{ day: 'numeric' }, { month: 'short' }, { year: 'numeric' }],
+    s = ' '
+  ) {
+    function format(m) {
+      let f = new Intl.DateTimeFormat('en', m);
+      return f.format(t);
+    }
+    return a.map(format).join(s);
   }
 }
 
