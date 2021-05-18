@@ -275,9 +275,9 @@ export class NavBar extends LitElement {
   }
 
   /**
-   * forward to the notebook route
+   * forward to the notepad route
    */
-  openNotebook() {
+  openNotepad() {
     goto('notepad', {
       topic: 'engineering-craftsmanship'
     });
@@ -318,7 +318,7 @@ export class NavBar extends LitElement {
         await forgotPassword(email);
       }
 
-      this.openNotebook();
+      this.openNotepad();
     } catch (e) {
       this.error = e.message;
     }
@@ -345,7 +345,7 @@ export class NavBar extends LitElement {
   }
 
   /**
-   * toggle between opening notebook when loged in or modal
+   * toggle between opening notepad when loged in or modal
    */
   async toggleModal() {
     const user = await getUser();
@@ -406,7 +406,7 @@ export class NavBar extends LitElement {
             </ul>
           </li>
         </ul>
-        <a href="${getUser() ? urlForName('notepad', { topic }) : ''}">
+        <a>
           <fc-button @click="${() => this.toggleModal()}" size="large">
             ${this.label}
           </fc-button>
@@ -453,7 +453,7 @@ export class NavBar extends LitElement {
             <span
                 id="forgot"
               ?hidden=${[FORGOT, FORGOT_POST_EMAIL].includes(formState)}
-              @click="${() => (formState = FORGOT)}"
+              @click="${() => (this.formState = FORGOT)}"
               >Forgot Password?</span
             >
             <span
@@ -482,7 +482,7 @@ export class NavBar extends LitElement {
               </fc-button>
             </div>
 
-            <div id="guest" @click=${() => this.openNotebook()}>
+            <div id="guest" @click=${() => this.openNotepad()}>
                 Continue as a guest</div>
           </div>
         </fc-modal>

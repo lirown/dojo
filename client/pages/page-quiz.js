@@ -25,6 +25,9 @@ export class PageQuiz extends PageElement {
   }
 
   getTitle() {
+    if (quizQuestions.length !== 5) {
+      console.error('Number of questions changed! Please update the headers');
+    }
     const index = this.selected;
     switch (index) {
       case 0:
