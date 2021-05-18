@@ -5,6 +5,7 @@ import {
   QUIZ_QUESTIONS as quizQuestions
 } from '../services/quiz';
 import { goto } from '../router';
+import { create } from '../services/db';
 
 /**
  * Page Quiz - a quick 5 questions check to evaluate your engineering level.
@@ -108,6 +109,7 @@ export class PageQuiz extends PageElement {
   async goToResult() {
     const { answers } = this;
     const params = { role: getQuizResult({ answers }) };
+    await create('user', params);
     goto('result', params);
   }
 }

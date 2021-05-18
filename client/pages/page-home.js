@@ -5,7 +5,8 @@ import {
   Ninja,
   GoogleDocsSpreadsheetLink
 } from '../components';
-import { urlForName } from '../router';
+import { goto, urlForName } from '../router';
+import { get } from '../services/db';
 
 /**
  * Home Page when opening the app.
@@ -14,6 +15,15 @@ import { urlForName } from '../router';
  * @element page-home
  */
 export class PageHome extends PageElement {
+  async navigateQuizOrResults() {
+    const user = await get('user');
+    if (user?.role) {
+      goto('result', { role: user?.role });
+      return;
+    }
+    goto('quiz');
+  }
+
   /** @inheritdoc */
   render() {
     return html` <section class="main-hero">
@@ -32,7 +42,7 @@ export class PageHome extends PageElement {
             <div class="bottom-data">
               <fc-button
                 size="large"
-                @click="${() => (location.href = urlForName('quiz'))}"
+                @click="${async () => await this.navigateQuizOrResults()}"
                 >I'm Ready! Show Me</fc-button
               >
               <p>all free, no emails, no BS. We're Engineers...</p>
