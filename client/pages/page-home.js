@@ -55,13 +55,13 @@ export class PageHome extends PageElement {
             <div class="doc-btns">
               ${GoogleDocsSpreadsheetLink({
                 href:
-                  'https://docs.google.com/spreadsheets/d/14veIcZKVLGjcGAKDSLUnXQg5t2VGkHFZFfCEl3aJvIA/edit?usp=sharing',
+                  'https://docs.google.com/spreadsheets/d/1CPIFwR_iSCQeq8aEebZ0XsBK9IKhah-l_HeDZuavik4/edit?usp=sharing',
                 label: 'Forter Career Ladder for Software Engineers',
                 icon: 'excel'
               })}
               ${GoogleDocsSpreadsheetLink({
                 href:
-                  'https://docs.google.com/document/d/1PE-xwiKYOiB74UVIX_1_a6tYNz4pJAr48FDNWf0arvc/edit?usp=sharing',
+                  'https://docs.google.com/document/d/1bjPSAOGIsdSiLV5lm_H3HgvUd5nHNsTI5RkT_Zmdydo/edit?usp=sharing',
                 label: 'Forter Engineering Career Journey',
                 icon: 'doc'
               })}
