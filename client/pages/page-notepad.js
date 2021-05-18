@@ -136,7 +136,7 @@ export class PageNotepad extends PageElement {
                                       updatedAt
                                     }) => html`
                                       <div>
-                                        <div>
+                                        <div class="${status}">
                                           ${StatusCheckbox({
                                             key,
                                             section,
@@ -146,16 +146,18 @@ export class PageNotepad extends PageElement {
                                             callback
                                           })}
                                           <span>
-                                            ${link
-                                              ? html`
-                                                  <a
-                                                    class="link"
-                                                    href="${link}"
-                                                    target="_blank"
-                                                    >${key}</a
-                                                  >
-                                                `
-                                              : html` ${key} `}
+                                            <span class="checkbox-text">
+                                              ${link
+                                                ? html`
+                                                    <a
+                                                      class="link"
+                                                      href="${link}"
+                                                      target="_blank"
+                                                      >${key}</a
+                                                    >
+                                                  `
+                                                : html` ${key} `}
+                                            </span>
 
                                             <span
                                               class="green done-text"
