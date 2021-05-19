@@ -36,10 +36,20 @@ export class PageNotepad extends PageElement {
   }
 
   /** @inheritdoc */
+  constructor(props) {
+    super(props);
+    this.getTopic = this.getTopic.bind(this);
+    this.topicsCount = {};
+  }
+
+  /** @inheritdoc */
   async firstUpdated() {
     await this.fetch();
   }
 
+  /**
+   * query topics actionable items and counts by topic
+   */
   async fetch(key) {
     const topic = this.getTopic();
     this.state = await db.query({
@@ -50,18 +60,17 @@ export class PageNotepad extends PageElement {
     this.topicsCount = await db.aggregate({ groupBy: 'topic' });
   }
 
-  constructor(props) {
-    super(props);
-    this.getTopic = this.getTopic.bind(this);
-    this.topicsCount = {};
-  }
-
-  changeTab(e) {
-    const { key } = e.detail;
+  /**
+   * toggle between different topics;
+   */
+  changeTab({ detail: { key } }) {
     history.pushState(null, '', `/notepad/${key}`);
     this.fetch(key);
   }
 
+  /**
+   * @returns {string} topic by url params or default
+   */
   getTopic() {
     const last = location.href.split('/').reverse()[0];
     const topic =
@@ -72,8 +81,11 @@ export class PageNotepad extends PageElement {
     return topic;
   }
 
-  openModal() {
-    document.querySelector('#auth-modal').openModal();
+  /**
+   * @returns {HTMLElement} modal
+   */
+  get modal() {
+    return document.querySelector('#auth-modal').modal;
   }
 
   /** @inheritdoc */
@@ -86,6 +98,10 @@ export class PageNotepad extends PageElement {
 
     const { state, topicsCount } = this;
     const callback = this.fetch.bind(this);
+    const tabs = getTopics().map((item) => {
+      return { ...item, count: this.topicsCount[item.key] || 0 };
+    });
+    const activeElement = getTopics().find((item) => item.key === topic).name;
 
     return html`
       <section class="hero">
@@ -94,11 +110,10 @@ export class PageNotepad extends PageElement {
             <h1>My Growth Notepad</h1>
             <div class="goal-items">
                 <elastic-tabs @change="${(e) =>
-                  this.changeTab(e)}" .tabs="${getTopics().map((item) => {
-      return { ...item, count: this.topicsCount[item.key] || 0 };
-    })}" activeElementName="${
-      getTopics().find((item) => item.key === topic).name
-    }"></elastic-tabs>
+                  this.changeTab(
+                    e
+                  )}" .tabs="${tabs}" activeElementName="${activeElement}">
+                </elastic-tabs>
             </div>
           </div>
         </div>
@@ -110,7 +125,7 @@ export class PageNotepad extends PageElement {
               <b>Note:</b> By default, things you’ve added or marked as done will be
               stored on your browser. If you want to persist them so you can
               change devices or browsers, we do recommend you to <span id="auth-text" @click="${() =>
-                this.openModal()}">Sign up / sign in</span>.
+                this.modal.open()()}">Sign up / sign in</span>.
             </p>
             <fc-auth-modal id="auth-modal"></fc-auth-modal>
           </div>
@@ -199,18 +214,6 @@ export class PageNotepad extends PageElement {
         </div>
       </section>
     `;
-  }
-
-  convertDate(
-    t,
-    a = [{ day: 'numeric' }, { month: 'short' }, { year: 'numeric' }],
-    s = ' '
-  ) {
-    function format(m) {
-      let f = new Intl.DateTimeFormat('en', m);
-      return f.format(t);
-    }
-    return a.map(format).join(s);
   }
 }
 

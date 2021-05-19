@@ -1,6 +1,7 @@
 import { html, LitElement, css } from './base';
 
 export class ElasticTabs extends LitElement {
+  /** @inheritdoc */
   static styles = [
     css`
       .tabs span.active {
@@ -75,6 +76,7 @@ export class ElasticTabs extends LitElement {
     `
   ];
 
+  /** @inheritdoc */
   static get properties() {
     return {
       tabs: { type: Array },
@@ -86,6 +88,7 @@ export class ElasticTabs extends LitElement {
     };
   }
 
+  /** @inheritdoc */
   constructor() {
     super();
     this.left = 0;
@@ -94,6 +97,7 @@ export class ElasticTabs extends LitElement {
     this.height = 0;
   }
 
+  /** @inheritdoc */
   updated(changedProperties) {
     changedProperties.forEach((key, value) => {
       const allowedUpdates = ['activeElementName'];
@@ -103,6 +107,9 @@ export class ElasticTabs extends LitElement {
     });
   }
 
+  /**
+   * dispatch change event to slide animated
+   */
   tabClick(activeElementName) {
     this.activeElementName = activeElementName;
     const selectedTab = this.shadowRoot.querySelector(
@@ -118,6 +125,7 @@ export class ElasticTabs extends LitElement {
     this.dispatchEvent(new CustomEvent('change', { detail: item }));
   }
 
+  /** @inheritdoc */
   render() {
     return html`<nav class="tabs">
       <div

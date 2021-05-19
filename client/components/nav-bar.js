@@ -21,6 +21,7 @@ const FORM_STATES = {
 };
 
 export class NavBar extends LitElement {
+  /** @inheritdoc */
   static styles = [
     css`
       img {
@@ -258,6 +259,7 @@ export class NavBar extends LitElement {
     `
   ];
 
+  /** @inheritdoc */
   static get properties() {
     return {
       label: { type: String },
@@ -267,6 +269,7 @@ export class NavBar extends LitElement {
     };
   }
 
+  /** @inheritdoc */
   constructor() {
     super();
     this.label = '';
@@ -281,6 +284,7 @@ export class NavBar extends LitElement {
     });
   }
 
+  /** @inheritdoc */
   render() {
     const role = getRoleFromURL();
     const topic = getTopicFromURL();
