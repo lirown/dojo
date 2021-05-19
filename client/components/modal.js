@@ -99,6 +99,12 @@ export class FcModal extends LitElement {
         cursor: pointer;
         font-size: 16px;
       }
+
+      #escape {
+        position: fixed;
+        top: -9999px;
+        left: -9999px;
+      }
     `
   ];
 
@@ -129,6 +135,7 @@ export class FcModal extends LitElement {
   open() {
     this.opened = true;
     this.dispatchEvent(new CustomEvent('change', { detail: { opened: true } }));
+    this.focusInput();
   }
 
   /**
@@ -151,20 +158,50 @@ export class FcModal extends LitElement {
     return this.open();
   }
 
+  focusInput() {
+    this.shadowRoot.getElementById('escape').focus();
+  }
+
+  tryToFocusInput(e) {
+    const clickedEl = e.path[0];
+    const approvedElements = [
+      'DIV',
+      'SECTION',
+      'HEADER',
+      'MAIN',
+      'FOOTER',
+      'ASIDE',
+      'NAV'
+    ];
+    if (approvedElements.includes(clickedEl.nodeName)) {
+      this.focusInput();
+    }
+  }
+
+  modalKeys(e) {
+    const key = e.keyCode;
+    if (key === 27 && this.opened) {
+      this.opened = false;
+    }
+  }
+
   /** @inheritdoc */
   render() {
     const { opened } = this;
     return html`
+      <input tabindex="-1" @keyup="${(e) => this.modalKeys(e)}" id="escape" />
       <slot @click="${() => this.open()}" name="button"></slot>
       <div class="fc-modal" ?opened=${opened}>
         <label class="fc-modal-bg" @click="${() => this.close()}"></label>
-        <div
+        <section
+          id="content"
+          @click="${(e) => this.tryToFocusInput(e)}"
           class="fc-modal-inner"
           style="width:${this.width || 'fit-content'};height:${this.height ||
           'fit-content'};"
         >
           <slot></slot>
-        </div>
+        </section>
       </div>
     `;
   }

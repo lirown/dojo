@@ -35,7 +35,7 @@ export class App extends LitElement {
         <div class="container" id="container" role="container">
           <div class="header-inner">
             ${Logo()}
-            <nav-bar label="My Growth Notebook"></nav-bar>
+            <nav-bar label="My Growth Notepad"></nav-bar>
           </div>
         </div>
       </header>

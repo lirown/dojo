@@ -95,7 +95,7 @@ export class PageImprove extends PageElement {
                               return data.link && data.name
                                 ? html`
                                     <div>
-                                      <div>
+                                      <div class="${status}">
                                         ${StatusCheckbox({
                                           status,
                                           key,
@@ -124,7 +124,7 @@ export class PageImprove extends PageElement {
                                   `
                                 : html`
                                     <div>
-                                      <div>
+                                      <div class="${status}">
                                         ${StatusCheckbox({
                                           status,
                                           key,
@@ -132,7 +132,8 @@ export class PageImprove extends PageElement {
                                           topic,
                                           callback
                                         })}
-                                        <span class="improve-label"
+                                        <span
+                                          class="checkbox-text improve-label"
                                           >${key}
                                           ${!['added', 'done'].includes(status)
                                             ? ''

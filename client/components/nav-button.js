@@ -28,7 +28,10 @@ export function NavButton({
 }) {
   return html`
     <li class="type-notepad">
-      <a href="${urlForName(name, params)}">${label}</a>
+      <a href="${urlForName(name, params)}">${label}</a href="${urlForName(
+    name,
+    params
+  )}">
       <pwa-install-button>
         <button>Install app</button>
       </pwa-install-button>

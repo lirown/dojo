@@ -34,7 +34,6 @@ export const routes = [
     path: '/logout',
     redirect: '/',
     name: 'logout',
-    component: 'page-home',
     metadata: {
       title: config.appName,
       titleTemplate: null,
