@@ -371,8 +371,8 @@ section:not(.hero) {
 .slide-top-bottom {
   position: absolute;
   top: 279px;
-  right: 30%;
-  height: 109px;
+  right: calc(50% - 83px);
+  height: 180px;
   -webkit-animation: slide-top-bottom 2s ease-in-out infinite;
   animation: slide-top-bottom 2s ease-in-out infinite;
 }
