@@ -594,6 +594,10 @@ li {
   line-height: 23px;
 }
 
+page-notepad .box-title {
+  justify-content: space-between;
+}
+
 .box-tags ul li {
   display: flex;
   align-items: center;
@@ -606,7 +610,7 @@ li {
   text-align: center;
   background: #dce3f3;
   border-radius: 30px;
-  cursor: pointer;
+  cursor: normal;
 }
 
 i.impact {

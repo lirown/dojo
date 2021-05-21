@@ -32,8 +32,14 @@ export async function backup() {
     return;
   }
 
-  const state = await db.query({ groupBy: 'key', flat: true });
-  await storage.put(`user/${user.uid}`, state);
+  try {
+    const state = await db
+      .store('notepad')
+      .query({ groupBy: 'key', flat: true });
+    await storage.put(`user/${user.uid}`, state);
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 /**
@@ -45,14 +51,18 @@ export async function restore() {
   if (!user) {
     return;
   }
-  const path = `user/${user.uid}`;
-  const { updated } = await storage.metadata(path);
-  const currentUpdated = localStorage.getItem(LAST_UPDATED_KEY);
-  if (updated == currentUpdated) {
-    return;
+  try {
+    const path = `user/${user.uid}`;
+    const { updated } = await storage.metadata(path);
+    const currentUpdated = localStorage.getItem(LAST_UPDATED_KEY);
+    if (updated == currentUpdated) {
+      return;
+    }
+    localStorage.setItem(LAST_UPDATED_KEY, updated);
+    const state = await storage.get(path);
+    await db.store('notepad').clear();
+    await db.store('notepad').restore(state || {});
+  } catch (e) {
+    console.error(e);
   }
-  localStorage.setItem(LAST_UPDATED_KEY, updated);
-  const state = await storage.get(path);
-  await db.clear();
-  await db.restore(state);
 }

@@ -6,7 +6,7 @@ import {
   GoogleDocsSpreadsheetLink
 } from '../components';
 import { goto, urlForName } from '../router';
-import { get } from '../services/db';
+import { db } from '../services/db';
 
 /**
  * Home Page when opening the app.
@@ -16,7 +16,7 @@ import { get } from '../services/db';
  */
 export class PageHome extends PageElement {
   async navigateQuizOrResults() {
-    const user = await get('user');
+    const user = await db.store('user').get('user');
     if (user?.role) {
       goto('result', { role: user?.role });
       return;

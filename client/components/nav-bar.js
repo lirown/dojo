@@ -33,6 +33,7 @@ export class NavBar extends LitElement {
         --fc-button-item-color: white;
         font-size: 14px;
         margin-right: 5px;
+        margin-bottom: 5px;
       }
 
       fc-button[secondary] {
@@ -92,6 +93,9 @@ export class NavBar extends LitElement {
       nav {
         display: flex;
         align-items: center;
+        max-width: 245px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
       }
 
       ul,
@@ -101,17 +105,12 @@ export class NavBar extends LitElement {
 
       ul#main-menu {
         display: flex;
-        flex: 1;
-        gap: 20px;
-        align-self: stretch;
-        justify-content: flex-end;
-        height: 30px;
-
+        flex: 1 1 0%;
+        justify-content: flex-start;
         position: absolute;
-        top: 45px;
-        left: 0;
+        top: 52px;
+        left: -45px;
         height: 30px;
-        margin-right: 30px;
       }
 
       ul#main-menu li {
@@ -206,16 +205,26 @@ export class NavBar extends LitElement {
       }
 
       @media (min-width: 992px) {
+        nav {
+          max-width: 100%;
+        }
+
         ul#main-menu {
           position: relative;
           top: auto;
           left: auto;
+          display: flex;
+          flex: 1;
+          gap: 20px;
+          align-self: stretch;
+          justify-content: flex-end;
+          height: 30px;
         }
 
         fc-button[size='large'] {
           --fc-button-background-color: rgba(255, 255, 255, 0.3);
           --fc-button-item-color: white;
-          font-size: 18px;
+          font-size: 16px;
         }
 
         ul#main-menu > li.type-drop {
@@ -289,6 +298,8 @@ export class NavBar extends LitElement {
     const role = getRoleFromURL();
     const topic = getTopicFromURL();
     const { pathname } = location;
+    const user = getUser();
+    const userRole = localStorage.getItem('user.role');
 
     return html`
       <nav>
@@ -340,6 +351,13 @@ export class NavBar extends LitElement {
           !getUser()
             ? ''
             : html`
+                <a
+                  href="${urlForName('result', {
+                    role: userRole || 'software-engineer'
+                  })}"
+                >
+                  <fc-button size="large"> Explore </fc-button>
+                </a>
                 <a href="${urlForName('logout')}">
                   <fc-button size="large"> Sign out </fc-button>
                 </a>

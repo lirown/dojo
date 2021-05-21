@@ -40,6 +40,7 @@ export class PageNotepad extends PageElement {
     super(props);
     this.getTopic = this.getTopic.bind(this);
     this.topicsCount = {};
+    this.sectionStatus = {};
   }
 
   /** @inheritdoc */
@@ -52,12 +53,14 @@ export class PageNotepad extends PageElement {
    */
   async fetch(key) {
     const topic = this.getTopic();
-    this.state = await db.query({
+    this.state = await db.store('notepad').query({
       groupBy: 'section',
       filter: (notepad) =>
         notepad.topic === (typeof key === 'string' ? key : topic)
     });
-    this.topicsCount = await db.aggregate({ groupBy: 'topic' });
+    this.topicsCount = await db
+      .store('notepad')
+      .aggregate({ groupBy: 'topic' });
   }
 
   /**
@@ -88,6 +91,18 @@ export class PageNotepad extends PageElement {
     return document.querySelector('#auth-modal').modal;
   }
 
+  toggleStatus(section) {
+    if (
+      !this.sectionStatus[section] ||
+      this.sectionStatus[section] === 'added'
+    ) {
+      this.sectionStatus[section] = 'done';
+    } else {
+      this.sectionStatus[section] = 'added';
+    }
+    this.requestUpdate();
+  }
+
   /** @inheritdoc */
   render() {
     const topic = this.getTopic();
@@ -102,6 +117,8 @@ export class PageNotepad extends PageElement {
       return { ...item, count: this.topicsCount[item.key] || 0 };
     });
     const activeElement = getTopics().find((item) => item.key === topic).name;
+    const sectionStatusFilter = (section) => ({ status }) =>
+      (this.sectionStatus[section] || 'added') === status;
 
     return html`
       <section class="hero">
@@ -125,7 +142,7 @@ export class PageNotepad extends PageElement {
               <b>Note:</b> By default, things you’ve added or marked as done will be
               stored on your browser. If you want to persist them so you can
               change devices or browsers, we do recommend you to <span id="auth-text" @click="${() =>
-                this.modal.open()()}">Sign up / sign in</span>.
+                this.modal.open()}">Sign up / sign in</span>.
             </p>
             <fc-auth-modal id="auth-modal"></fc-auth-modal>
           </div>
@@ -137,15 +154,28 @@ export class PageNotepad extends PageElement {
                     (section) => html`
                       <div class="result-box">
                         <div class="left-box">
-                          <div class="box-title">${section}</div>
+                          <div class="box-title">
+                            ${section}
+                            <a
+                              class="link"
+                              @click=${() => this.toggleStatus(section)}
+                            >
+                              ${this.sectionStatus[section] === 'added'
+                                ? 'View Open Items'
+                                : 'View History'}
+                            </a>
+                          </div>
                           <div class="box-subtitle">
                             ${sectionMetadata[section].description}
                           </div>
                           <div class="box-questions">
-                            ${!state[section]
+                            ${(state[section] || []).filter(
+                              sectionStatusFilter(section)
+                            ).length === 0
                               ? html` <div>Nothing here yet.</div> `
                               : state[section]
                                   .sort((a, b) => a.key.localeCompare(b.key))
+                                  .filter(sectionStatusFilter(section))
                                   .map(
                                     ({
                                       key,

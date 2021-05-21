@@ -52,8 +52,9 @@ export const routes = [
     name: 'result',
     component: 'page-result',
     metadata: {
-      title: 'Result',
-      description: 'Quiz result page'
+      title: 'Explore growth opportunities',
+      description:
+        'Pick one of the 4 growth areas to find interesting growth opportunities to work on'
     },
     action: async (a, b) => {
       await import('../pages/page-result');
@@ -78,8 +79,9 @@ export const routes = [
     name: 'improve',
     component: 'page-improve',
     metadata: {
-      title: 'Result',
-      description: 'Suggestions for improve due to  quiz result'
+      title: 'Improving at Engineering',
+      description:
+        'Ideas, concepts, frameworks and resources that can help you improve at Engineering Craftsmanship as a Engineer'
     },
     action: async () => {
       await restore();

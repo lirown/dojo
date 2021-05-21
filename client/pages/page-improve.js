@@ -39,7 +39,9 @@ export class PageImprove extends PageElement {
     /**
      * fetching actionable items to improve
      */
-    this.state = await db.query({ groupBy: 'key', flat: true });
+    this.state = await db
+      .store('notepad')
+      .query({ groupBy: 'key', flat: true });
   }
 
   /** @inheritdoc */
