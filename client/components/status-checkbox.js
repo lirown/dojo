@@ -45,6 +45,7 @@ export function StatusCheckbox({
    */
   callback
 }) {
+  console.log(status, key);
   return html`
     <fc-tooltip
       tooltip="${status === 'done' ? 'added?' : 'done?'}"
@@ -52,16 +53,22 @@ export function StatusCheckbox({
     >
       <fc-checkbox
         ?checked=${status === 'done'}
-        @click="${({ target: { checked } }) =>
+        @click="${({ target }) =>
           db
             .create(key, {
-              status: checked ? 'added' : 'done',
+              status: status === 'done' ? 'added' : 'done',
               link,
               key,
               section,
               topic
             })
+            .then(() =>
+              status !== 'added'
+                ? target.removeAttribute('checked')
+                : target.setAttribute('checked', '')
+            )
             .then(callback)
+
             .then(backup)}"
       ></fc-checkbox
     ></fc-tooltip>

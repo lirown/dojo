@@ -91,6 +91,10 @@ export class PageNotepad extends PageElement {
     return document.querySelector('#auth-modal').modal;
   }
 
+  /**
+   * @param {String} section
+   * change between "View History" and "View Opened Items"
+   */
   toggleStatus(section) {
     if (
       !this.sectionStatus[section] ||
@@ -112,7 +116,7 @@ export class PageNotepad extends PageElement {
     }
 
     const { state, topicsCount } = this;
-    const callback = this.fetch.bind(this);
+    const callback = () => setTimeout(() => this.fetch(), 500);
     const tabs = getTopics().map((item) => {
       return { ...item, count: this.topicsCount[item.key] || 0 };
     });
@@ -174,7 +178,7 @@ export class PageNotepad extends PageElement {
                             ).length === 0
                               ? html` <div>Nothing here yet.</div> `
                               : state[section]
-                                  .sort((a, b) => a.key.localeCompare(b.key))
+                                  //.sort((a, b) => a.key.localeCompare(b.key))
                                   .filter(sectionStatusFilter(section))
                                   .map(
                                     ({
