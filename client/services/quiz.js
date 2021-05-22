@@ -143,6 +143,17 @@ export var QUIZ_QUESTIONS = [
 ];
 
 /**
+ * Mapping between quiz description
+ */
+export const QUIZ_DESCRIPTION = [
+  'Answer these 5 quick questions without overthinking it.',
+  'Amazing! Only 4 left...',
+  'You’re doing great, please continue...',
+  'So much fun! 2 more questions please :)',
+  'And the last one...'
+];
+
+/**
  * Will return the level of engineeing by the answers submitted.
  * @param {Object} answers of the quiz questions.
  * @returns {String} with the role resulted by quiz

@@ -7,6 +7,7 @@ import {
   signOut,
   getUser
 } from '../services/authentication';
+
 import { goto } from '../router';
 
 const FORM_STATES = {
@@ -15,7 +16,13 @@ const FORM_STATES = {
   SIGNIN: 'SIGNIN',
   SIGNUP: 'SIGNUP'
 };
+
+/**
+ * Authentication Modal (SignIn, SignUp, etc)
+ * @return {HTMLElement}
+ */
 export class AuthModal extends LitElement {
+  /** @inheritdoc */
   static styles = [
     css`
       img {
@@ -249,6 +256,7 @@ export class AuthModal extends LitElement {
     `
   ];
 
+  /** @inheritdoc */
   static get properties() {
     return {
       label: { type: String },
@@ -258,6 +266,14 @@ export class AuthModal extends LitElement {
     };
   }
 
+  /**
+   * @returns {HTMLElement} modal
+   */
+  get modal() {
+    return this.shadowRoot.getElementById('modal');
+  }
+
+  /** @inheritdoc */
   constructor() {
     super();
     this.formState = FORM_STATES.SIGNIN;
@@ -302,7 +318,7 @@ export class AuthModal extends LitElement {
         await forgotPassword(email);
       }
 
-      this.closeModal();
+      this.modal.close();
     } catch (e) {
       this.error = e.message;
     }
@@ -319,19 +335,7 @@ export class AuthModal extends LitElement {
         : FORM_STATES.SIGNIN;
   }
 
-  /**
-   * forward to the notepad route
-   */
-  openModal() {
-    const modal = this.shadowRoot.getElementById('modal');
-    modal.open();
-  }
-
-  closeModal() {
-    const modal = this.shadowRoot.getElementById('modal');
-    modal.close();
-  }
-
+  /** @inheritdoc */
   render() {
     const { FORGOT, FORGOT_POST_EMAIL, SIGNUP, SIGNIN } = FORM_STATES;
     const { enterPressed, formState, emailValue, getWidth } = this;
@@ -397,7 +401,7 @@ export class AuthModal extends LitElement {
               </fc-button>
             </div>
 
-            <div id="guest" @click=${() => this.closeModal()}>
+            <div id="guest" @click=${() => this.modal.close()}>
                 Continue as a guest</div>
           </div>
         </fc-modal>`;

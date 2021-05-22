@@ -2,10 +2,11 @@ import { html } from '../components/base';
 import { PageElement } from '../components';
 import {
   getQuizResult,
-  QUIZ_QUESTIONS as quizQuestions
+  QUIZ_QUESTIONS as quizQuestions,
+  QUIZ_DESCRIPTION as quizDescription
 } from '../services/quiz';
 import { goto } from '../router';
-import { create } from '../services/db';
+import { db } from '../services/db';
 
 /**
  * Page Quiz - a quick 5 questions check to evaluate your engineering level.
@@ -22,25 +23,6 @@ export class PageQuiz extends PageElement {
        */
       selected: { type: Number, default: 0 }
     };
-  }
-
-  getTitle() {
-    if (quizQuestions.length !== 5) {
-      console.error('Number of questions changed! Please update the headers');
-    }
-    const index = this.selected;
-    switch (index) {
-      case 0:
-        return 'Answer these 5 quick questions without overthinking it.';
-      case 1:
-        return 'Amazing! Only 4 left...';
-      case 2:
-        return 'You’re doing great, please continue...';
-      case 3:
-        return 'So much fun! 2 more questions please :)';
-      case 4:
-        return 'And the last one...';
-    }
   }
 
   /** @inheritdoc */
@@ -61,7 +43,7 @@ export class PageQuiz extends PageElement {
           <div class="hero-inner">
             <p>To be helpful, we need to get to know you just a little.</p>
 
-            <h1>${this.getTitle()}</h1>
+            <h1>${quizDescription[this.selected]}</h1>
           </div>
         </div>
       </section>
@@ -128,7 +110,8 @@ export class PageQuiz extends PageElement {
   async goToResult() {
     const { answers } = this;
     const params = { role: getQuizResult({ answers }) };
-    await create('user', params);
+    await db.store('user').create('user', params);
+    localStorage.setItem('user.role', params.role);
     goto('result', params);
   }
 }
