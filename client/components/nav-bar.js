@@ -1,6 +1,6 @@
 import { html, LitElement, css } from './base';
 import { restore } from '../services/notepad';
-import { goto, urlForName } from '../router';
+import { redirect, urlForName } from '../services/router';
 import { NavButton, NavDropdownItem } from '../components';
 import { getTopics, getTopicFromURL } from '../services/topic';
 import { getRoles, getRoleFromURL } from '../services/role';
@@ -288,7 +288,7 @@ export class NavBar extends LitElement {
    * forward to the notepad route
    */
   openNotepad() {
-    goto('notepad', {
+    redirect('notepad', {
       topic: 'engineering-craftsmanship'
     });
   }

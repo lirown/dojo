@@ -5,7 +5,7 @@ import {
   QUIZ_QUESTIONS as quizQuestions,
   QUIZ_DESCRIPTION as quizDescription
 } from '../services/quiz';
-import { goto } from '../router';
+import { redirect } from '../services/router';
 import { db } from '../services/db';
 
 /**
@@ -96,7 +96,7 @@ export class PageQuiz extends PageElement {
 
     setTimeout(async () => {
       if (this.selected === 4) {
-        return await this.goToResult();
+        return await this.redirectResult();
       }
 
       this.selected = index + 1;
@@ -107,12 +107,12 @@ export class PageQuiz extends PageElement {
   /**
    * go to result by the engineering level result after quiz
    */
-  async goToResult() {
+  async redirectResult() {
     const { answers } = this;
     const params = { role: getQuizResult({ answers }) };
     await db.store('user').create('user', params);
     localStorage.setItem('user.role', params.role);
-    goto('result', params);
+    redirect('result', params);
   }
 }
 

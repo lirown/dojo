@@ -1,5 +1,5 @@
 import { Router } from '@vaadin/router';
-import { routes } from './routes';
+import { routes } from '../routes';
 
 /**
  * vaadin router
@@ -43,16 +43,8 @@ export const urlForName = (name, params) => {
 /**
  * go to specified router from code
  */
-export const goto = (url, params = {}) => {
+export const redirect = (url, params = {}) => {
   const a = document.querySelector('#link');
   a.setAttribute('href', urlForName(url, params));
   a.click();
-};
-
-/**
- * go to not found from code
- */
-export const redirectNotFound = () => {
-  goto('not-found');
-  return;
 };

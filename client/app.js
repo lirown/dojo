@@ -8,7 +8,7 @@ import {
   NavDropdownItem
 } from './components';
 
-import { attachRouter } from './router';
+import { attachRouter } from './services/router';
 import '@forter/checkbox';
 import '@forter/button';
 import '@forter/radio';

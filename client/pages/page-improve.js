@@ -7,7 +7,7 @@ import {
 } from '../components';
 
 import { db } from '../services/db';
-import { goto, redirectNotFound } from '../router';
+import { redirect } from '../services/router';
 import {
   startCase,
   sections,
@@ -49,7 +49,7 @@ export class PageImprove extends PageElement {
     const { topic, role } = this.location.params;
 
     if (!topicRoutes.includes(topic) || !roleRoutes.includes(role)) {
-      return redirectNotFound();
+      return redirect('404');
     }
 
     const callback = this.firstUpdated.bind(this);

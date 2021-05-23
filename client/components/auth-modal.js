@@ -8,8 +8,6 @@ import {
   getUser
 } from '../services/authentication';
 
-import { goto } from '../router';
-
 const FORM_STATES = {
   FORGOT: 'FORGOT',
   FORGOT_POST_EMAIL: 'FORGOT_POST_EMAIL',

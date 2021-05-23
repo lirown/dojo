@@ -1,5 +1,5 @@
 import { html } from '../components/base';
-import { urlForName } from '../router';
+import { urlForName } from '../services/router';
 
 /**
  * Creating a floating button for hiring

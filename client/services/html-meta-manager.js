@@ -11,22 +11,35 @@ export const updateMetadata = ({
   title,
   titleTemplate,
   description,
+  descriptionTemplate,
   image,
   url
 }) => {
-  if (title) {
-    const finalTitle = titleTemplate
-      ? titleTemplate.replace('%s', title)
-      : title;
+  const [param1, param2] = location.href
+    .split('/')
+    .reverse()
+    .map((x) => x.split('-').join(' '));
 
+  const finalTitle = titleTemplate
+    ? titleTemplate
+        .replace('%s', title)
+        .replace('%1', param1)
+        .replace('%2', param2)
+    : title;
+
+  if (finalTitle) {
     document.title = finalTitle;
     setMetaTag('property', 'og:title', finalTitle);
   }
 
-  if (description) {
-    setMetaTag('name', 'description', description);
-    setMetaTag('property', 'og:description', description);
-  } else if (description === null) {
+  const finalDescription = descriptionTemplate
+    ? descriptionTemplate.replace('%1', param1).replace('%2', param2)
+    : description;
+
+  if (finalDescription) {
+    setMetaTag('name', 'description', finalDescription);
+    setMetaTag('property', 'og:description', finalDescription);
+  } else if (finalDescription === null) {
     setMetaTag('name', 'description', '');
     setMetaTag('property', 'og:description', '');
   }

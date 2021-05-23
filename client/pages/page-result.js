@@ -1,6 +1,6 @@
 import { html } from '../components/base';
 import { PageElement } from '../components';
-import { redirectNotFound, urlForName } from '../router';
+import { redirect, urlForName } from '../services/router';
 import { topicMetadata, topics, getCategoriesByTopic } from '../services/topic';
 import { roleMetadata, roleRoutes } from '../services/role';
 import { db } from '../services/db';
@@ -15,7 +15,7 @@ export class PageResult extends PageElement {
   render() {
     const { role } = this.location.params;
     if (!roleRoutes.includes(role)) {
-      return redirectNotFound();
+      return redirect('404');
     }
 
     db.store('user').create('user', { role });

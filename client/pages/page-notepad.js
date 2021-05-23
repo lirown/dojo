@@ -1,8 +1,7 @@
 import { html } from '../components/base';
 import { PageElement, StatusCheckbox, StatusDeleteButton } from '../components';
 import { db } from '../services/db';
-import { redirectNotFound } from '../router';
-import { urlForName } from '../router';
+import { redirect, urlForName } from '../services/router';
 
 import {
   DEFAULT_TOPIC,
@@ -112,7 +111,8 @@ export class PageNotepad extends PageElement {
     const topic = this.getTopic();
 
     if (!topicRoutes.includes(topic)) {
-      redirectNotFound();
+      redirect('404');
+      return;
     }
 
     const { state, topicsCount } = this;
