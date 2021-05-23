@@ -5,7 +5,7 @@ import {
   QUIZ_QUESTIONS as quizQuestions,
   QUIZ_DESCRIPTION as quizDescription
 } from '../services/quiz';
-import { redirect } from '../router';
+import { redirect } from '../services/router';
 import { db } from '../services/db';
 
 /**

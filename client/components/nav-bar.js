@@ -1,6 +1,6 @@
 import { html, LitElement, css } from './base';
 import { restore } from '../services/notepad';
-import { redirect, urlForName } from '../router';
+import { redirect, urlForName } from '../services/router';
 import { NavButton, NavDropdownItem } from '../components';
 import { getTopics, getTopicFromURL } from '../services/topic';
 import { getRoles, getRoleFromURL } from '../services/role';

@@ -1,5 +1,5 @@
 import { svg, html } from './base';
-import { urlForName } from '../router';
+import { urlForName } from '../services/router';
 
 /**
  * Creating a the ninja logo

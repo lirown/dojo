@@ -5,7 +5,7 @@ import {
   Ninja,
   GoogleDocsSpreadsheetLink
 } from '../components';
-import { redirect, urlForName } from '../router';
+import { redirect, urlForName } from '../services/router';
 import { db } from '../services/db';
 
 /**

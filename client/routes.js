@@ -1,8 +1,8 @@
-import config from '../config';
-import { db } from '../services/db';
-import { LAST_UPDATED_KEY } from '../services/notepad';
-import { signOut } from '../services/authentication';
-import { restore } from '../services/notepad';
+import config from './config';
+import { db } from './services/db';
+import { LAST_UPDATED_KEY } from './services/notepad';
+import { signOut } from './services/authentication';
+import { restore } from './services/notepad';
 
 /**
  * Update the navbar items by route
@@ -27,7 +27,7 @@ export const routes = [
       description: config.appDescription
     },
     action: async () => {
-      await import('../pages/page-home');
+      await import('./pages/page-home');
     }
   },
   {
@@ -43,7 +43,7 @@ export const routes = [
       await signOut();
       await db.clear();
       localStorage.setItem(LAST_UPDATED_KEY, '');
-      await import('../pages/page-home');
+      await import('./pages/page-home');
       updateNavbar();
     }
   },
@@ -57,7 +57,7 @@ export const routes = [
         'Pick one of the 4 growth areas to find interesting growth opportunities to work on'
     },
     action: async (a, b) => {
-      await import('../pages/page-result');
+      await import('./pages/page-result');
       updateNavbar();
     }
   },
@@ -70,7 +70,7 @@ export const routes = [
       description: 'Quiz quiz page'
     },
     action: async () => {
-      await import('../pages/page-quiz');
+      await import('./pages/page-quiz');
       updateNavbar();
     }
   },
@@ -85,7 +85,7 @@ export const routes = [
     },
     action: async () => {
       await restore();
-      await import('../pages/page-improve');
+      await import('./pages/page-improve');
       updateNavbar();
     }
   },
@@ -99,7 +99,7 @@ export const routes = [
     },
     action: async () => {
       await restore();
-      await import('../pages/page-notepad');
+      await import('./pages/page-notepad');
       updateNavbar();
     }
   },
@@ -113,7 +113,7 @@ export const routes = [
       image: null
     },
     action: async () => {
-      await import('../pages/page-not-found');
+      await import('./pages/page-not-found');
       updateNavbar();
     }
   },
@@ -127,7 +127,7 @@ export const routes = [
       image: null
     },
     action: async () => {
-      await import('../pages/page-not-found');
+      await import('./pages/page-not-found');
       updateNavbar();
     }
   }

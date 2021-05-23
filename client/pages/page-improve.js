@@ -7,7 +7,7 @@ import {
 } from '../components';
 
 import { db } from '../services/db';
-import { redirect } from '../router';
+import { redirect } from '../services/router';
 import {
   startCase,
   sections,
