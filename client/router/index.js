@@ -43,7 +43,7 @@ export const urlForName = (name, params) => {
 /**
  * go to specified router from code
  */
-export const goto = (url, params = {}) => {
+export const redirect = (url, params = {}) => {
   const a = document.querySelector('#link');
   a.setAttribute('href', urlForName(url, params));
   a.click();
@@ -53,6 +53,6 @@ export const goto = (url, params = {}) => {
  * go to not found from code
  */
 export const redirectNotFound = () => {
-  goto('not-found');
+  redirect('404');
   return;
 };

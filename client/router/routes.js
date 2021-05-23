@@ -79,9 +79,9 @@ export const routes = [
     name: 'improve',
     component: 'page-improve',
     metadata: {
-      title: 'Improving at Engineering',
-      description:
-        'Ideas, concepts, frameworks and resources that can help you improve at Engineering Craftsmanship as a Engineer'
+      title: 'Improving at %1',
+      descriptionTemplate:
+        'Ideas, concepts, frameworks and resources that can help you improve at %1 as a %2'
     },
     action: async () => {
       await restore();
@@ -106,6 +106,20 @@ export const routes = [
   {
     path: '(.*)',
     name: 'not-found',
+    component: 'page-not-found',
+    metadata: {
+      title: 'Error',
+      description: null,
+      image: null
+    },
+    action: async () => {
+      await import('../pages/page-not-found');
+      updateNavbar();
+    }
+  },
+  {
+    path: '/404',
+    name: '404',
     component: 'page-not-found',
     metadata: {
       title: 'Error',

@@ -5,7 +5,7 @@ import {
   Ninja,
   GoogleDocsSpreadsheetLink
 } from '../components';
-import { goto, urlForName } from '../router';
+import { redirect, urlForName } from '../router';
 import { db } from '../services/db';
 
 /**
@@ -18,10 +18,10 @@ export class PageHome extends PageElement {
   async navigateQuizOrResults() {
     const user = await db.store('user').get('user');
     if (user?.role) {
-      goto('result', { role: user?.role });
+      redirect('result', { role: user?.role });
       return;
     }
-    goto('quiz');
+    redirect('quiz');
   }
 
   /** @inheritdoc */
