@@ -8,6 +8,8 @@ import {
   getUser
 } from '../services/authentication';
 
+import { restore } from '../services/notepad';
+
 const FORM_STATES = {
   FORGOT: 'FORGOT',
   FORGOT_POST_EMAIL: 'FORGOT_POST_EMAIL',
@@ -316,10 +318,21 @@ export class AuthModal extends LitElement {
         await forgotPassword(email);
       }
 
+      await restore();
+      await this.page.fetch();
+      this.navbar.requestUpdate();
       this.modal.close();
     } catch (e) {
       this.error = e.message;
     }
+  }
+
+  get navbar() {
+    return document.querySelector('nav-bar');
+  }
+
+  get page() {
+    return document.querySelector('main').firstElementChild;
   }
 
   /**

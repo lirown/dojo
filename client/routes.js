@@ -1,5 +1,5 @@
 import config from './config';
-import { db } from './services/db';
+import { db } from './services/database';
 import { LAST_UPDATED_KEY } from './services/notepad';
 import { signOut } from './services/authentication';
 import { restore } from './services/notepad';

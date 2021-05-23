@@ -6,7 +6,7 @@ import {
   QUIZ_DESCRIPTION as quizDescription
 } from '../services/quiz';
 import { redirect } from '../services/router';
-import { db } from '../services/db';
+import { db } from '../services/database';
 
 /**
  * Page Quiz - a quick 5 questions check to evaluate your engineering level.

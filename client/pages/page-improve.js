@@ -6,7 +6,7 @@ import {
   StatusDeleteButton
 } from '../components';
 
-import { db } from '../services/db';
+import { db } from '../services/database';
 import { redirect } from '../services/router';
 import {
   startCase,

@@ -1,6 +1,6 @@
 import { html } from '../components/base';
 import { PageElement, StatusCheckbox, StatusDeleteButton } from '../components';
-import { db } from '../services/db';
+import { db } from '../services/database';
 import { redirect, urlForName } from '../services/router';
 
 import {

@@ -6,7 +6,7 @@ import {
   GoogleDocsSpreadsheetLink
 } from '../components';
 import { redirect, urlForName } from '../services/router';
-import { db } from '../services/db';
+import { db } from '../services/database';
 
 /**
  * Home Page when opening the app.

@@ -3,7 +3,7 @@ import { PageElement } from '../components';
 import { redirect, urlForName } from '../services/router';
 import { topicMetadata, topics, getCategoriesByTopic } from '../services/topic';
 import { roleMetadata, roleRoutes } from '../services/role';
-import { db } from '../services/db';
+import { db } from '../services/database';
 
 /**
  * Page Result - A page that shows the result of the quiz with the estimated level of engineering.

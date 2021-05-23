@@ -1,5 +1,5 @@
-import * as storage from '../services/storage';
-import { db } from '../services/db';
+import { readJSON, writeJSON, readMetadata } from '../services/storage';
+import { db } from '../services/database';
 import { getUser } from '../services/authentication';
 
 /**
@@ -36,7 +36,7 @@ export async function backup() {
     const state = await db
       .store('notepad')
       .query({ groupBy: 'key', flat: true });
-    await storage.put(`user/${user.uid}`, state);
+    await writeJSON(`user/${user.uid}`, state);
   } catch (e) {
     console.log(e);
   }
@@ -53,13 +53,13 @@ export async function restore() {
   }
   try {
     const path = `user/${user.uid}`;
-    const { updated } = await storage.metadata(path);
+    const { updated } = await readMetadata(path);
     const currentUpdated = localStorage.getItem(LAST_UPDATED_KEY);
     if (updated == currentUpdated) {
       return;
     }
     localStorage.setItem(LAST_UPDATED_KEY, updated);
-    const state = await storage.get(path);
+    const state = await readJSON(path);
     await db.store('notepad').clear();
     await db.store('notepad').restore(state || {});
   } catch (e) {

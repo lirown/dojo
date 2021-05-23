@@ -7,7 +7,7 @@ import { getUser } from './authentication';
  * @return {Promise<String>}
  */
 
-export async function put(path, content) {
+export async function writeJSON(path, content) {
   return storageRef.child(path).putString(JSON.stringify(content));
 }
 
@@ -16,7 +16,7 @@ export async function put(path, content) {
  * @return {Promise<String>}
  */
 
-export async function get(path) {
+export async function readJSON(path) {
   try {
     // Get the download URL
     const url = await storageRef.child(path).getDownloadURL();
@@ -33,6 +33,6 @@ export async function get(path) {
  * Get a metadata of uploaded file
  * @return {Promise<String>}
  */
-export async function metadata(path) {
+export async function readMetadata(path) {
   return storageRef.child(path).getMetadata();
 }
