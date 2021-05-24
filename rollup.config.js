@@ -2,6 +2,7 @@ import { createSpaConfig } from '@open-wc/building-rollup';
 import renameExtensions from '@betit/rollup-plugin-rename-extensions';
 import replace from '@rollup/plugin-replace';
 import { babel } from '@rollup/plugin-babel';
+import json from '@rollup/plugin-json';
 import { copy } from '@web/rollup-plugin-copy';
 import { visualizer } from 'rollup-plugin-visualizer';
 
@@ -53,6 +54,7 @@ const config = merge(
           'process.env.NODE_ENV': JSON.stringify('production')
         }
       }),
+      json(),
       ...(process.env.NODE_ENV
         ? [
             replace({

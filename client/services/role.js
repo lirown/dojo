@@ -1,4 +1,4 @@
-import careerLadder from './career-ladder.js';
+import careerLadder from './career-ladder.json';
 import { startCase } from './topic';
 
 /**

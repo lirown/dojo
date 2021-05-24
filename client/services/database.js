@@ -169,7 +169,7 @@ export const db = new DBInstance('dojo-notepad', 1, {
     role: { type: STRING },
     updatedAt: { type: NUMBER, indexed: true }
   },
-  notepad: {
+  Notepad: {
     key: { type: STRING, key: true },
     section: {
       type: ENUM,
