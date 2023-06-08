@@ -65,7 +65,7 @@ export class PageHome extends PageElement {
             <div class="doc-btns">
               ${GoogleDocsSpreadsheetLink({
                 href:
-                  'https://docs.google.com/spreadsheets/d/1CPIFwR_iSCQeq8aEebZ0XsBK9IKhah-l_HeDZuavik4/edit?usp=sharing',
+                  'https://docs.google.com/spreadsheets/d/1e71fL0b5lYyac_SMSZZFHqID_VjixPwUOuCqFXtzGL4/edit?pli=1#gid=1063128571',
                 label: 'Forter Career Ladder for Software Engineers',
                 icon: 'excel'
               })}
