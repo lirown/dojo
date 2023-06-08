@@ -1,4 +1,4 @@
-> This project is currently in development.
+> This project is currently in development. 
 
 [![CI](https://github.com/lirown/dojo/workflows/CI/badge.svg)](https://github.com/lirown/dojo/actions)
 [![Built with dojo-starter](https://img.shields.io/badge/built%20with-pwa--dojo--starter-blue)](https://github.com/lirown/dojo-starter 'Built with pwa-dojo-starter')
